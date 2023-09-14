@@ -23,10 +23,9 @@ jobs:
            dotnet-version: 7.x
       - name: Test .NET Sdk
         run: |
-          cd dotnet
-          LD_LIBRARY_PATH=/usr/local/lib dotnet test ./Extism.sln
+          make test
       - name: Publish .NET Sdk
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
-          cd dotnet/src/Extism.Sdk/
-          dotnet pack -c Release
-          dotnet nuget push --source https://api.nuget.org/v3/index.json ./bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }}
+          make publish

@@ -24,7 +24,8 @@ public unsafe class Plugin : IDisposable
     /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
     /// <param name="functions">List of host functions expected by the plugin.</param>
     /// <param name="withWasi">Enable/Disable WASI.</param>
-    public Plugin(ReadOnlySpan<byte> wasm, HostFunction[] functions, bool withWasi) {
+    public Plugin(ReadOnlySpan<byte> wasm, HostFunction[] functions, bool withWasi)
+    {
         _functions = functions;
         var functionHandles = functions.Select(f => f.NativeHandle).ToArray();
 
