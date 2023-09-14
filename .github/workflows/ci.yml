@@ -1,12 +1,22 @@
 on: 
+  push:
+    branches: [ main ]
   pull_request:
-  workflow_dispatch:
+    branches: [ main ]
 
 name: .NET CI
 
 jobs:
-  dotnet:
-    name: .NET
+  prepare:
+    name: Install Extism Runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/libextism
+
+  test:
+    name: Test .NET SDK
+    needs: prepare
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -16,7 +26,28 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-      - uses: ./.github/actions/extism
+
+# Install libextism
+      - name: Download libextism.so
+        if: runner.os != 'Windows'
+        uses: actions/download-artifact@v2
+        with:
+          name: libextism-so-artifact
+
+      - name: Download libextism.h
+        if: runner.os != 'Windows'
+        uses: actions/download-artifact@v2
+        with:
+          name: libextism-h-artifact
+
+      - name: Move the files because download can't sudo
+        if: runner.os != 'Windows'
+        run: |
+          ls -lah ./
+          sudo mv libextism.so /usr/local/lib/
+          sudo mv extism.h /usr/local/include/
+
+# Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
         with:
