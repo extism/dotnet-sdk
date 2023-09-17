@@ -20,6 +20,7 @@ namespace Extism.Sdk
     {
         private const int DisposedMarker = 1;
         private int _disposed;
+        private readonly ExtismFunction _function;
 
         /// <summary>
         /// Registers a Host Function.
@@ -59,6 +60,9 @@ namespace Extism.Sdk
             IntPtr userData,
             ExtismFunction hostFunction)
         {
+            // Make sure we store the delegate referene in a field so that it doesn't get garbage collected
+            _function = hostFunction;
+
             fixed (ExtismValType* inputs = inputTypes)
             fixed (ExtismValType* outputs = outputTypes)
             {
@@ -81,7 +85,7 @@ namespace Extism.Sdk
                 var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
                 var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
 
-                hostFunction(new CurrentPlugin(plugin), inputs, outputs, data);
+                _function(new CurrentPlugin(plugin), inputs, outputs, data);
             }
         }
 
