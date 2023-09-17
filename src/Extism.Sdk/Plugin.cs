@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Text.Json;
 
 namespace Extism.Sdk.Native;
 
@@ -19,7 +21,36 @@ public unsafe class Plugin : IDisposable
     internal LibExtism.ExtismPlugin* NativeHandle { get; }
 
     /// <summary>
-    /// Create a and load a plug-in
+    /// Create a plugin from a Manifest.
+    /// </summary>
+    /// <param name="manifest"></param>
+    /// <param name="functions"></param>
+    /// <param name="withWasi"></param>
+    public Plugin(Manifest manifest, HostFunction[] functions, bool withWasi)
+    {
+        _functions = functions;
+
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
+        options.Converters.Add(new WasmSourceConverter());
+        var json = JsonSerializer.Serialize(manifest, options);
+
+        var bytes = Encoding.UTF8.GetBytes(json);
+
+        var functionHandles = functions.Select(f => f.NativeHandle).ToArray();
+        fixed (byte* wasmPtr = bytes)
+        fixed (IntPtr* functionsPtr = functionHandles)
+        {
+            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, withWasi, functionsPtr);
+        }
+    }
+
+    /// <summary>
+    /// Create and load a plugin from a byte array.
     /// </summary>
     /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
     /// <param name="functions">List of host functions expected by the plugin.</param>
@@ -27,24 +58,33 @@ public unsafe class Plugin : IDisposable
     public Plugin(ReadOnlySpan<byte> wasm, HostFunction[] functions, bool withWasi)
     {
         _functions = functions;
-        var functionHandles = functions.Select(f => f.NativeHandle).ToArray();
 
-        unsafe
+        var functionHandles = functions.Select(f => f.NativeHandle).ToArray();
+        fixed (byte* wasmPtr = wasm)
+        fixed (IntPtr* functionsPtr = functionHandles)
         {
-            fixed (byte* wasmPtr = wasm)
-            fixed (IntPtr* functionsPtr = functionHandles)
-            {
-                NativeHandle = LibExtism.extism_plugin_new(wasmPtr, wasm.Length, functionsPtr, functions.Length, withWasi, null);
-                if (NativeHandle == null)
-                {
-                    throw new ExtismException("Unable to create plugin");
-                    // TODO: handle error
-                    // var s = Marshal.PtrToStringUTF8(result);
-                    // LibExtism.extism_plugin_new_error_free(errmsg);
-                    // throw new ExtismException(s);
-                }
-            }
+            NativeHandle = Initialize(wasmPtr, wasm.Length, functions, withWasi, functionsPtr);
         }
+    }
+
+    private unsafe LibExtism.ExtismPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, IntPtr* functionsPtr)
+    {
+        char** errorMsgPtr;
+
+        var handle = LibExtism.extism_plugin_new(wasmPtr, (ulong)wasmLength, functionsPtr, (ulong)functions.Length, withWasi, out errorMsgPtr);
+        if (handle == null)
+        {
+            var msg = "Unable to create plugin";
+
+            if (errorMsgPtr is not null)
+            {
+                msg = Marshal.PtrToStringAnsi(new IntPtr(errorMsgPtr));
+            }
+
+            throw new ExtismException(msg);
+        }
+
+        return handle;
     }
 
     /// <summary>
@@ -199,5 +239,16 @@ public unsafe class Plugin : IDisposable
     ~Plugin()
     {
         Dispose(false);
+    }
+
+    /// <summary>
+    /// Get Extism Runtime version.
+    /// </summary>
+    /// <returns></returns>
+    public static string ExtismVersion()
+    {
+        var version = LibExtism.extism_version();
+        return Marshal.PtrToStringAnsi(version);
+
     }
 }
