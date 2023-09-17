@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Extism.Sdk.Native;
 
@@ -32,11 +33,12 @@ public unsafe class Plugin : IDisposable
 
         var options = new JsonSerializerOptions
         {
-            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
         options.Converters.Add(new WasmSourceConverter());
+        options.Converters.Add(new JsonStringEnumConverter());
         var json = JsonSerializer.Serialize(manifest, options);
 
         var bytes = Encoding.UTF8.GetBytes(json);

@@ -22,14 +22,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\wasm\code.wasm" Link="code.wasm">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Include="..\..\wasm\code-functions.wasm" Link="code-functions.wasm">
+		<None Include="..\..\wasm\*.wasm">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\Extism.Sdk\Extism.Sdk.csproj" />

@@ -17,7 +17,7 @@ namespace Extism.Sdk
         /// </summary>
         public Manifest()
         {
-            
+
         }
 
         /// <summary>
@@ -129,19 +129,68 @@ namespace Extism.Sdk
             Path = System.IO.Path.GetFullPath(path);
             Name = name ?? System.IO.Path.GetFileNameWithoutExtension(path);
             Hash = hash;
-
-            if (Hash is null)
-            {
-                using var file = File.OpenRead(Path);
-                Hash = Helpers.ComputeSha256Hash(file);
-            }
         }
 
         /// <summary>
         /// Path to wasm plugin.
         /// </summary>
         [JsonPropertyName("path")]
-        public string Path { get; }
+        public string Path { get; set; }
+    }
+
+    /// <summary>
+    /// Wasm Source represented by a file referenced by a path.
+    /// </summary>
+    public class UrlWasmSource : WasmSource
+    {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="url">uri to wasm plugin.</param>
+        /// <param name="name"></param>
+        /// <param name="hash"></param>
+        public UrlWasmSource(string url, string? name = null, string? hash = null) : this(new Uri(url), name, hash)
+        {
+
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="url">uri to wasm plugin.</param>
+        /// <param name="name"></param>
+        /// <param name="hash"></param>
+        public UrlWasmSource(Uri url, string? name = null, string? hash = null)
+        {
+            Url = url;
+            Name = name;
+            Hash = hash;
+        }
+
+        /// <summary>
+        /// Uri to wasm plugin.
+        /// </summary>
+        [JsonPropertyName("url")]
+        public Uri Url { get; set; }
+
+        /// <summary>
+        /// HTTP headers
+        /// </summary>
+        [JsonPropertyName("header")]
+        public Dictionary<string, string> Headers { get; set; } = new();
+
+        /// <summary>
+        /// HTTP Method
+        /// </summary>
+        [JsonPropertyName("method")]
+        public HttpMethod? Method { get; set; }
+    }
+
+    public enum HttpMethod
+    {
+        GET,
+        POST,
+        PUT,
     }
 
     /// <summary>
@@ -160,41 +209,13 @@ namespace Extism.Sdk
             Data = data;
             Name = name;
             Hash = hash;
-
-            if (Hash is null)
-            {
-                using var memory = new MemoryStream(data);
-                Hash = Helpers.ComputeSha256Hash(memory);
-            }
         }
 
         /// <summary>
         /// The byte array representing the Wasm code
         /// </summary>
         [JsonPropertyName("data")]
-        [JsonConverter(typeof(Base64EncodedStringConverter))]
         public byte[] Data { get; }
-    }
-
-    static class Helpers
-    {
-        public static string ComputeSha256Hash(Stream stream)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashBytes = sha256.ComputeHash(stream);
-                return BitConverter.ToString(hashBytes).Replace("-", "").ToLowerInvariant();
-            }
-        }
-    }
-
-    class Base64EncodedStringConverter : JsonConverter<string>
-    {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) =>
-            Encoding.UTF8.GetString(reader.GetBytesFromBase64());
-
-        public override void Write(Utf8JsonWriter writer, string value, JsonSerializerOptions options) =>
-            writer.WriteBase64StringValue(Encoding.UTF8.GetBytes(value));
     }
 
     class WasmSourceConverter : JsonConverter<WasmSource>
@@ -210,6 +231,8 @@ namespace Extism.Sdk
                 JsonSerializer.Serialize(writer, path, typeof(PathWasmSource), options);
             else if (value is ByteArrayWasmSource bytes)
                 JsonSerializer.Serialize(writer, bytes, typeof(ByteArrayWasmSource), options);
+            else if (value is UrlWasmSource uri)
+                JsonSerializer.Serialize(writer, uri, typeof(UrlWasmSource), options);
             else
                 throw new ArgumentOutOfRangeException(nameof(value), "Unknown Wasm Source");
         }
