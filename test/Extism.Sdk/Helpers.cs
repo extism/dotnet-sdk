@@ -1,0 +1,20 @@
+using System.Reflection;
+using Extism.Sdk.Native;
+
+namespace Extism.Sdk.Tests;
+
+public static class Helpers
+{
+    public static Plugin LoadPlugin(string name, Action<Manifest>? config = null, params HostFunction[] hostFunctions)
+    {
+        var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, name), "main"));
+
+        if (config is not null)
+        {
+            config(manifest);
+        }
+
+        return new Plugin(manifest, hostFunctions, withWasi: true);
+    }
+}

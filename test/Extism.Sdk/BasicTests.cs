@@ -1,5 +1,5 @@
 using Extism.Sdk.Native;
-
+using Shouldly;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -10,15 +10,24 @@ namespace Extism.Sdk.Tests;
 
 public class BasicTests
 {
+    [Theory]
+    [InlineData("code.wasm", "count_vowels", true)]
+    [InlineData("code.wasm", "i_dont_exist", false)]
+    public void FunctionExists(string fileName, string functionName, bool expected)
+    {
+        using var plugin = Helpers.LoadPlugin(fileName);
+
+        var actual = plugin.FunctionExists(functionName);
+        actual.ShouldBe(expected);
+    }
+
     [Fact]
     public void CountHelloWorldVowels()
     {
-        var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var wasm = File.ReadAllBytes(Path.Combine(binDirectory, "code.wasm"));
-        using var plugin = new Plugin(wasm, Array.Empty<HostFunction>(), withWasi: true);
+        using var plugin = Helpers.LoadPlugin("code.wasm");
 
         var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Assert.Equal("{\"count\": 3}", Encoding.UTF8.GetString(response));
+        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
     [Fact]
@@ -34,12 +43,10 @@ public class BasicTests
             userData,
             HelloWorld);
 
-        var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var wasm = File.ReadAllBytes(Path.Combine(binDirectory, "code-functions.wasm"));
-        using var plugin = new Plugin(wasm, new[] { helloWorld }, withWasi: true);
+        using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
 
         var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Assert.Equal("{\"count\": 3}", Encoding.UTF8.GetString(response));
+        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
 
         void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)
         {

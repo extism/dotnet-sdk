@@ -1,5 +1,5 @@
 using Extism.Sdk.Native;
-
+using Shouldly;
 using System.Reflection;
 using System.Text;
 
@@ -20,7 +20,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Assert.Equal("{\"count\": 3}", Encoding.UTF8.GetString(response));
+        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Assert.Equal("{\"count\": 3}", Encoding.UTF8.GetString(response));
+        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Assert.Equal("{\"count\": 3}", Encoding.UTF8.GetString(response));
+        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
     [Theory]
@@ -60,18 +60,56 @@ public class ManifestTests
     [InlineData("", "{\"config\": \"<unset by host>\"}")]
     public void CanSetPluginConfig(string thing, string expected)
     {
-        var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, "config.wasm"), "main"));
-
-        if (!string.IsNullOrEmpty(thing))
+        using var plugin = Helpers.LoadPlugin("config.wasm", m =>
         {
-            manifest.Config["thing"] = thing;
-        }
+            if (!string.IsNullOrEmpty(thing))
+            {
+                m.Config["thing"] = thing;
+            }
+        });
 
-        using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
         var response = plugin.CallFunction("run_test", Array.Empty<byte>());
-        var text = Encoding.UTF8.GetString(response);
+        var actual = Encoding.UTF8.GetString(response);
 
-        Assert.Equal(expected, text);
+        actual.ShouldBe(expected);
+    }
+
+    [Fact]
+    public void CanMakeHttpCalls_WhenAllowed()
+    {
+        using var plugin = Helpers.LoadPlugin("http.wasm", m =>
+        {
+            m.AllowedHosts.Add("jsonplaceholder.*.com");
+        });
+
+        var expected =
+        """
+        {
+            "userId": 1,
+            "id": 1,
+            "title": "delectus aut autem",
+            "completed": false
+        }
+        """;
+
+        var response = plugin.CallFunction("run_test", Array.Empty<byte>());
+        var actual = Encoding.UTF8.GetString(response);
+         actual.ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("google*")]
+    public void CantMakeHttpCalls_WhenDenied(string allowedHost)
+    {
+        using var plugin = Helpers.LoadPlugin("http.wasm", m =>
+        {
+            if (!string.IsNullOrEmpty(allowedHost))
+            {
+                m.AllowedHosts.Add(allowedHost);
+            }
+        });
+
+        Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>()));
     }
 }
