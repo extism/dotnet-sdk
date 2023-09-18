@@ -80,6 +80,13 @@ namespace Extism.Sdk
         /// </summary>
         [JsonPropertyName("config")]
         public Dictionary<string, string> Config { get; set; } = new();
+
+        /// <summary>
+        /// Plugin call timeout.
+        /// </summary>
+        [JsonPropertyName("timeout_ms")]
+        [JsonConverter(typeof(TimeSpanMillisecondsConverter))]
+        public TimeSpan? Timeout { get; set; }
     }
 
     /// <summary>
@@ -235,6 +242,36 @@ namespace Extism.Sdk
                 JsonSerializer.Serialize(writer, uri, typeof(UrlWasmSource), options);
             else
                 throw new ArgumentOutOfRangeException(nameof(value), "Unknown Wasm Source");
+        }
+    }
+
+    class TimeSpanMillisecondsConverter : JsonConverter<TimeSpan?>
+    {
+        public override TimeSpan? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.Null)
+            {
+                return null;
+            }
+            else if (reader.TokenType == JsonTokenType.Number)
+            {
+                long milliseconds = reader.GetInt64();
+                return TimeSpan.FromMilliseconds(milliseconds);
+            }
+
+            throw new JsonException($"Expected number, but got {reader.TokenType}");
+        }
+
+        public override void Write(Utf8JsonWriter writer, TimeSpan? value, JsonSerializerOptions options)
+        {
+            if (value is null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                writer.WriteNumberValue((long)value.Value.TotalMilliseconds);
+            }
         }
     }
 }
