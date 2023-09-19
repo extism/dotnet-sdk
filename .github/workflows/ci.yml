@@ -68,7 +68,7 @@ jobs:
       - name: Delete Native binary from nuget package
         if: runner.os == 'Windows'
         run: |
-          rm -f test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/Extism.dll
+          rm -force test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/Extism.dll
 
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
