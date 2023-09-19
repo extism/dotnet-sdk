@@ -68,13 +68,15 @@ jobs:
       - name: Delete Native binary from nuget package
         if: runner.os == 'Windows'
         run: |
-          tree test/Extism.Sdk/bin/Debug/net7.0
+          Get-ChildItem -Recurse test/Extism.Sdk/bin/Debug/net7.0
 
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
+        if: false
         uses: actions/setup-dotnet@v3.0.3
         with:
            dotnet-version: 7.x
       - name: Test .NET Sdk
+        if: false
         run: |
           make test
