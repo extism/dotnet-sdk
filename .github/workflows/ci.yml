@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         rust:
           - stable
     steps:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
 
 # Install libextism
-## linux
+# linux
       - name: Download Linux binaries
         if: runner.os == 'Linux'
         uses: robinraju/release-downloader@v1.8
@@ -37,7 +37,7 @@ jobs:
           sudo mv native/extism.h /usr/local/include/
           sudo mv native/libextism.so  /usr/local/lib/
 
-## macOS
+# macOS
       - name: Download macOS binaries
         if: runner.os == 'macOS'
         uses: robinraju/release-downloader@v1.8
@@ -54,7 +54,7 @@ jobs:
           sudo mv native/extism.h /usr/local/include/
           sudo mv native/libextism.dylib  /usr/local/lib/
 
-## Windows
+# Windows
       - name: Download Windows binaries
         if: runner.os == 'Windows'
         uses: robinraju/release-downloader@v1.8
@@ -71,6 +71,8 @@ jobs:
         with:
            dotnet-version: 7.x
 
+      # We want to use the native binaries downloaded from GitHub releases,
+      # so we will remove the native binaries provided by the Extism.runtime.win-x64 NuGet package
       - name: Remove NuGet package native binary
         if: runner.os == 'Windows'
         run: |
