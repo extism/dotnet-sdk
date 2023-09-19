@@ -129,22 +129,14 @@ public unsafe class Plugin : IDisposable
         fixed (byte* dataPtr = data)
         {
             int response = LibExtism.extism_plugin_call(NativeHandle, functionName, dataPtr, data.Length);
-            if (response == 0)
+            var errorMsg = GetError();
+
+            if (errorMsg != null)
             {
-                return OutputData();
+                throw new ExtismException($"{errorMsg}. Exit Code: {response}");
             }
-            else
-            {
-                var errorMsg = GetError();
-                if (errorMsg != null)
-                {
-                    throw new ExtismException(errorMsg);
-                }
-                else
-                {
-                    throw new ExtismException("Call to Extism failed");
-                }
-            }
+
+            return OutputData();
         }
     }
 

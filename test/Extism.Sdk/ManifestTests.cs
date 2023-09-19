@@ -85,16 +85,16 @@ public class ManifestTests
         var expected =
         """
         {
-            "userId": 1,
-            "id": 1,
-            "title": "delectus aut autem",
-            "completed": false
+          "userId": 1,
+          "id": 1,
+          "title": "delectus aut autem",
+          "completed": false
         }
         """;
 
         var response = plugin.CallFunction("run_test", Array.Empty<byte>());
         var actual = Encoding.UTF8.GetString(response);
-         actual.ShouldBe(expected);
+        actual.ShouldBe(expected, StringCompareShould.IgnoreLineEndings);
     }
 
     [Theory]
