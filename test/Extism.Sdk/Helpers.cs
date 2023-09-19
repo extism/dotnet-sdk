@@ -8,7 +8,7 @@ public static class Helpers
     public static Plugin LoadPlugin(string name, Action<Manifest>? config = null, params HostFunction[] hostFunctions)
     {
         var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, name), "main"));
+        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, "wasm", name), "main"));
 
         if (config is not null)
         {

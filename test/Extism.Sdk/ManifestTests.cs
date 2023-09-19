@@ -13,7 +13,7 @@ public class ManifestTests
     public void LoadPluginFromByteArray()
     {
         var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var wasm = File.ReadAllBytes(Path.Combine(binDirectory, "code.wasm"));
+        var wasm = File.ReadAllBytes(Path.Combine(binDirectory, "wasm", "code.wasm"));
 
         var manifest = new Manifest(new ByteArrayWasmSource(wasm, "main"));
 
@@ -27,7 +27,7 @@ public class ManifestTests
     public void LoadPluginFromPath()
     {
         var binDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
-        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, "code.wasm"), "main"));
+        var manifest = new Manifest(new PathWasmSource(Path.Combine(binDirectory, "wasm", "code.wasm"), "main"));
 
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 

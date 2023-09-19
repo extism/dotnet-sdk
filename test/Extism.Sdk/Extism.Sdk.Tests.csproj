@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\wasm\*.wasm">
+		<None Include="..\..\wasm\*.wasm" Link="wasm/%(Filename)%(Extension)">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 

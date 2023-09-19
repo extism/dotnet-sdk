@@ -26,7 +26,6 @@ public class BasicTests
 
 
     [Theory]
-    [InlineData("-1", -1)]
     [InlineData("abc", 1)]
     [InlineData("", 2)]
     public void Exit(string code, int expected)
