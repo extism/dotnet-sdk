@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         rust:
           - stable
     steps:
@@ -21,7 +21,7 @@ jobs:
 
 # Install libextism
 ## linux
-      - name: release-downloader
+      - name: Download Linux binaries
         if: runner.os == 'Linux'
         uses: robinraju/release-downloader@v1.8
         with:
@@ -31,14 +31,14 @@ jobs:
           out-file-path: 'native'
           extract: true
 
-      - name: Move the files because download can't sudo
+      - name: Move Linux binaries to lib
         if: runner.os == 'Linux'
         run: |
           sudo mv native/extism.h /usr/local/include/
           sudo mv native/libextism.so  /usr/local/lib/
 
 ## macOS
-      - name: release-downloader
+      - name: Download macOS binaries
         if: runner.os == 'macOS'
         uses: robinraju/release-downloader@v1.8
         with:
@@ -48,12 +48,22 @@ jobs:
           out-file-path: 'native'
           extract: true
 
-      - name: Move the files because download can't sudo
+      - name: Move macOS binaries to lib
         if: runner.os == 'macOS'
         run: |
           sudo mv native/extism.h /usr/local/include/
           sudo mv native/libextism.dylib  /usr/local/lib/
 
+## Windows
+      - name: Download Windows binaries
+        if: runner.os == 'Windows'
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: 'extism/extism'
+          tag: latest
+          fileName: 'libextism-x86_64-pc-windows-msvc-main.tar.gz'
+          out-file-path: 'test/Extism.Sdk/bin/Debug/net7.0'
+          extract: true
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
