@@ -7,20 +7,12 @@ on:
 name: .NET CI
 
 jobs:
-  prepare:
-    name: Install Extism Runtime
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/libextism
-
   test:
     name: Test .NET SDK
-    needs: prepare
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         rust:
           - stable
     steps:
@@ -28,25 +20,21 @@ jobs:
         uses: actions/checkout@v3
 
 # Install libextism
-      - name: Download libextism.so
-        if: runner.os != 'Windows'
-        uses: actions/download-artifact@v2
+      - name: release-downloader
+        # You may pin to the exact commit or the version.
+        # uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
+        uses: robinraju/release-downloader@v1.8
         with:
-          name: libextism-so-artifact
-
-      - name: Download libextism.h
-        if: runner.os != 'Windows'
-        uses: actions/download-artifact@v2
-        with:
-          name: libextism-h-artifact
+          repository: 'extism/extism'
+          tag: latest
+          fileName: 'libextism-x86_64-unknown-linux-gnu-main.tar.gz'
+          out-file-path: '/usr/local/lib'
+          extract: true
 
       - name: Move the files because download can't sudo
-        if: runner.os != 'Windows'
+        if: runner.os == 'Linux'
         run: |
-          ls -lah ./
-          sudo mv libextism.so /usr/local/lib/
-          sudo mv extism.h /usr/local/include/
-
+          sudo mv /usr/local/lib/extism.h /usr/local/include/
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
