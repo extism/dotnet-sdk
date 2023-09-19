@@ -64,6 +64,12 @@ jobs:
           fileName: 'libextism-x86_64-pc-windows-msvc-main.tar.gz'
           out-file-path: 'test/Extism.Sdk/bin/Debug/net7.0'
           extract: true
+          
+      - name: Delete Native binary from nuget package
+        if: runner.os == 'Linux'
+        run: |
+          rm -f test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/Extism.dll
+
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
