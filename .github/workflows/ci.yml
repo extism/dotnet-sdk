@@ -21,20 +21,20 @@ jobs:
 
 # Install libextism
       - name: release-downloader
-        # You may pin to the exact commit or the version.
-        # uses: robinraju/release-downloader@efa4cd07bd0195e6cc65e9e30c251b49ce4d3e51
         uses: robinraju/release-downloader@v1.8
         with:
           repository: 'extism/extism'
           tag: latest
           fileName: 'libextism-x86_64-unknown-linux-gnu-main.tar.gz'
-          out-file-path: '/usr/local/lib'
+          out-file-path: 'native'
           extract: true
 
       - name: Move the files because download can't sudo
         if: runner.os == 'Linux'
         run: |
-          sudo mv /usr/local/lib/extism.h /usr/local/include/
+          sudo mv native/extism.h /usr/local/include/
+          sudo mv native/libextism.so  /usr/local/lib/
+
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
