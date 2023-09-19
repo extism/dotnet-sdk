@@ -79,7 +79,7 @@ jobs:
       - name: Test .NET Sdk
         if: runner.os == 'Windows'
         run: |
-          make build
+          make prepare
           Get-ChildItem -Recurse test/Extism.Sdk/bin/Debug/net7.0
           rm test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/Extism.dll
 
