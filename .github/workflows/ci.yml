@@ -71,12 +71,15 @@ jobs:
         with:
            dotnet-version: 7.x
 
+      - name: Build the solution
+        run: |
+          make prepare
+
       # We want to use the native binaries downloaded from GitHub releases,
       # so we will remove the native binaries provided by the Extism.runtime.win-x64 NuGet package
       - name: Remove NuGet package native binary
         if: runner.os == 'Windows'
         run: |
-          make prepare
           if (test-path 'test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/extism.dll') {
             rm 'test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/extism.dll'
           }
