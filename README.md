@@ -45,7 +45,7 @@ using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 > **Note**: The schema for this manifest can be found here: https://extism.org/docs/concepts/manifest/
 
 
-This plug-in was written in C and it does one thing, it counts vowels in a string. As such it exposes one "export" function: `count_vowels`. We can call exports using `Extism::Plugin#call`:
+This plug-in was written in C and it does one thing, it counts vowels in a string. As such it exposes one "export" function: `count_vowels`. We can call exports using `Plugin.CallFunction`:
 
 ```csharp
 var output = Encoding.UTF8.GetString(
@@ -86,7 +86,7 @@ var manifest = new Manifest(new UrlWasmSource("https://raw.githubusercontent.com
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Yellow, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
@@ -102,7 +102,7 @@ var manifest = new Manifest(new UrlWasmSource("https://raw.githubusercontent.com
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Yellow, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
@@ -153,7 +153,7 @@ using var helloWorld = new HostFunction(
 using var plugin = new Plugin(manifest, new [] { helloWorld }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Hello, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => Hello From .NET!
