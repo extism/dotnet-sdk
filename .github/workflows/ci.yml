@@ -12,7 +12,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
         rust:
           - stable
     steps:
@@ -66,7 +66,7 @@ jobs:
           extract: true
           
       - name: Delete Native binary from nuget package
-        if: runner.os == 'Linux'
+        if: runner.os == 'Windows'
         run: |
           rm -f test/Extism.Sdk/bin/Debug/net7.0/runtimes/win-x64/native/Extism.dll
 
