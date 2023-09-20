@@ -13,7 +13,7 @@ public class BasicTests
     public void Alloc()
     {
         using var plugin = Helpers.LoadPlugin("alloc.wasm");
-        _ = plugin.CallFunction("run_test", Array.Empty<byte>());
+        _ = plugin.Call("run_test", Array.Empty<byte>());
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class BasicTests
     {
         using var plugin = Helpers.LoadPlugin("fail.wasm");
 
-        Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>()));
+        Should.Throw<ExtismException>(() => plugin.Call("run_test", Array.Empty<byte>()));
     }
 
 
@@ -35,7 +35,7 @@ public class BasicTests
             m.Config["code"] = code;
         });
 
-        var exception = Should.Throw<ExtismException>(() => plugin.CallFunction("_start", Array.Empty<byte>()));
+        var exception = Should.Throw<ExtismException>(() => plugin.Call("_start", Array.Empty<byte>()));
 
         exception.Message.ShouldContain(expected.ToString());
         exception.Message.ShouldContain("WASI return code");
@@ -50,7 +50,7 @@ public class BasicTests
             m.Config["duration"] = "3"; // sleep for 3 seconds
         });
 
-        Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>()))
+        Should.Throw<ExtismException>(() => plugin.Call("run_test", Array.Empty<byte>()))
             .Message.ShouldContain("timeout");
     }
 
@@ -67,14 +67,14 @@ public class BasicTests
             var cts = new CancellationTokenSource();
             cts.CancelAfter(TimeSpan.FromMilliseconds(50));
 
-            Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>(), cts.Token))
+            Should.Throw<ExtismException>(() => plugin.Call("run_test", Array.Empty<byte>(), cts.Token))
                .Message.ShouldContain("timeout");
 
-            Should.Throw<OperationCanceledException>(() => plugin.CallFunction("run_test", Array.Empty<byte>(), cts.Token));
+            Should.Throw<OperationCanceledException>(() => plugin.Call("run_test", Array.Empty<byte>(), cts.Token));
         }
 
         // We should be able to call the plugin normally after a cancellation
-        plugin.CallFunction("run_test", Array.Empty<byte>());
+        plugin.Call("run_test", Array.Empty<byte>());
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class BasicTests
             m.AllowedPaths.Add("data", "/mnt");
         });
 
-        var output = plugin.CallFunction("run_test", Array.Empty<byte>());
+        var output = plugin.Call("run_test", Array.Empty<byte>());
         var text = Encoding.UTF8.GetString(output);
 
         text.ShouldBe("hello world!");
@@ -107,7 +107,7 @@ public class BasicTests
     {
         using var plugin = Helpers.LoadPlugin("code.wasm");
 
-        var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
         Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
@@ -126,7 +126,7 @@ public class BasicTests
 
         using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
 
-        var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
         Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
 
         void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)
@@ -159,7 +159,7 @@ public class BasicTests
 
         using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
 
-        var response = plugin.CallFunction("run_test", Encoding.UTF8.GetBytes("Frodo"));
+        var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
 
         void ToUpper(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)

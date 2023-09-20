@@ -141,7 +141,7 @@ public unsafe class Plugin : IDisposable
     /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
     /// <returns>The exit code of the function.</returns>
     /// <exception cref="ExtismException"></exception>
-    unsafe public ReadOnlySpan<byte> CallFunction(string functionName, ReadOnlySpan<byte> data, CancellationToken? cancellationToken = null)
+    unsafe public ReadOnlySpan<byte> Call(string functionName, ReadOnlySpan<byte> data, CancellationToken? cancellationToken = null)
     {
         CheckNotDisposed();
 

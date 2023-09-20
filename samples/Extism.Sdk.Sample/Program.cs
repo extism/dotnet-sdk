@@ -42,7 +42,7 @@ using var plugin = new Plugin(manifest, new[] { helloWorld }, withWasi: true);
 Console.WriteLine("Plugin creatd!!!");
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
 );
 
 Console.WriteLine($"Output: {output}");

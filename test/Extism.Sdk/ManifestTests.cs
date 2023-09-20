@@ -19,7 +19,7 @@ public class ManifestTests
 
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
-        var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
         Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
@@ -31,7 +31,7 @@ public class ManifestTests
 
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
-        var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
         Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
@@ -51,7 +51,7 @@ public class ManifestTests
 
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
-        var response = plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
         Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
     }
 
@@ -68,7 +68,7 @@ public class ManifestTests
             }
         });
 
-        var response = plugin.CallFunction("run_test", Array.Empty<byte>());
+        var response = plugin.Call("run_test", Array.Empty<byte>());
         var actual = Encoding.UTF8.GetString(response);
 
         actual.ShouldBe(expected);
@@ -92,7 +92,7 @@ public class ManifestTests
         }
         """;
 
-        var response = plugin.CallFunction("run_test", Array.Empty<byte>());
+        var response = plugin.Call("run_test", Array.Empty<byte>());
         var actual = Encoding.UTF8.GetString(response);
         actual.ShouldBe(expected, StringCompareShould.IgnoreLineEndings);
     }
@@ -110,6 +110,6 @@ public class ManifestTests
             }
         });
 
-        Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>()));
+        Should.Throw<ExtismException>(() => plugin.Call("run_test", Array.Empty<byte>()));
     }
 }
