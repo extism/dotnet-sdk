@@ -7,20 +7,12 @@ on:
 name: .NET CI
 
 jobs:
-  prepare:
-    name: Install Extism Runtime
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/libextism
-
   test:
     name: Test .NET SDK
-    needs: prepare
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         rust:
           - stable
     steps:
@@ -28,30 +20,58 @@ jobs:
         uses: actions/checkout@v3
 
 # Install libextism
-      - name: Download libextism.so
-        if: runner.os != 'Windows'
-        uses: actions/download-artifact@v2
+# linux
+      - name: Download Linux binaries
+        if: runner.os == 'Linux'
+        uses: robinraju/release-downloader@v1.8
         with:
-          name: libextism-so-artifact
+          repository: 'extism/extism'
+          tag: latest
+          fileName: 'libextism-x86_64-unknown-linux-gnu-main.tar.gz'
+          out-file-path: 'native'
+          extract: true
 
-      - name: Download libextism.h
-        if: runner.os != 'Windows'
-        uses: actions/download-artifact@v2
-        with:
-          name: libextism-h-artifact
-
-      - name: Move the files because download can't sudo
-        if: runner.os != 'Windows'
+      - name: Move Linux binaries to lib
+        if: runner.os == 'Linux'
         run: |
-          ls -lah ./
-          sudo mv libextism.so /usr/local/lib/
-          sudo mv extism.h /usr/local/include/
+          sudo mv native/extism.h /usr/local/include/
+          sudo mv native/libextism.so  /usr/local/lib/
 
+# macOS
+      - name: Download macOS binaries
+        if: runner.os == 'macOS'
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: 'extism/extism'
+          tag: latest
+          fileName: 'libextism-x86_64-apple-darwin-main.tar.gz'
+          out-file-path: 'native'
+          extract: true
+
+      - name: Move macOS binaries to lib
+        if: runner.os == 'macOS'
+        run: |
+          sudo mv native/extism.h /usr/local/include/
+          sudo mv native/libextism.dylib  /usr/local/lib/
+
+# Windows
+      - name: Download Windows binaries
+        if: runner.os == 'Windows'
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: 'extism/extism'
+          tag: latest
+          fileName: 'libextism-x86_64-pc-windows-msvc-main.tar.gz'
+          out-file-path: 'test/Extism.Sdk/bin/Debug/net7.0'
+          extract: true
+          
 # Setup .NET and run tests
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v3.0.3
         with:
            dotnet-version: 7.x
+
       - name: Test .NET Sdk
         run: |
+          make test
           make test
