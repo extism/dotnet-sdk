@@ -95,10 +95,23 @@ public unsafe class Plugin : IDisposable
     }
 
     /// <summary>
+    /// Update plugin config values, this will merge with the existing values.
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="serializerOptions"></param>
+    /// <returns></returns>
+    public bool UpdateConfig(Dictionary<string, string> value, JsonSerializerOptions serializerOptions)
+    {
+        var json = JsonSerializer.Serialize(value, serializerOptions);
+        var bytes = Encoding.UTF8.GetBytes(json);
+        return UpdateConfig(bytes);
+    }
+
+    /// <summary>
     ///  Update plugin config values, this will merge with the existing values.
     /// </summary>
     /// <param name="json">The configuration JSON encoded in UTF8.</param>
-    unsafe public bool SetConfig(ReadOnlySpan<byte> json)
+    unsafe public bool UpdateConfig(ReadOnlySpan<byte> json)
     {
         CheckNotDisposed();
 
