@@ -208,6 +208,22 @@ internal static class LibExtism
     unsafe internal static extern void extism_plugin_free(ExtismPlugin* plugin);
 
     /// <summary>
+    /// Get handle for plugin cancellation
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    internal unsafe static extern IntPtr extism_plugin_cancel_handle(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Cancel a running plugin
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    internal static extern bool extism_plugin_cancel(IntPtr handle);
+
+    /// <summary>
     /// Update plugin config values, this will merge with the existing values.
     /// </summary>
     /// <param name="plugin">Pointer to the plugin you want to update the configurations for.</param>

@@ -55,6 +55,29 @@ public class BasicTests
     }
 
     [Fact]
+    public void Cancel()
+    {
+        using var plugin = Helpers.LoadPlugin("sleep.wasm", m =>
+        {
+            m.Config["duration"] = "1"; // sleep for 1 seconds
+        });
+
+        for (var i = 0; i < 3; i++)
+        {
+            var cts = new CancellationTokenSource();
+            cts.CancelAfter(TimeSpan.FromMilliseconds(50));
+
+            Should.Throw<ExtismException>(() => plugin.CallFunction("run_test", Array.Empty<byte>(), cts.Token))
+               .Message.ShouldContain("timeout");
+
+            Should.Throw<OperationCanceledException>(() => plugin.CallFunction("run_test", Array.Empty<byte>(), cts.Token));
+        }
+
+        // We should be able to call the plugin normally after a cancellation
+        plugin.CallFunction("run_test", Array.Empty<byte>());
+    }
+
+    [Fact]
     public void FileSystem()
     {
         using var plugin = Helpers.LoadPlugin("fs.wasm", m =>

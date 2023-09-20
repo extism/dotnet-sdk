@@ -15,6 +15,7 @@ public unsafe class Plugin : IDisposable
 
     private readonly HostFunction[] _functions;
     private int _disposed;
+    private readonly IntPtr _cancelHandle;
 
     /// <summary>
     /// Native pointer to the Extism Plugin.
@@ -49,6 +50,8 @@ public unsafe class Plugin : IDisposable
         {
             NativeHandle = Initialize(wasmPtr, bytes.Length, functions, withWasi, functionsPtr);
         }
+
+        _cancelHandle = LibExtism.extism_plugin_cancel_handle(NativeHandle);
     }
 
     /// <summary>
@@ -67,6 +70,8 @@ public unsafe class Plugin : IDisposable
         {
             NativeHandle = Initialize(wasmPtr, wasm.Length, functions, withWasi, functionsPtr);
         }
+
+        _cancelHandle = LibExtism.extism_plugin_cancel_handle(NativeHandle);
     }
 
     private unsafe LibExtism.ExtismPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, IntPtr* functionsPtr)
@@ -120,11 +125,16 @@ public unsafe class Plugin : IDisposable
     /// </summary>
     /// <param name="functionName">Name of the function in the plugin to invoke.</param>
     /// <param name="data">A buffer to provide as input to the function.</param>
+    /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
     /// <returns>The exit code of the function.</returns>
     /// <exception cref="ExtismException"></exception>
-    unsafe public ReadOnlySpan<byte> CallFunction(string functionName, ReadOnlySpan<byte> data)
+    unsafe public ReadOnlySpan<byte> CallFunction(string functionName, ReadOnlySpan<byte> data, CancellationToken? cancellationToken = null)
     {
         CheckNotDisposed();
+
+        cancellationToken?.ThrowIfCancellationRequested();
+
+        using var _ = cancellationToken?.Register(() => LibExtism.extism_plugin_cancel(_cancelHandle));
 
         fixed (byte* dataPtr = data)
         {
@@ -243,6 +253,5 @@ public unsafe class Plugin : IDisposable
     {
         var version = LibExtism.extism_version();
         return Marshal.PtrToStringAnsi(version);
-
     }
 }
