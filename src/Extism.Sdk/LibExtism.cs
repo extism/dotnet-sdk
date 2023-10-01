@@ -188,9 +188,17 @@ internal static class LibExtism
     /// <param name="functions">Array of host function pointers.</param>
     /// <param name="nFunctions">Number of host functions.</param>
     /// <param name="withWasi">Enables/disables WASI.</param>
+    /// <param name="errmsg"></param>
     /// <returns></returns>
     [DllImport("extism")]
-    unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, int wasmSize, IntPtr* functions, int nFunctions, bool withWasi, IntPtr* errmsg);
+    unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, ulong wasmSize, IntPtr* functions, ulong nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
+
+    /// <summary>
+    /// Frees a plugin error message.
+    /// </summary>
+    /// <param name="errorMessage"></param>
+    [DllImport("extism")]
+    unsafe internal static extern void extism_plugin_new_error_free(IntPtr errorMessage);
 
     /// <summary>
     /// Remove a plugin from the registry and free associated memory.
@@ -198,6 +206,22 @@ internal static class LibExtism
     /// <param name="plugin">Pointer to the plugin you want to free.</param>
     [DllImport("extism")]
     unsafe internal static extern void extism_plugin_free(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Get handle for plugin cancellation
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    internal unsafe static extern IntPtr extism_plugin_cancel_handle(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Cancel a running plugin
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    internal static extern bool extism_plugin_cancel(IntPtr handle);
 
     /// <summary>
     /// Update plugin config values, this will merge with the existing values.
@@ -263,11 +287,11 @@ internal static class LibExtism
     internal static extern bool extism_log_file(string filename, string logLevel);
 
     /// <summary>
-    /// Get the Extism Plugin ID, a 16-bit UUID in host order
+    /// Get Extism Runtime version.
     /// </summary>
     /// <returns></returns>
-    // [DllImport("extism")]
-    // unsafe internal static extern IntPtr extism_plugin_id(ExtismPlugin* plugin);
+    [DllImport("extism")]
+    internal static extern IntPtr extism_version();
 
     /// <summary>
     /// Extism Log Levels

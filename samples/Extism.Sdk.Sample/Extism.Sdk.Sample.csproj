@@ -9,16 +9,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\wasm\code.wasm" Link="code.wasm">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Include="..\..\wasm\code-functions.wasm" Link="code-functions.wasm">
+		<None Include="..\..\wasm\*.wasm">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Extism.runtime.win-x64" Version="0.7.0" />
+		<!--<PackageReference Include="Extism.runtime.win-x64" Version="0.4.0" />-->
 	</ItemGroup>
 
 	<ItemGroup>

@@ -37,7 +37,7 @@ The code for a plug-in exist as a binary wasm module. We can load this with the 
 For simplicity let's load one from the web:
 
 ```csharp
-var manifest = new Manifest(new UrlWasmSource("https://raw.githubusercontent.com/extism/extism/main/wasm/code.wasm"));
+var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"));
 
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 ```
@@ -45,11 +45,11 @@ using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 > **Note**: The schema for this manifest can be found here: https://extism.org/docs/concepts/manifest/
 
 
-This plug-in was written in C and it does one thing, it counts vowels in a string. As such it exposes one "export" function: `count_vowels`. We can call exports using `Extism::Plugin#call`:
+This plug-in was written in C and it does one thing, it counts vowels in a string. As such it exposes one "export" function: `count_vowels`. We can call exports using `Plugin.Call`:
 
 ```csharp
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
 );
 
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
@@ -63,13 +63,13 @@ Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by 
 
 ```csharp
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
 );
 
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
 output = Encoding.UTF8.GetString(
-    plugin.CallFunction("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
 );
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
@@ -86,7 +86,7 @@ var manifest = new Manifest(new UrlWasmSource("https://raw.githubusercontent.com
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Yellow, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
@@ -102,7 +102,7 @@ var manifest = new Manifest(new UrlWasmSource("https://raw.githubusercontent.com
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Yellow, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
@@ -153,7 +153,7 @@ using var helloWorld = new HostFunction(
 using var plugin = new Plugin(manifest, new [] { helloWorld }, withWasi: true);
 
 var output = Encoding.UTF8.GetString(
-    plugin.CallFunction("Hello, World!", Encoding.UTF8.GetBytes("Hello, World!"))
+    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
 );
 
 // => Hello From .NET!
