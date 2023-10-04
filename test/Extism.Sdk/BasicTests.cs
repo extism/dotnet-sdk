@@ -132,11 +132,11 @@ public class BasicTests
             Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
         }
 
-        void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)
+        void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
         {
             Console.WriteLine("Hello from .NET!");
 
-            var text = Marshal.PtrToStringAnsi(data);
+            var text = Marshal.PtrToStringAnsi(plugin.UserData);
             Console.WriteLine(text);
 
             var input = plugin.ReadString(new nint(inputs[0].v.i64));
@@ -152,28 +152,19 @@ public class BasicTests
     {
         var userData = Marshal.StringToHGlobalAnsi("Hello again!");
 
-        using var helloWorld = new HostFunction(
-            "to_upper",
-            "host",
-            new[] { ExtismValType.I64 },
-            new[] { ExtismValType.I64 },
-            userData,
-            ToUpper);
-
-        using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
-
-        var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
-        Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
-
-        void ToUpper(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs, nint data)
+        using var helloWorld = HostFunction.FromMethod("to_upper", "host", IntPtr.Zero, (CurrentPlugin plugin, long offset) =>
         {
-            var offset = (nint)inputs[0].v.i64;
             var input = plugin.ReadString(offset);
             var output = input.ToUpperInvariant();
             Console.WriteLine($"Result: {output}"); ;
             plugin.FreeBlock(offset);
 
-            outputs[0].v.i64 = plugin.WriteString(output);
-        }
+            return plugin.WriteString(output);
+        });
+
+        using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
+
+        var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
+        Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
     }
 }

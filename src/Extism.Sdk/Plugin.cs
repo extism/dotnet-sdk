@@ -78,7 +78,7 @@ public unsafe class Plugin : IDisposable
     {
         char** errorMsgPtr;
 
-        var handle = LibExtism.extism_plugin_new(wasmPtr, (ulong)wasmLength, functionsPtr, (ulong)functions.Length, withWasi, out errorMsgPtr);
+        var handle = LibExtism.extism_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, out errorMsgPtr);
         if (handle == null)
         {
             var msg = "Unable to create plugin";
