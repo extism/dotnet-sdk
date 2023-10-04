@@ -47,12 +47,18 @@ First you should add a using statement for Extism:
 
 C#:
 ```csharp
+using System;
+using System.Text;
+
 using Extism.Sdk;
 using Extism.Sdk.Native;
 ```
 
 F#:
 ```
+open System
+open System.Text
+
 open Extism.Sdk
 open Extism.Sdk.Native
 ```
@@ -72,11 +78,11 @@ using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
 F#:
 ```fsharp
-let manifest = 
-    Manifest(new UrlWasmSource(Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")))
+let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
+let manifest = Manifest(new UrlWasmSource(uri))
 
 use plugin = 
-    Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
+    Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
 ```
 
 > **Note**: The schema for this manifest can be found here: https://extism.org/docs/concepts/manifest/
@@ -169,7 +175,9 @@ var output = Encoding.UTF8.GetString(
 
 F#:
 ```fsharp
-let manifest = Manifest(new UrlWasmSource(Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")))
+let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
+let manifest = Manifest(new UrlWasmSource(uri))
+manifest.Config.Add("vowels", "aeiouyAEIOUY")
 
 use plugin = Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
 
@@ -246,6 +254,29 @@ var functions = new[]
 
 F#:
 ```
+let kvStore = new Dictionary<string, byte[]>()
+
+let functions =
+    [|
+        HostFunction.FromMethod("kv_read", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) ->
+            let key = plugin.ReadString(offs)
+            let value = 
+                match kvStore.TryGetValue(key) with
+                | true, v -> v
+                | _ -> [| 0uy; 0uy; 0uy; 0uy |] // Default value if key not found
+
+            Console.WriteLine($"Read {BitConverter.ToUInt32(value, 0)} from key={key}")
+            plugin.WriteBytes(value)
+        )
+
+        HostFunction.FromMethod("kv_write", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) ->
+            let key = plugin.ReadString(kOffs)
+            let value = plugin.ReadBytes(vOffs).ToArray()
+
+            Console.WriteLine($"Writing value={BitConverter.ToUInt32(value, 0)} from key={key}")
+            kvStore.[key] <- value
+        )
+    |]
 ```
 
 > *Note*: In order to write host functions you should get familiar with the methods on the CurrentPlugin type. The `plugin` parameter is an instance of this type.
@@ -260,7 +291,7 @@ var output = Encoding.UTF8.GetString(
     plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
 );
 
-Console.WriteLine($"Output: {output}");
+Console.WriteLine(output);
 // => Read from key=count-vowels"
 // => Writing value=3 from key=count-vowels"
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
@@ -269,7 +300,7 @@ output = Encoding.UTF8.GetString(
     plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
 );
 
-Console.WriteLine($"Output: {output}");
+Console.WriteLine(output);
 // => Read from key=count-vowels"
 // => Writing value=6 from key=count-vowels"
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
@@ -279,14 +310,14 @@ F#:
 ```fsharp
 use plugin = Plugin(manifest, functions, withWasi = true)
 
-let outputBytes = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
-printfn "Output: %s" Encoding.UTF8.GetString(outputBytes)
+let output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+printfn "%s" output
 // => Read from key=count-vowels
 // => Writing value=3 from key=count-vowels
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-let outputBytes2 = plugin.Call("count_vowels", inputBytes)
-printfn "Output: %s" Encoding.UTF8.GetString(outputBytes2)
+let output2 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+printfn "%s" output2
 // => Read from key=count-vowels
 // => Writing value=6 from key=count-vowels
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
