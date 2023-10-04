@@ -21,6 +21,7 @@ namespace Extism.Sdk
         private const int DisposedMarker = 1;
         private int _disposed;
         private readonly ExtismFunction _function;
+        private readonly LibExtism.InternalExtismFunction _callback;
 
         /// <summary>
         /// Registers a Host Function.
@@ -62,31 +63,32 @@ namespace Extism.Sdk
         {
             // Make sure we store the delegate referene in a field so that it doesn't get garbage collected
             _function = hostFunction;
+            _callback = CallbackImpl;
 
             fixed (ExtismValType* inputs = inputTypes)
             fixed (ExtismValType* outputs = outputTypes)
             {
-                NativeHandle = LibExtism.extism_function_new(functionName, inputs, inputTypes.Length, outputs, outputTypes.Length, CallbackImpl, userData, IntPtr.Zero);
+                NativeHandle = LibExtism.extism_function_new(functionName, inputs, inputTypes.Length, outputs, outputTypes.Length, _callback, userData, IntPtr.Zero);
             }
 
             if (!string.IsNullOrEmpty(@namespace))
             {
                 LibExtism.extism_function_set_namespace(NativeHandle, @namespace);
             }
+        }
 
-            void CallbackImpl(
-                nint plugin,
-                ExtismVal* inputsPtr,
-                uint n_inputs,
-                ExtismVal* outputsPtr,
-                uint n_outputs,
-                IntPtr data)
-            {
-                var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
-                var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
+        private unsafe void CallbackImpl(
+            nint plugin,
+            ExtismVal* inputsPtr,
+            uint n_inputs,
+            ExtismVal* outputsPtr,
+            uint n_outputs,
+            IntPtr data)
+        {
+            var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
+            var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
 
-                _function(new CurrentPlugin(plugin), inputs, outputs, data);
-            }
+            _function(new CurrentPlugin(plugin), inputs, outputs, data);
         }
 
         internal IntPtr NativeHandle { get; }
