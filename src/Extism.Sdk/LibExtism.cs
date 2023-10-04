@@ -36,7 +36,7 @@ public struct ExtismValUnion
 /// <summary>
 /// Represents Wasm data types that Extism can understand
 /// </summary>
-public enum ExtismValType : byte
+public enum ExtismValType : int
 {
     /// <summary>
     /// Signed 32 bit integer. Equivalent of <see cref="int"/> or <see cref="uint"/>
