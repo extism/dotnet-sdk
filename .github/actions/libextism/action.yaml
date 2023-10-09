@@ -18,4 +18,4 @@ runs:
     - uses: ./.extism-cli/.github/actions/extism-cli
     - name: Install
       shell: bash
-      run: sudo extism lib install --version git -prefix ${{ inputs.prefix }}
+      run: sudo extism lib install --version git --prefix ${{ inputs.prefix }}
