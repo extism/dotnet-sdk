@@ -9,19 +9,25 @@ namespace Extism.Sdk
     /// </summary>
     public class CurrentPlugin
     {
-        internal CurrentPlugin(nint nativeHandle)
+        internal CurrentPlugin(long nativeHandle, nint userData)
         {
             NativeHandle = nativeHandle;
+            UserData = userData;
         }
 
-        internal nint NativeHandle { get; }
+        internal long NativeHandle { get; }
 
         /// <summary>
-        /// Returns a pointer to the memory of the currently running plugin.
+        /// An opaque pointer to an object from the host, passed in when a <see cref="HostFunction"/> is registered.
+        /// </summary>
+        public nint UserData { get; set; }
+
+        /// <summary>
+        /// Returns a offset to the memory of the currently running plugin.
         /// NOTE: this should only be called from host functions.
         /// </summary>
         /// <returns></returns>
-        public nint GetMemory()
+        public long GetMemory()
         {
             return LibExtism.extism_current_plugin_memory(NativeHandle);
         }
@@ -29,22 +35,22 @@ namespace Extism.Sdk
         /// <summary>
         /// Reads a string from a memory block using UTF8.
         /// </summary>
-        /// <param name="pointer"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
-        public string ReadString(nint pointer)
+        public string ReadString(long offset)
         {
-            return ReadString(pointer, Encoding.UTF8);
+            return ReadString(offset, Encoding.UTF8);
         }
 
         /// <summary>
         /// Reads a string form a memory block.
         /// </summary>
-        /// <param name="pointer"></param>
+        /// <param name="offset"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public string ReadString(nint pointer, Encoding encoding)
+        public string ReadString(long offset, Encoding encoding)
         {
-            var buffer = ReadBytes(pointer);
+            var buffer = ReadBytes(offset);
 
             return encoding.GetString(buffer);
         }
@@ -52,53 +58,65 @@ namespace Extism.Sdk
         /// <summary>
         /// Returns a span of bytes for a given block.
         /// </summary>
-        /// <param name="pointer"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
-        public unsafe Span<byte> ReadBytes(nint pointer)
+        public unsafe Span<byte> ReadBytes(long offset)
         {
             var mem = GetMemory();
-            var length = (int)BlockLength(pointer);
-            var ptr = (byte*)mem + pointer;
+            var length = (int)BlockLength(offset);
+            var ptr = (byte*)mem + offset;
 
             return new Span<byte>(ptr, length);
         }
 
         /// <summary>
-        /// Writes a string into the current plugin memory using UTF-8 encoding and returns the pointer of the block.
+        /// Writes a string into the current plugin memory using UTF-8 encoding and returns the offset of the block.
         /// </summary>
         /// <param name="value"></param>
-        public nint WriteString(string value)
+        public long WriteString(string value)
             => WriteString(value, Encoding.UTF8);
 
         /// <summary>
-        /// Writes a string into the current plugin memory and returns the pointer of the block.
+        /// Writes a string into the current plugin memory and returns the offset of the block.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="encoding"></param>
-        public nint WriteString(string value, Encoding encoding)
+        public long WriteString(string value, Encoding encoding)
         {
             var bytes = encoding.GetBytes(value);
-            var pointer = AllocateBlock(bytes.Length);
-            WriteBytes(pointer, bytes);
+            var offset = AllocateBlock(bytes.Length);
+            WriteBytes(offset, bytes);
 
-            return pointer;
+            return offset;
+        }
+
+        /// <summary>
+        /// Writes a byte array into a newly allocated block of memory.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns>Returns the offset of the allocated block</returns>
+        public long WriteBytes(Span<byte> bytes)
+        {
+            var offset = AllocateBlock(bytes.Length);
+            WriteBytes(offset, bytes);
+            return offset;
         }
 
         /// <summary>
         /// Writes a byte array into a block of memory.
         /// </summary>
-        /// <param name="pointer"></param>
+        /// <param name="offset"></param>
         /// <param name="bytes"></param>
-        public unsafe void WriteBytes(nint pointer, Span<byte> bytes)
+        public unsafe void WriteBytes(long offset, Span<byte> bytes)
         {
-            var length = BlockLength(pointer);
+            var length = BlockLength(offset);
             if (length < bytes.Length)
             {
                 throw new InvalidOperationException("Destination block length is less than source block length.");
             }
 
             var mem = GetMemory();
-            var ptr = (void*)(mem + pointer);
+            var ptr = (void*)(mem + offset);
             var destination = new Span<byte>(ptr, bytes.Length);
 
             bytes.CopyTo(destination);
@@ -107,10 +125,10 @@ namespace Extism.Sdk
         /// <summary>
         /// Frees a block of memory belonging to the current plugin.
         /// </summary>
-        /// <param name="pointer"></param>
-        public void FreeBlock(nint pointer)
+        /// <param name="offset"></param>
+        public void FreeBlock(long offset)
         {
-            LibExtism.extism_current_plugin_memory_free(NativeHandle, pointer);
+            LibExtism.extism_current_plugin_memory_free(NativeHandle, offset);
         }
 
         /// <summary>
@@ -119,7 +137,7 @@ namespace Extism.Sdk
         /// </summary>
         /// <param name="length"></param>
         /// <returns></returns>
-        public nint AllocateBlock(long length)
+        public long AllocateBlock(long length)
         {
             return LibExtism.extism_current_plugin_memory_alloc(NativeHandle, length);
         }
@@ -128,11 +146,11 @@ namespace Extism.Sdk
         /// Get the length of an allocated block.
         /// NOTE: this should only be called from host functions.
         /// </summary>
-        /// <param name="pointer"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
-        public long BlockLength(nint pointer)
+        public long BlockLength(long offset)
         {
-            return LibExtism.extism_current_plugin_memory_length(NativeHandle, pointer);
+            return LibExtism.extism_current_plugin_memory_length(NativeHandle, offset);
         }
     }
 }

@@ -44,7 +44,7 @@ public enum ExtismValType : int
     I32,
 
     /// <summary>
-    /// Signed 64 bit integer. Equivalent of <see cref="long"/> or <see cref="ulong"/>
+    /// Signed 64 bit integer. Equivalent of <see cref="long"/> or <see cref="long"/>
     /// </summary>
     I64,
 
@@ -111,7 +111,7 @@ internal static class LibExtism
     /// <param name="outputs"></param>
     /// <param name="n_outputs"></param>
     /// <param name="data"></param>
-    unsafe internal delegate void InternalExtismFunction(nint plugin, ExtismVal* inputs, uint n_inputs, ExtismVal* outputs, uint n_outputs, IntPtr data);
+    unsafe internal delegate void InternalExtismFunction(long plugin, ExtismVal* inputs, uint n_inputs, ExtismVal* outputs, uint n_outputs, IntPtr data);
 
     /// <summary>
     /// Returns a pointer to the memory of the currently running plugin.
@@ -120,7 +120,7 @@ internal static class LibExtism
     /// <param name="plugin"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory")]
-    internal static extern IntPtr extism_current_plugin_memory(nint plugin);
+    internal static extern long extism_current_plugin_memory(long plugin);
 
     /// <summary>
     /// Allocate a memory block in the currently running plugin
@@ -129,7 +129,7 @@ internal static class LibExtism
     /// <param name="n"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_alloc")]
-    internal static extern IntPtr extism_current_plugin_memory_alloc(nint plugin, long n);
+    internal static extern long extism_current_plugin_memory_alloc(long plugin, long n);
 
     /// <summary>
     /// Get the length of an allocated block.
@@ -139,7 +139,7 @@ internal static class LibExtism
     /// <param name="n"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_length")]
-    internal static extern long extism_current_plugin_memory_length(nint plugin, long n);
+    internal static extern long extism_current_plugin_memory_length(long plugin, long n);
 
     /// <summary>
     /// Get the length of an allocated block.
@@ -148,7 +148,7 @@ internal static class LibExtism
     /// <param name="plugin"></param>
     /// <param name="ptr"></param>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_free")]
-    internal static extern void extism_current_plugin_memory_free(nint plugin, IntPtr ptr);
+    internal static extern void extism_current_plugin_memory_free(long plugin, long ptr);
 
     /// <summary>
     /// Create a new host function.
@@ -191,7 +191,7 @@ internal static class LibExtism
     /// <param name="errmsg"></param>
     /// <returns></returns>
     [DllImport("extism")]
-    unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, ulong wasmSize, IntPtr* functions, ulong nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
+    unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
 
     /// <summary>
     /// Frees a plugin error message.

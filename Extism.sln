@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extism.Sdk.Tests", "test\Ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extism.Sdk.Sample", "samples\Extism.Sdk.Sample\Extism.Sdk.Sample.csproj", "{2232E572-E8BA-46A1-AF31-E4168960DB75}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Extism.Sdk.FSharpSample", "samples\Extism.Sdk.FSharpSample\Extism.Sdk.FSharpSample.fsproj", "{FD564581-E6FA-4380-B5D0-A0423BBA05A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2232E572-E8BA-46A1-AF31-E4168960DB75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2232E572-E8BA-46A1-AF31-E4168960DB75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2232E572-E8BA-46A1-AF31-E4168960DB75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD564581-E6FA-4380-B5D0-A0423BBA05A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD564581-E6FA-4380-B5D0-A0423BBA05A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD564581-E6FA-4380-B5D0-A0423BBA05A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD564581-E6FA-4380-B5D0-A0423BBA05A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
