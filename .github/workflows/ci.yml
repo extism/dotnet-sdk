@@ -1,8 +1,10 @@
-on: 
+on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 name: .NET CI
 
@@ -13,32 +15,27 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        rust:
-          - stable
+
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-# Install libextism
-# linux and macOS
-     - name: Install libextism
-       uses: ./.github/actions/libextism
-       if: runner.os != 'Windows'
+      # macOS and Linux
+      - name: Install libextism
+        if: runner.os != 'Windows'
+        uses: ./.github/actions/libextism
 
-# Windows
-     - name: Install libextism
-       uses: ./.github/actions/libextism
-       with:
-        prefix: test/Extism.Sdk/bin/Debug/net7.0
-       if: runner.os != 'Windows'
-          
-# Setup .NET and run tests
-      - name: Setup .NET Core SDK
-        uses: actions/setup-dotnet@v3.0.3
+      # Windows
+      - name: Install libextism
+        if: runner.os == 'Windows'
         with:
-           dotnet-version: 7.x
+          prefix: test/Extism.Sdk/bin/Debug/net7.0
 
-      - name: Test .NET Sdk
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.x
+
+      - name: Run tests
         run: |
-          make test
           make test
