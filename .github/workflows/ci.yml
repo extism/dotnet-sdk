@@ -54,6 +54,8 @@ jobs:
       - name: Move macOS binaries to lib
         if: runner.os == 'macOS'
         run: |
+          ls -a native
+
           sudo mkdir -p /usr/local/include/
           sudo mv native/extism.h /usr/local/include/
 
