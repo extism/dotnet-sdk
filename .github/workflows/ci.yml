@@ -28,6 +28,7 @@ jobs:
       # Windows
       - name: Install libextism
         if: runner.os == 'Windows'
+        uses: ./.github/actions/libextism
         with:
           prefix: test/Extism.Sdk/bin/Debug/net7.0
 
