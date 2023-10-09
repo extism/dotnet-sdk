@@ -34,7 +34,10 @@ jobs:
       - name: Move Linux binaries to lib
         if: runner.os == 'Linux'
         run: |
+          sudo mkdir -p /usr/local/include/
           sudo mv native/extism.h /usr/local/include/
+
+          sudo mkdir -p /usr/local/lib/
           sudo mv native/libextism.so  /usr/local/lib/
 
 # macOS
@@ -51,7 +54,10 @@ jobs:
       - name: Move macOS binaries to lib
         if: runner.os == 'macOS'
         run: |
+          sudo mkdir -p /usr/local/include/
           sudo mv native/extism.h /usr/local/include/
+
+          sudo mkdir -p /usr/local/lib/
           sudo mv native/libextism.dylib  /usr/local/lib/
 
 # Windows
