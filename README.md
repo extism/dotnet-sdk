@@ -55,7 +55,7 @@ using Extism.Sdk.Native;
 ```
 
 F#:
-```
+```fsharp
 open System
 open System.Text
 
@@ -229,7 +229,7 @@ var kvStore = new Dictionary<string, byte[]>();
 
 var functions = new[]
 {
-    HostFunction.FromMethod("kv_read", "env", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =>
+    HostFunction.FromMethod("kv_read", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         if (!kvStore.TryGetValue(key, out var value))
@@ -241,7 +241,7 @@ var functions = new[]
         return plugin.WriteBytes(value);
     }),
 
-    HostFunction.FromMethod("kv_write", "env", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
+    HostFunction.FromMethod("kv_write", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         var value = plugin.ReadBytes(valueOffset);
@@ -253,12 +253,12 @@ var functions = new[]
 ```
 
 F#:
-```
+```fsharp
 let kvStore = new Dictionary<string, byte[]>()
 
 let functions =
     [|
-        HostFunction.FromMethod("kv_read", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) ->
+        HostFunction.FromMethod("kv_read", IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) ->
             let key = plugin.ReadString(offs)
             let value = 
                 match kvStore.TryGetValue(key) with
@@ -269,7 +269,7 @@ let functions =
             plugin.WriteBytes(value)
         )
 
-        HostFunction.FromMethod("kv_write", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) ->
+        HostFunction.FromMethod("kv_write", IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) ->
             let key = plugin.ReadString(kOffs)
             let value = plugin.ReadBytes(vOffs).ToArray()
 

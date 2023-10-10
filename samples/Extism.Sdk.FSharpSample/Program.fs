@@ -12,7 +12,7 @@ let kvStore = new Dictionary<string, byte[]>()
 
 let functions =
     [|
-        HostFunction.FromMethod("kv_read", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (keyOffset: int64) ->
+        HostFunction.FromMethod("kv_read", IntPtr.Zero, fun (plugin: CurrentPlugin) (keyOffset: int64) ->
             let key = plugin.ReadString(keyOffset)
             let value = 
                 match kvStore.TryGetValue(key) with
@@ -23,7 +23,7 @@ let functions =
             plugin.WriteBytes(value)
         )
 
-        HostFunction.FromMethod("kv_write", "env", IntPtr.Zero, fun (plugin: CurrentPlugin) (keyOffset: int64) (valueOffset: int64) ->
+        HostFunction.FromMethod("kv_write", IntPtr.Zero, fun (plugin: CurrentPlugin) (keyOffset: int64) (valueOffset: int64) ->
             let key = plugin.ReadString(keyOffset)
             let value = plugin.ReadBytes(valueOffset).ToArray()
 

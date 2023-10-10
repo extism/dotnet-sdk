@@ -14,7 +14,7 @@ var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins
 
 var functions = new[]
 {
-    HostFunction.FromMethod("kv_read", "env", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =>
+    HostFunction.FromMethod("kv_read", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         if (!kvStore.TryGetValue(key, out var value))
@@ -26,7 +26,7 @@ var functions = new[]
         return plugin.WriteBytes(value);
     }),
 
-    HostFunction.FromMethod("kv_write", "env", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
+    HostFunction.FromMethod("kv_write", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         var value = plugin.ReadBytes(valueOffset);

@@ -33,30 +33,8 @@ namespace Extism.Sdk
         /// <param name="userData">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="hostFunction"></param>
-        public HostFunction(
-            string functionName,
-            Span<ExtismValType> inputTypes,
-            Span<ExtismValType> outputTypes,
-            nint userData,
-            ExtismFunction hostFunction) :
-            this(functionName, "", inputTypes, outputTypes, userData, hostFunction)
-        {
-
-        }
-
-        /// <summary>
-        /// Registers a Host Function.
-        /// </summary>
-        /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace.</param>
-        /// <param name="inputTypes">The types of the input arguments/parameters the <see cref="Plugin"/> caller will provide.</param>
-        /// <param name="outputTypes">The types of the output returned from the host function to the <see cref="Plugin"/>.</param>
-        /// <param name="userData">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-        /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
-        /// <param name="hostFunction"></param>
         unsafe public HostFunction(
             string functionName,
-            string @namespace,
             Span<ExtismValType> inputTypes,
             Span<ExtismValType> outputTypes,
             nint userData,
@@ -71,14 +49,21 @@ namespace Extism.Sdk
             {
                 NativeHandle = extism_function_new(functionName, inputs, inputTypes.Length, outputs, outputTypes.Length, _callback, userData, IntPtr.Zero);
             }
-
-            if (!string.IsNullOrEmpty(@namespace))
-            {
-                extism_function_set_namespace(NativeHandle, @namespace);
-            }
         }
 
         internal nint NativeHandle { get; }
+
+        /// <summary>
+        /// Sets the function namespace. By default it's set to `env`.
+        /// </summary>
+        /// <param name="ns"></param>
+        public void SetNamespace(string ns)
+        {
+            if (!string.IsNullOrEmpty(ns))
+            {
+                extism_function_set_namespace(NativeHandle, ns);
+            }
+        }
 
         private unsafe void CallbackImpl(
             long plugin,
@@ -98,21 +83,19 @@ namespace Extism.Sdk
         /// Registers a <see cref="HostFunction"/> from a method that takes no parameters an returns no values.
         /// </summary>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod(
             string functionName,
-            string @namespace,
             nint userdata,
             Action<CurrentPlugin> callback)
         {
             var inputTypes = new ExtismValType[] { };
             var returnType = new ExtismValType[] { };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     callback(plugin);
@@ -125,14 +108,12 @@ namespace Extism.Sdk
         /// </summary>
         /// <typeparam name="I1">Type of first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1>(
             string functionName,
-            string @namespace,
             nint userdata,
             Action<CurrentPlugin, I1> callback)
             where I1 : struct
@@ -140,7 +121,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { ToExtismType<I1>() };
             var returnType = new ExtismValType[] { };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     callback(plugin, GetValue<I1>(inputs[0]));
@@ -154,14 +135,12 @@ namespace Extism.Sdk
         /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1, I2>(
             string functionName,
-            string @namespace,
             nint userdata,
             Action<CurrentPlugin, I1, I2> callback)
             where I1 : struct
@@ -171,7 +150,7 @@ namespace Extism.Sdk
 
             var returnType = new ExtismValType[] { };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]));
@@ -186,14 +165,12 @@ namespace Extism.Sdk
         /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1, I2, I3>(
             string functionName,
-            string @namespace,
             nint userdata,
             Action<CurrentPlugin, I1, I2, I3> callback)
             where I1 : struct
@@ -203,7 +180,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>() };
             var returnType = new ExtismValType[] { };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]), GetValue<I3>(inputs[2]));
@@ -216,14 +193,12 @@ namespace Extism.Sdk
         /// </summary>
         /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<R>(
             string functionName,
-            string @namespace,
             nint userdata,
             Func<CurrentPlugin, R> callback)
             where R : struct
@@ -231,7 +206,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { };
             var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     var value = callback(plugin);
@@ -246,14 +221,12 @@ namespace Extism.Sdk
         /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1, R>(
             string functionName,
-            string @namespace,
             nint userdata,
             Func<CurrentPlugin, I1, R> callback)
             where I1 : struct
@@ -262,7 +235,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { ToExtismType<I1>() };
             var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     var value = callback(plugin, GetValue<I1>(inputs[0]));
@@ -278,14 +251,12 @@ namespace Extism.Sdk
         /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1, I2, R>(
             string functionName,
-            string @namespace,
             nint userdata,
             Func<CurrentPlugin, I1, I2, R> callback)
             where I1 : struct
@@ -295,7 +266,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>() };
             var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     var value = callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]));
@@ -312,14 +283,12 @@ namespace Extism.Sdk
         /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
         /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="namespace">Function namespace. Usually `env`.</param>
         /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
         /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
         /// <param name="callback">The host function implementation.</param>
         /// <returns></returns>
         public static HostFunction FromMethod<I1, I2, I3, R>(
             string functionName,
-            string @namespace,
             nint userdata,
             Func<CurrentPlugin, I1, I2, I3, R> callback)
             where I1 : struct
@@ -330,7 +299,7 @@ namespace Extism.Sdk
             var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
             var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-            return new HostFunction(functionName, @namespace, inputTypes, returnType, userdata,
+            return new HostFunction(functionName, inputTypes, returnType, userdata,
                 (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
                 {
                     var value = callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]), GetValue<I3>(inputs[2]));
