@@ -120,7 +120,6 @@ public class BasicTests
 
             using var helloWorld = new HostFunction(
                 "hello_world",
-                "env",
                 new[] { ExtismValType.I64 },
                 new[] { ExtismValType.I64 },
                 userData,
@@ -152,7 +151,7 @@ public class BasicTests
     {
         var userData = Marshal.StringToHGlobalAnsi("Hello again!");
 
-        using var helloWorld = HostFunction.FromMethod("to_upper", "host", IntPtr.Zero, (CurrentPlugin plugin, long offset) =>
+        using var helloWorld = HostFunction.FromMethod("to_upper", IntPtr.Zero, (CurrentPlugin plugin, long offset) =>
         {
             var input = plugin.ReadString(offset);
             var output = input.ToUpperInvariant();
@@ -161,6 +160,8 @@ public class BasicTests
 
             return plugin.WriteString(output);
         });
+
+        helloWorld.SetNamespace("host");
 
         using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
 
