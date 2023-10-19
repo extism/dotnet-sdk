@@ -8,33 +8,15 @@ This repo houses the .NET SDK for integrating with the [Extism](https://extism.o
 
 ## Installation
 
-For this library, you first need to install the Extism Runtime.
+This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
+<img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
 
-### Windows
-
-We provide [a native package](https://www.nuget.org/packages/Extism.runtime.win-x64) for Windows. You can install with:
 > ```
-> dotnet add package Extism.runtime.win-64
+> dotnet add package Extism.runtime.win-64 --prerelease
 >```
 
-### Linux and macOS
-
-You can [download the shared object directly from a release](https://github.com/extism/extism/releases) or use the [Extism CLI](https://github.com/extism/cli) to install it:
-
-```
-sudo extism lib install latest
-
-#=> Fetching https://github.com/extism/extism/releases/download/v0.5.2/libextism-aarch64-apple-darwin-v0.5.2.tar.gz
-#=> Copying libextism.dylib to /usr/local/lib/libextism.dylib
-#=> Copying extism.h to /usr/local/include/extism.h
-```
-
-> Note: This library has breaking changes and targets 1.0 of the runtime. For the time being, install the runtime from our nightly development builds on git: sudo extism lib install --version git.
-
-### Install the NuGet package
-
-Add this [NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
-
+Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
+<img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
 ```
 dotnet add package Extism.Sdk
 ```
