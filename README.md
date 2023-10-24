@@ -2,18 +2,15 @@
 
 This repo houses the .NET SDK for integrating with the [Extism](https://extism.org/) runtime. Install this library into your host .NET applications to run Extism plugins.
 
-> **Note:** If you're unsure what Extism is or what an SDK is see our homepage: https://extism.org.
-
-> **Note**: This houses the 1.0 version of the .NET SDK and is a work in progress. Please use the .NET SDK in extism/extism until we hit 1.0.
+> **Note**: This houses the 1.0 pre-release version of the .NET SDK. We may push breaking changes in new versions until will hit 1.0 in December, 2023. But it's currently the best place to start a new integration and we welcome any feedback.
 
 ## Installation
 
 This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
 <img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
-
-> ```
-> dotnet add package Extism.runtime.win-64 --prerelease
->```
+```
+dotnet add package Extism.runtime.win-64 --prerelease
+```
 
 Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
 <img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
