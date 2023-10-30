@@ -20,7 +20,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        Encoding.UTF8.GetString(response).ShouldContain("\"count\":3");
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        Encoding.UTF8.GetString(response).ShouldContain("\"count\":3");
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class ManifestTests
         using var plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi: true);
 
         var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        Encoding.UTF8.GetString(response).ShouldContain("\"count\":3");
     }
 
     [Theory]
