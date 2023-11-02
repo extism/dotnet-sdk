@@ -1,4 +1,3 @@
-using Extism.Sdk.Native;
 using Shouldly;
 using System.Reflection;
 using System.Text;
