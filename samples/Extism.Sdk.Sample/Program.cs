@@ -1,5 +1,4 @@
 using Extism.Sdk;
-using Extism.Sdk.Native;
 
 using System.Runtime.InteropServices;
 using System.Text;

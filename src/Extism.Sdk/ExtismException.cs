@@ -1,4 +1,4 @@
-namespace Extism.Sdk.Native;
+namespace Extism.Sdk;
 
 using System;
 
