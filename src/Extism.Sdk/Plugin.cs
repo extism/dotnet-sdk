@@ -137,11 +137,11 @@ public unsafe class Plugin : IDisposable
     /// Othewise, call <see cref="OutputData"/> to get the function's output data.
     /// </summary>
     /// <param name="functionName">Name of the function in the plugin to invoke.</param>
-    /// <param name="data">A buffer to provide as input to the function.</param>
+    /// <param name="input">A buffer to provide as input to the function.</param>
     /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
-    /// <returns>The exit code of the function.</returns>
+    /// <returns>The output of the function call</returns>
     /// <exception cref="ExtismException"></exception>
-    unsafe public ReadOnlySpan<byte> Call(string functionName, ReadOnlySpan<byte> data, CancellationToken? cancellationToken = null)
+    unsafe public ReadOnlySpan<byte> Call(string functionName, ReadOnlySpan<byte> input, CancellationToken? cancellationToken = null)
     {
         CheckNotDisposed();
 
@@ -149,9 +149,9 @@ public unsafe class Plugin : IDisposable
 
         using var _ = cancellationToken?.Register(() => LibExtism.extism_plugin_cancel(_cancelHandle));
 
-        fixed (byte* dataPtr = data)
+        fixed (byte* dataPtr = input)
         {
-            int response = LibExtism.extism_plugin_call(NativeHandle, functionName, dataPtr, data.Length);
+            int response = LibExtism.extism_plugin_call(NativeHandle, functionName, dataPtr, input.Length);
             var errorMsg = GetError();
 
             if (errorMsg != null)
@@ -161,6 +161,23 @@ public unsafe class Plugin : IDisposable
 
             return OutputData();
         }
+    }
+
+    /// <summary>
+    /// Calls a function in the current plugin and returns a status.
+    /// If the status represents an error, call <see cref="GetError"/> to get the error.
+    /// Othewise, call <see cref="OutputData"/> to get the function's output data.
+    /// UTF8 Encoding is used for both input and output strings.
+    /// </summary>
+    /// <param name="functionName">Name of the function in the plugin to invoke.</param>
+    /// <param name="input">A string that will be UTF8 encoded and passed to the plugin.</param>
+    /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
+    /// <returns>The output of the </returns>
+    public string Call(string functionName, string input, CancellationToken? cancellationToken = null)
+    {
+        var inputBytes = Encoding.UTF8.GetBytes(input);
+        var outputBytes = Call(functionName, inputBytes, cancellationToken);
+        return Encoding.UTF8.GetString(outputBytes);
     }
 
     /// <summary>

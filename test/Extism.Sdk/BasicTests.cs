@@ -107,8 +107,8 @@ public class BasicTests
     {
         using var plugin = Helpers.LoadPlugin("code.wasm");
 
-        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Encoding.UTF8.GetString(response).ShouldContain("\"count\":3");
+        var response = plugin.Call("count_vowels", "Hello World");
+        response.ShouldContain("\"count\":3");
     }
 
     [Fact]
