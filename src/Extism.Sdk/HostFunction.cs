@@ -54,7 +54,7 @@ namespace Extism.Sdk
         internal nint NativeHandle { get; }
 
         /// <summary>
-        /// Sets the function namespace. By default it's set to `env`.
+        /// Sets the function namespace. By default it's set to `extism:host/user`.
         /// </summary>
         /// <param name="ns"></param>
         public void SetNamespace(string ns)
@@ -63,6 +63,17 @@ namespace Extism.Sdk
             {
                 extism_function_set_namespace(NativeHandle, ns);
             }
+        }
+
+        /// <summary>
+        /// Sets the function namespace. By default it's set to `extism:host/user`.
+        /// </summary>
+        /// <param name="ns"></param>
+        /// <returns></returns>
+        public HostFunction WithNamespace(string ns)
+        {
+            this.SetNamespace(ns);
+            return this;
         }
 
         private unsafe void CallbackImpl(

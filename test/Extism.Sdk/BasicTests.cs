@@ -159,9 +159,7 @@ public class BasicTests
             plugin.FreeBlock(offset);
 
             return plugin.WriteString(output);
-        });
-
-        helloWorld.SetNamespace("host");
+        }).WithNamespace("host");
 
         using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
 
