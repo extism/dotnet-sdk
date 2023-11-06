@@ -112,6 +112,17 @@ public class BasicTests
     }
 
     [Fact]
+    public void CountVowelsJson()
+    {
+        using var plugin = Helpers.LoadPlugin("code.wasm");
+
+        var response = plugin.Call<CountVowelsResponse>("count_vowels", "Hello World");
+
+        response.ShouldNotBeNull();
+        response.Count.ShouldBe(3);
+    }
+
+    [Fact]
     public void CountVowelsHostFunctions()
     {
         for (int i = 0; i < 100; i++)
@@ -165,5 +176,12 @@ public class BasicTests
 
         var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
+    }
+
+    public class CountVowelsResponse
+    {
+        public int Count { get; set; }
+        public int Total { get; set; }
+        public string? Vowels { get; set; }
     }
 }
