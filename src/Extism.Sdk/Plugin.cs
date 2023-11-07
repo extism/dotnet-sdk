@@ -267,4 +267,15 @@ public unsafe class Plugin : IDisposable
         var version = LibExtism.extism_version();
         return Marshal.PtrToStringAnsi(version);
     }
+
+    /// <summary>
+    /// Set log file and level
+    /// </summary>
+    /// <param name="path">Log file path</param>
+    /// <param name="level">Minimum log level</param>
+    public static void SetLogFile(string path, LogLevel level)
+    {
+        var logLevel = Enum.GetName(typeof(LogLevel), level).ToLowerInvariant();
+        LibExtism.extism_log_file(path, logLevel);
+    }
 }

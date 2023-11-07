@@ -168,4 +168,26 @@ public class BasicTests
         var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
     }
+
+    [Fact]
+    public void LogLevel()
+    {
+        var tempFile = Path.GetTempFileName();
+        Plugin.SetLogFile(tempFile, Native.LogLevel.Warn);
+        using (var plugin = Helpers.LoadPlugin("log.wasm"))
+        {
+            plugin.Call("run_test", Array.Empty<byte>());
+        }
+
+        // HACK: tempFile gets locked by the Extism runtime 
+        var tempFile2 = Path.GetTempFileName();
+        File.Copy(tempFile, tempFile2, true);
+
+        var content = File.ReadAllText(tempFile2);
+        content.ShouldContain("warn");
+        content.ShouldContain("error");
+        content.ShouldNotContain("info");
+        content.ShouldNotContain("debug");
+        content.ShouldNotContain("trace");
+    }
 }

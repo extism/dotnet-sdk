@@ -8,12 +8,12 @@ public enum LogLevel
     /// <summary>
     /// Designates very serious errors.
     /// </summary>
-    Error,
+    Error = 1,
 
     /// <summary>
     /// Designates hazardous situations.
     /// </summary>
-    Warning,
+    Warn,
 
     /// <summary>
     /// Designates useful information.
