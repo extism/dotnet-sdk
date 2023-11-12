@@ -177,7 +177,7 @@ namespace Extism.Sdk
             where I2 : struct
             where I3 : struct
         {
-            var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>() };
+            var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I2>() };
             var returnType = new ExtismValType[] { };
 
             return new HostFunction(functionName, inputTypes, returnType, userdata,
