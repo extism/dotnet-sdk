@@ -154,28 +154,28 @@ public class HostFunction : IDisposable
             });
     }
 
-    /// <summary>
-    /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
-    /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
-    /// </summary>
-    /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-    /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-    /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-    /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
-    /// <param name="callback">The host function implementation.</param>
-    /// <returns></returns>
-    public static HostFunction FromMethod<I1, I2, I3>(
-        string functionName,
-        nint userdata,
-        Action<CurrentPlugin, I1, I2, I3> callback)
-        where I1 : struct
-        where I2 : struct
-        where I3 : struct
-    {
-        var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>() };
-        var returnType = new ExtismValType[] { };
+        /// <summary>
+        /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
+        /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
+        /// </summary>
+        /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+        /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+        /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+        /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
+        /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
+        /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+        /// <param name="callback">The host function implementation.</param>
+        /// <returns></returns>
+        public static HostFunction FromMethod<I1, I2, I3>(
+            string functionName,
+            nint userdata,
+            Action<CurrentPlugin, I1, I2, I3> callback)
+            where I1 : struct
+            where I2 : struct
+            where I3 : struct
+        {
+            var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
+            var returnType = new ExtismValType[] { };
 
         return new HostFunction(functionName, inputTypes, returnType, userdata,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>

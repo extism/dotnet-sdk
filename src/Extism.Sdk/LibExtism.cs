@@ -21,6 +21,12 @@ public struct ExtismValUnion
     public long i64;
 
     /// <summary>
+    /// Set this for 64 bit integers
+    /// </summary>
+    [FieldOffset(0)]
+    public long ptr;
+
+    /// <summary>
     /// Set this for 32 bit floats
     /// </summary>
     [FieldOffset(0)]
@@ -47,6 +53,11 @@ public enum ExtismValType : int
     /// Signed 64 bit integer. Equivalent of <see cref="long"/> or <see cref="long"/>
     /// </summary>
     I64,
+
+    /// <summary>
+    /// A wrapper around <see cref="I64"/> to specify arguments that are pointers to memory blocks
+    /// </summary>
+    PTR = I64,
 
     /// <summary>
     /// Floating point 32 bit integer. Equivalent of <see cref="float"/>
