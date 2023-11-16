@@ -1,5 +1,4 @@
 ﻿open Extism.Sdk
-open Extism.Sdk.Native
 open System
 open System.Text
 open System.Collections.Generic
