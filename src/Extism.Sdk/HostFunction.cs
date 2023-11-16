@@ -62,16 +62,27 @@ public class HostFunction : IDisposable
         }
     }
 
-    private unsafe void CallbackImpl(
-        long plugin,
-        ExtismVal* inputsPtr,
-        uint n_inputs,
-        ExtismVal* outputsPtr,
-        uint n_outputs,
-        nint data)
-    {
-        var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
-        var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
+        /// <summary>
+        /// Sets the function namespace. By default it's set to `extism:host/user`.
+        /// </summary>
+        /// <param name="ns"></param>
+        /// <returns></returns>
+        public HostFunction WithNamespace(string ns)
+        {
+            this.SetNamespace(ns);
+            return this;
+        }
+
+        private unsafe void CallbackImpl(
+            long plugin,
+            ExtismVal* inputsPtr,
+            uint n_inputs,
+            ExtismVal* outputsPtr,
+            uint n_outputs,
+            nint data)
+        {
+            var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
+            var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
 
         _function(new CurrentPlugin(plugin, data), inputs, outputs);
     }
