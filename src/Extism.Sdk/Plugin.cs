@@ -3,8 +3,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Extism.Sdk.Native;
 
-namespace Extism.Sdk.Native;
+namespace Extism.Sdk;
 
 /// <summary>
 /// Represents a WASM Extism plugin.

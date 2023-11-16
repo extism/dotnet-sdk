@@ -131,8 +131,8 @@ public class BasicTests
 
             using var helloWorld = new HostFunction(
                 "hello_world",
-                new[] { ExtismValType.I64 },
-                new[] { ExtismValType.I64 },
+                new[] { ExtismValType.PTR },
+                new[] { ExtismValType.PTR },
                 userData,
                 HelloWorld);
 
@@ -149,11 +149,11 @@ public class BasicTests
             var text = Marshal.PtrToStringAnsi(plugin.UserData);
             Console.WriteLine(text);
 
-            var input = plugin.ReadString(new nint(inputs[0].v.i64));
+            var input = plugin.ReadString(new nint(inputs[0].v.ptr));
             Console.WriteLine($"Input: {input}");
 
             var output = new string(input); // clone the string
-            outputs[0].v.i64 = plugin.WriteString(output);
+            outputs[0].v.ptr = plugin.WriteString(output);
         }
     }
 

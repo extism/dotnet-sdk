@@ -1,5 +1,4 @@
 using System.Reflection;
-using Extism.Sdk.Native;
 
 namespace Extism.Sdk.Tests;
 
