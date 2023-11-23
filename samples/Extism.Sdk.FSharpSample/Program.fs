@@ -31,8 +31,8 @@ let functions =
         )
     |]
 
-use plugin = 
-    Plugin(manifest, functions, withWasi = true)
+let plugin = 
+    new Plugin(manifest, functions, withWasi = true)
 
 printfn "plugin created"
 
