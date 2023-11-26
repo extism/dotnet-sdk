@@ -107,8 +107,19 @@ public class BasicTests
     {
         using var plugin = Helpers.LoadPlugin("code.wasm");
 
-        var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
-        Encoding.UTF8.GetString(response).ShouldContain("\"count\":3");
+        var response = plugin.Call("count_vowels", "Hello World");
+        response.ShouldContain("\"count\":3");
+    }
+
+    [Fact]
+    public void CountVowelsJson()
+    {
+        using var plugin = Helpers.LoadPlugin("code.wasm");
+
+        var response = plugin.Call<CountVowelsResponse>("count_vowels", "Hello World");
+
+        response.ShouldNotBeNull();
+        response.Count.ShouldBe(3);
     }
 
     [Fact]
@@ -120,8 +131,8 @@ public class BasicTests
 
             using var helloWorld = new HostFunction(
                 "hello_world",
-                new[] { ExtismValType.I64 },
-                new[] { ExtismValType.I64 },
+                new[] { ExtismValType.PTR },
+                new[] { ExtismValType.PTR },
                 userData,
                 HelloWorld);
 
@@ -138,11 +149,11 @@ public class BasicTests
             var text = Marshal.PtrToStringAnsi(plugin.UserData);
             Console.WriteLine(text);
 
-            var input = plugin.ReadString(new nint(inputs[0].v.i64));
+            var input = plugin.ReadString(new nint(inputs[0].v.ptr));
             Console.WriteLine($"Input: {input}");
 
             var output = new string(input); // clone the string
-            outputs[0].v.i64 = plugin.WriteString(output);
+            outputs[0].v.ptr = plugin.WriteString(output);
         }
     }
 
@@ -159,9 +170,7 @@ public class BasicTests
             plugin.FreeBlock(offset);
 
             return plugin.WriteString(output);
-        });
-
-        helloWorld.SetNamespace("host");
+        }).WithNamespace("host");
 
         using var plugin = Helpers.LoadPlugin("host_memory.wasm", config: null, helloWorld);
 
@@ -189,5 +198,12 @@ public class BasicTests
         content.ShouldNotContain("info");
         content.ShouldNotContain("debug");
         content.ShouldNotContain("trace");
+    }
+
+    public class CountVowelsResponse
+    {
+        public int Count { get; set; }
+        public int Total { get; set; }
+        public string? Vowels { get; set; }
     }
 }

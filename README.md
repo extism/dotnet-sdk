@@ -27,7 +27,6 @@ First you should add a using statement for Extism:
 C#:
 ```csharp
 using System;
-using System.Text;
 
 using Extism.Sdk;
 using Extism.Sdk.Native;
@@ -36,7 +35,6 @@ using Extism.Sdk.Native;
 F#:
 ```fsharp
 open System
-open System.Text
 
 open Extism.Sdk
 open Extism.Sdk.Native
@@ -72,16 +70,14 @@ This plug-in was written in Rust and it does one thing, it counts vowels in a st
 
 C#:
 ```csharp
-var inputBytes = Encoding.UTF8.GetBytes("Hello, World!");
-var output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes));
+var output = plugin.Call("count_vowels", "Hello, World!");
 
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
 F#:
 ```fsharp
-let inputBytes = Encoding.UTF8.GetBytes("Hello, World!")
-let output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output = plugin.Call("count_vowels", "Hello, World!")
 
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
@@ -94,26 +90,19 @@ Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by 
 
 C#:
 ```csharp
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
-);
-
+var output = plugin.Call("count_vowels", "Hello, World!");
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
-output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
-);
+output = plugin.Call("count_vowels", "Hello, World!");
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
 
 F#:
 ```fsharp
-let inputBytes = Encoding.UTF8.GetBytes("Hello, World!")
-
-let output1 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output1 = plugin.Call("count_vowels", "Hello, World!")
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
-let output2 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output2 = plugin.Call("count_vowels", "Hello, World!")
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
 
@@ -129,10 +118,7 @@ var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins
 
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-);
-
+var output = plugin.Call("count_vowels", "Yellow, World!");
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
 var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"))
@@ -145,10 +131,7 @@ var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins
 
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-);
-
+var output = plugin.Call("count_vowels", "Yellow, World!");
 // => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
 ```
 
@@ -160,8 +143,7 @@ manifest.Config.Add("vowels", "aeiouyAEIOUY")
 
 use plugin = Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
 
-let outputBytes = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-let output = Encoding.UTF8.GetString(outputBytes)
+let output = plugin.Call("count_vowels", "Yellow, World!")
 
 let manifest = 
     Manifest(new UrlWasmSource(Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")),
@@ -170,9 +152,7 @@ let manifest =
 use plugin = 
     Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
 
-let outputBytes = 
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-let output = Encoding.UTF8.GetString(outputBytes)
+let output = plugin.Call("count_vowels", "Yellow, World!")
 ```
 
 ### Host Functions
@@ -266,18 +246,14 @@ C#:
 ```csharp
 using var plugin = new Plugin(manifest, functions, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
-);
+var output = plugin.Call("count_vowels", "Hello World!");
 
 Console.WriteLine(output);
 // => Read from key=count-vowels"
 // => Writing value=3 from key=count-vowels"
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
-);
+output = plugin.Call("count_vowels", "Hello World!");
 
 Console.WriteLine(output);
 // => Read from key=count-vowels"
@@ -289,13 +265,13 @@ F#:
 ```fsharp
 use plugin = Plugin(manifest, functions, withWasi = true)
 
-let output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output = plugin.Call("count_vowels", "Hello World!")
 printfn "%s" output
 // => Read from key=count-vowels
 // => Writing value=3 from key=count-vowels
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-let output2 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output2 = plugin.Call("count_vowels", "Hello World!")
 printfn "%s" output2
 // => Read from key=count-vowels
 // => Writing value=6 from key=count-vowels

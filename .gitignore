@@ -477,3 +477,7 @@ $RECYCLE.BIN/
 *.lnk
 
 nuget/runtimes/win-x64.dll
+
+# DocFx
+_site
+api
