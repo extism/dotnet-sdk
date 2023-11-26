@@ -289,7 +289,7 @@ internal static class LibExtism
     unsafe internal static extern IntPtr extism_plugin_output_data(ExtismPlugin* plugin);
 
     /// <summary>
-    /// Set log file and level.
+    /// Set log file and level for file logger.
     /// </summary>
     /// <param name="filename"></param>
     /// <param name="logLevel"></param>
@@ -298,40 +298,28 @@ internal static class LibExtism
     internal static extern bool extism_log_file(string filename, string logLevel);
 
     /// <summary>
+    /// Enable a custom log handler, this will buffer logs until `extism_log_drain` is called. 
+    /// this will buffer logs until `extism_log_drain` is called
+    /// </summary>
+    /// <param name="logLevel"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    internal static extern bool extism_log_custom(string logLevel);
+
+    internal delegate void LoggingSink(string line, ulong length);
+
+    /// <summary>
+    /// Calls the provided callback function for each buffered log line.
+    /// This is only needed when `extism_log_custom` is used.
+    /// </summary>
+    /// <param name="callback"></param>
+    [DllImport("extism")]
+    internal static extern void extism_log_drain(LoggingSink callback);
+
+    /// <summary>
     /// Get Extism Runtime version.
     /// </summary>
     /// <returns></returns>
     [DllImport("extism")]
     internal static extern IntPtr extism_version();
-
-    /// <summary>
-    /// Extism Log Levels
-    /// </summary>
-    internal static class LogLevels
-    {
-        /// <summary>
-        /// Designates very serious errors.
-        /// </summary>
-        internal const string Error = "Error";
-
-        /// <summary>
-        /// Designates hazardous situations.
-        /// </summary>
-        internal const string Warn = "Warn";
-
-        /// <summary>
-        /// Designates useful information.
-        /// </summary>
-        internal const string Info = "Info";
-
-        /// <summary>
-        /// Designates lower priority information.
-        /// </summary>
-        internal const string Debug = "Debug";
-
-        /// <summary>
-        /// Designates very low priority, often extremely verbose, information.
-        /// </summary>
-        internal const string Trace = "Trace";
-    }
 }

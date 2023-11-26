@@ -323,9 +323,38 @@ public unsafe class Plugin : IDisposable
     /// </summary>
     /// <param name="path">Log file path</param>
     /// <param name="level">Minimum log level</param>
-    public static void SetLogFile(string path, LogLevel level)
+    public static void ConfigureFileLogging(string path, LogLevel level)
     {
         var logLevel = Enum.GetName(typeof(LogLevel), level).ToLowerInvariant();
         LibExtism.extism_log_file(path, logLevel);
     }
+
+    /// <summary>
+    /// Enable a custom log handler, this will buffer logs until <see cref="DrainCustomLogs(LoggingSink)"/> is called.
+    /// </summary>
+    /// <param name="level"></param>
+    public static void ConfigureCustomLogging(LogLevel level)
+    {
+        var logLevel = Enum.GetName(typeof(LogLevel), level).ToLowerInvariant();
+        LibExtism.extism_log_custom(logLevel);
+    }
+
+    /// <summary>
+    /// Calls the provided callback function for each buffered log line.
+    /// This only needed when <see cref="ConfigureCustomLogging(LogLevel)"/> is used.
+    /// </summary>
+    /// <param name="callback"></param>
+    public static void DrainCustomLogs(LoggingSink callback)
+    {
+        LibExtism.extism_log_drain((line, length) =>
+        {
+            callback(line);
+        });
+    }
 }
+
+/// <summary>
+/// Custom logging callback.
+/// </summary>
+/// <param name="line"></param>
+public delegate void LoggingSink(string line);

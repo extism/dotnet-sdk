@@ -1,5 +1,7 @@
 using Extism.Sdk.Native;
+
 using Shouldly;
+
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -179,10 +181,10 @@ public class BasicTests
     }
 
     [Fact]
-    public void LogLevel()
+    public void FileLog()
     {
         var tempFile = Path.GetTempFileName();
-        Plugin.SetLogFile(tempFile, Native.LogLevel.Warn);
+        Plugin.ConfigureFileLogging(tempFile, LogLevel.Warn);
         using (var plugin = Helpers.LoadPlugin("log.wasm"))
         {
             plugin.Call("run_test", Array.Empty<byte>());
@@ -199,6 +201,29 @@ public class BasicTests
         content.ShouldNotContain("debug");
         content.ShouldNotContain("trace");
     }
+
+
+    [Fact]
+    public void CustomLog()
+    {
+        var builder = new StringBuilder();
+
+        Plugin.ConfigureCustomLogging(LogLevel.Warn);
+        using (var plugin = Helpers.LoadPlugin("log.wasm"))
+        {
+            plugin.Call("run_test", Array.Empty<byte>());
+        }
+
+        Plugin.DrainCustomLogs(line => builder.AppendLine(line));
+
+        var content = builder.ToString();
+        content.ShouldContain("warn");
+        content.ShouldContain("error");
+        content.ShouldNotContain("info");
+        content.ShouldNotContain("debug");
+        content.ShouldNotContain("trace");
+    }
+
 
     public class CountVowelsResponse
     {
