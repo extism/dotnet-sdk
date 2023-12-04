@@ -23,14 +23,17 @@ namespace Extism.Sdk
         /// <param name="sources"></param>
         public Manifest(params WasmSource[] sources)
         {
-            Sources.AddRange(sources);
+            foreach (var source in sources)
+            {
+                Sources.Add(source);
+            }
         }
 
         /// <summary>
         /// List of Wasm sources. See <see cref="PathWasmSource"/> and <see cref="ByteArrayWasmSource"/>.
         /// </summary>
         [JsonPropertyName("wasm")]
-        public List<WasmSource> Sources { get; set; } = new();
+        public IList<WasmSource> Sources { get; set; } = new List<WasmSource>();
 
         /// <summary>
         /// Configures memory for the Wasm runtime.
@@ -50,7 +53,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("allowed_hosts")]
-        public List<string> AllowedHosts { get; set; } = new();
+        public IList<string> AllowedHosts { get; set; } = new List<string>();
 
         /// <summary>
         /// List of directories that can be accessed by the plugins. Examples:
@@ -63,7 +66,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("allowed_paths")]
-        public Dictionary<string, string> AllowedPaths { get; set; } = new();
+        public IDictionary<string, string> AllowedPaths { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Configurations available to the plugins. Examples:
@@ -76,7 +79,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("config")]
-        public Dictionary<string, string> Config { get; set; } = new();
+        public IDictionary<string, string> Config { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Plugin call timeout.
