@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Extism .NET Host SDK | Extism .NET SDK </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Extism .NET Host SDK | Extism .NET SDK ">
+      
+      <link rel="icon" href="images/favicon.ico">
+      <link rel="stylesheet" href="public/docfx.min.css">
+      <link rel="stylesheet" href="public/main.css">
+      <meta name="docfx:navrel" content="toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/blob/fix/docs-publish-dir-1/index.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="landing" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="index.html">
+            <img id="logo" class="svg" src="images/logo.png" alt="Extism .NET SDK">
+            Extism .NET SDK
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="extism-net-host-sdk">Extism .NET Host SDK</h1>
+
+<p>This repo houses the .NET SDK for integrating with the <a href="https://extism.org/">Extism</a> runtime. Install this library into your host .NET applications to run Extism plugins.</p>
+<blockquote>
+<p><strong>Note</strong>: This houses the 1.0 pre-release version of the .NET SDK. We may push breaking changes in new versions until will hit 1.0 in December, 2023. But it's currently the best place to start a new integration and we welcome any feedback.</p>
+</blockquote>
+<h2 id="installation">Installation</h2>
+<p>This library depends on the native Extism runtime, we provide <a href="https://www.nuget.org/packages/Extism.runtime.all">native runtime packages</a> for all supported operating systems. You can install with:
+<img src="https://img.shields.io/nuget/vpre/Extism.runtime.all"></p>
+<pre><code>dotnet add package Extism.runtime.all --prerelease
+</code></pre>
+<p>Then, add the <a href="https://www.nuget.org/packages/Extism.Sdk">Extism.Sdk NuGet package</a> to your project:
+<img src="https://img.shields.io/nuget/vpre/Extism.Sdk"></p>
+<pre><code>dotnet add package Extism.Sdk --prerelease
+</code></pre>
+<h2 id="getting-started">Getting Started</h2>
+<p>This guide should walk you through some of the concepts in Extism and this .NET library.</p>
+<p>First you should add a using statement for Extism:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">using System;
+
+using Extism.Sdk;
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">open System
+
+open Extism.Sdk
+</code></pre>
+<h2 id="creating-a-plug-in">Creating A Plug-in</h2>
+<p>The primary concept in Extism is the <a href="https://extism.org/docs/concepts/plug-in">plug-in</a>. You can think of a plug-in as a code module stored in a <code>.wasm</code> file.</p>
+<p>Since you may not have an Extism plug-in on hand to test, let's load a demo plug-in from the web:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var manifest = new Manifest(new UrlWasmSource(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&quot;));
+
+using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let uri = Uri(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&quot;)
+let manifest = Manifest(new UrlWasmSource(uri))
+
+let plugin = new Plugin(manifest, Array.Empty&lt;HostFunction&gt;(), withWasi = true)
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: The schema for this manifest can be found here: <a href="https://extism.org/docs/concepts/manifest/">https://extism.org/docs/concepts/manifest/</a></p>
+</blockquote>
+<h3 id="calling-a-plug-ins-exports">Calling A Plug-in's Exports</h3>
+<p>This plug-in was written in Rust and it does one thing, it counts vowels in a string. As such, it exposes one &quot;export&quot; function: <code>count_vowels</code>. We can call exports using <code>Plugin.Call</code>:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;);
+Console.WriteLine(output);
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;)
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>All exports have a simple interface of optional bytes in, and optional bytes out. This plug-in happens to take a string and return a JSON encoded string with a report of results.</p>
+<h3 id="plug-in-state">Plug-in State</h3>
+<p>Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the &quot;total&quot; key in the result. You can see this by making subsequent calls to the export:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;);
+Console.WriteLine(output);
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 6, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;);
+Console.WriteLine(output);
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 9, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let output1 = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;)
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 6, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+let output2 = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;)
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 9, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>These variables will persist until this plug-in is freed or you initialize a new one.</p>
+<h3 id="configuration">Configuration</h3>
+<p>Plug-ins may optionally take a configuration object. This is a static way to configure the plug-in. Our count-vowels plugin takes an optional configuration to change out which characters are considered vowels. Example:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var manifest = new Manifest(new UrlWasmSource(&quot;&lt;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&gt;&quot;));
+
+using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
+
+var output = plugin.Call(&quot;count_vowels&quot;, &quot;Yellow, World!&quot;);
+Console.WriteLine(output);
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+manifest = new Manifest(new UrlWasmSource(&quot;&lt;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&gt;&quot;))
+{
+    Config = new Dictionary&lt;string, string&gt;
+    {
+        { &quot;vowels&quot;, &quot;aeiouyAEIOUY&quot; }
+    },
+};
+
+using var plugin2 = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
+
+var output2 = plugin2.Call(&quot;count_vowels&quot;, &quot;Yellow, World!&quot;);
+Console.WriteLine(output2);
+// =&gt; {&quot;count&quot;: 4, &quot;total&quot;: 4, &quot;vowels&quot;: &quot;aeiouAEIOUY&quot;}
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let uri = Uri(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&quot;)
+let manifest = Manifest(new UrlWasmSource(uri))
+manifest.Config &lt;- dict [(&quot;vowels&quot;, &quot;aeiouAEIOU&quot;)]
+
+let plugin = new Plugin(manifest, Array.Empty&lt;HostFunction&gt;(), withWasi = true)
+
+let output = plugin.Call(&quot;count_vowels&quot;, &quot;Yellow, World!&quot;)
+Console.WriteLine(output)
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+let manifest2 = 
+    Manifest(new UrlWasmSource(Uri(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&quot;)))
+manifest2.Config &lt;- dict [(&quot;vowels&quot;, &quot;aeiouyAEIOUY&quot;)]
+
+let plugin2 =
+    new Plugin(manifest2, Array.Empty&lt;HostFunction&gt;(), withWasi = true)
+
+let output2 = plugin2.Call(&quot;count_vowels&quot;, &quot;Yellow, World!&quot;)
+Console.WriteLine(output2)
+// =&gt; {&quot;count&quot;: 4, &quot;total&quot;: 4, &quot;vowels&quot;: &quot;aeiouAEIOUY&quot;}
+</code></pre>
+<h3 id="host-functions">Host Functions</h3>
+<p>Let's extend our count-vowels example a little bit: Instead of storing the <code>total</code> in an ephemeral plug-in var, let's store it in a persistent key-value store!</p>
+<p>Wasm can't use our KV store on it's own. This is where <code>Host Functions</code> come in.</p>
+<p><a href="https://extism.org/docs/concepts/host-functions">Host functions</a> allow us to grant new capabilities to our plug-ins from our application. They are simply some Go functions you write which can be passed down and invoked from any language inside the plug-in.</p>
+<p>Let's load the manifest like usual but load up this <code>count_vowels_kvstore</code> plug-in:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var manifest = new Manifest(new UrlWasmSource(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels_kvstore.wasm&quot;));
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let manifest = Manifest(new UrlWasmSource(Uri(&quot;https://github.com/extism/plugins/releases/latest/download/count_vowels_kvstore.wasm&quot;)))
+</code></pre>
+<blockquote>
+<p><em>Note</em>: The source code for this is <a href="https://github.com/extism/plugins/blob/main/count_vowels_kvstore/src/lib.rs">here</a> and is written in rust, but it could be written in any of our PDK languages.</p>
+</blockquote>
+<p>Unlike our previous plug-in, this plug-in expects you to provide host functions that satisfy our its import interface for a KV store.</p>
+<p>We want to expose two functions to our plugin, <code>void kv_write(key string, value byte[])</code> which writes a bytes value to a key and <code>byte[] kv_read(key string)</code> which reads the bytes at the given <code>key</code>.</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">// pretend this is Redis or something :)
+var kvStore = new Dictionary&lt;string, byte[]&gt;();
+
+var functions = new[]
+{
+    HostFunction.FromMethod(&quot;kv_read&quot;, IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =&gt;
+    {
+        var key = plugin.ReadString(keyOffset);
+        if (!kvStore.TryGetValue(key, out var value))
+        {
+            value = new byte[] { 0, 0, 0, 0 };
+        }
+
+        Console.WriteLine($&quot;Read {BitConverter.ToUInt32(value)} from key={key}&quot;);
+        return plugin.WriteBytes(value);
+    }),
+
+    HostFunction.FromMethod(&quot;kv_write&quot;, IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =&gt;
+    {
+        var key = plugin.ReadString(keyOffset);
+        var value = plugin.ReadBytes(valueOffset);
+
+        Console.WriteLine($&quot;Writing value={BitConverter.ToUInt32(value)} from key={key}&quot;);
+        kvStore[key] = value.ToArray();
+    })
+};
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let kvStore = new Dictionary&lt;string, byte[]&gt;()
+
+let functions =
+    [|
+        HostFunction.FromMethod(&quot;kv_read&quot;, IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) -&gt;
+            let key = plugin.ReadString(offs)
+            let value = 
+                match kvStore.TryGetValue(key) with
+                | true, v -&gt; v
+                | _ -&gt; [| 0uy; 0uy; 0uy; 0uy |] // Default value if key not found
+
+            Console.WriteLine($&quot;Read {BitConverter.ToUInt32(value, 0)} from key={key}&quot;)
+            plugin.WriteBytes(value)
+        )
+
+        HostFunction.FromMethod(&quot;kv_write&quot;, IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) -&gt;
+            let key = plugin.ReadString(kOffs)
+            let value = plugin.ReadBytes(vOffs).ToArray()
+
+            Console.WriteLine($&quot;Writing value={BitConverter.ToUInt32(value, 0)} from key={key}&quot;)
+            kvStore.[key] &lt;- value
+        )
+    |]
+</code></pre>
+<blockquote>
+<p><em>Note</em>: In order to write host functions you should get familiar with the methods on the CurrentPlugin type. The <code>plugin</code> parameter is an instance of this type.</p>
+</blockquote>
+<p>We need to pass these imports to the plug-in to create them. All imports of a plug-in must be satisfied for it to be initialized:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">using var plugin = new Plugin(manifest, functions, withWasi: true);
+
+var output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello World!&quot;);
+
+Console.WriteLine(output);
+// =&gt; Read 0 from key=count-vowels&quot;
+// =&gt; Writing value=3 from key=count-vowels&quot;
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello World!&quot;);
+
+Console.WriteLine(output);
+// =&gt; Read 3 from key=count-vowels&quot;
+// =&gt; Writing value=6 from key=count-vowels&quot;
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 6, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let plugin = new Plugin(manifest, functions, withWasi = true)
+
+let output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello World!&quot;)
+printfn &quot;%s&quot; output
+// =&gt; Read 0 from key=count-vowels
+// =&gt; Writing value=3 from key=count-vowels
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+
+let output2 = plugin.Call(&quot;count_vowels&quot;, &quot;Hello World!&quot;)
+printfn &quot;%s&quot; output2
+// =&gt; Read 3 from key=count-vowels
+// =&gt; Writing value=6 from key=count-vowels
+// =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 6, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<h2 id="api-docs">API Docs</h2>
+<p>Please see our <a class="xref" href="api/Extism.Sdk.html">API docs</a> for detailed information on each type.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/extism/dotnet-sdk/blob/fix/docs-publish-dir-1/index.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

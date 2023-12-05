@@ -1,0 +1,285 @@
+{
+  "source_base_path": "/home/runner/work/dotnet-sdk/dotnet-sdk",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.ByteArrayWasmSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.ByteArrayWasmSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.CurrentPlugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.CurrentPlugin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.ExtismException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.ExtismException.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.ExtismFunction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.ExtismFunction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.HostFunction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.HostFunction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.HttpMethod.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.HttpMethod.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.LogLevel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.LogLevel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Manifest.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Manifest.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.MemoryOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.MemoryOptions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Native.ExtismVal.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Native.ExtismVal.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Native.ExtismValType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Native.ExtismValType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Native.ExtismValUnion.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Native.ExtismValUnion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Native.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Native.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.PathWasmSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.PathWasmSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.Plugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.Plugin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.UrlWasmSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.UrlWasmSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.WasmSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.WasmSource.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/favicon.ico"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "samples/Extism.Sdk.Sample/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "samples/Extism.Sdk.Sample/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "src/Extism.Sdk/README.md",
+      "output": {
+        ".html": {
+          "relative_path": "src/Extism.Sdk/README.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

@@ -1,0 +1,1120 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: Extism.Sdk
+  name: Extism.Sdk
+  href: api/Extism.Sdk.html
+  commentId: N:Extism.Sdk
+  fullName: Extism.Sdk
+  nameWithType: Extism.Sdk
+- uid: Extism.Sdk.ByteArrayWasmSource
+  name: ByteArrayWasmSource
+  href: api/Extism.Sdk.ByteArrayWasmSource.html
+  commentId: T:Extism.Sdk.ByteArrayWasmSource
+  fullName: Extism.Sdk.ByteArrayWasmSource
+  nameWithType: ByteArrayWasmSource
+- uid: Extism.Sdk.ByteArrayWasmSource.#ctor(System.Byte[],System.String,System.String)
+  name: ByteArrayWasmSource(byte[], string?, string?)
+  href: api/Extism.Sdk.ByteArrayWasmSource.html#Extism_Sdk_ByteArrayWasmSource__ctor_System_Byte___System_String_System_String_
+  commentId: M:Extism.Sdk.ByteArrayWasmSource.#ctor(System.Byte[],System.String,System.String)
+  name.vb: New(Byte(), String, String)
+  fullName: Extism.Sdk.ByteArrayWasmSource.ByteArrayWasmSource(byte[], string?, string?)
+  fullName.vb: Extism.Sdk.ByteArrayWasmSource.New(Byte(), String, String)
+  nameWithType: ByteArrayWasmSource.ByteArrayWasmSource(byte[], string?, string?)
+  nameWithType.vb: ByteArrayWasmSource.New(Byte(), String, String)
+- uid: Extism.Sdk.ByteArrayWasmSource.#ctor*
+  name: ByteArrayWasmSource
+  href: api/Extism.Sdk.ByteArrayWasmSource.html#Extism_Sdk_ByteArrayWasmSource__ctor_
+  commentId: Overload:Extism.Sdk.ByteArrayWasmSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.ByteArrayWasmSource.ByteArrayWasmSource
+  fullName.vb: Extism.Sdk.ByteArrayWasmSource.New
+  nameWithType: ByteArrayWasmSource.ByteArrayWasmSource
+  nameWithType.vb: ByteArrayWasmSource.New
+- uid: Extism.Sdk.ByteArrayWasmSource.Data
+  name: Data
+  href: api/Extism.Sdk.ByteArrayWasmSource.html#Extism_Sdk_ByteArrayWasmSource_Data
+  commentId: P:Extism.Sdk.ByteArrayWasmSource.Data
+  fullName: Extism.Sdk.ByteArrayWasmSource.Data
+  nameWithType: ByteArrayWasmSource.Data
+- uid: Extism.Sdk.ByteArrayWasmSource.Data*
+  name: Data
+  href: api/Extism.Sdk.ByteArrayWasmSource.html#Extism_Sdk_ByteArrayWasmSource_Data_
+  commentId: Overload:Extism.Sdk.ByteArrayWasmSource.Data
+  isSpec: "True"
+  fullName: Extism.Sdk.ByteArrayWasmSource.Data
+  nameWithType: ByteArrayWasmSource.Data
+- uid: Extism.Sdk.CurrentPlugin
+  name: CurrentPlugin
+  href: api/Extism.Sdk.CurrentPlugin.html
+  commentId: T:Extism.Sdk.CurrentPlugin
+  fullName: Extism.Sdk.CurrentPlugin
+  nameWithType: CurrentPlugin
+- uid: Extism.Sdk.CurrentPlugin.AllocateBlock(System.Int64)
+  name: AllocateBlock(long)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_AllocateBlock_System_Int64_
+  commentId: M:Extism.Sdk.CurrentPlugin.AllocateBlock(System.Int64)
+  name.vb: AllocateBlock(Long)
+  fullName: Extism.Sdk.CurrentPlugin.AllocateBlock(long)
+  fullName.vb: Extism.Sdk.CurrentPlugin.AllocateBlock(Long)
+  nameWithType: CurrentPlugin.AllocateBlock(long)
+  nameWithType.vb: CurrentPlugin.AllocateBlock(Long)
+- uid: Extism.Sdk.CurrentPlugin.AllocateBlock*
+  name: AllocateBlock
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_AllocateBlock_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.AllocateBlock
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.AllocateBlock
+  nameWithType: CurrentPlugin.AllocateBlock
+- uid: Extism.Sdk.CurrentPlugin.BlockLength(System.Int64)
+  name: BlockLength(long)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_BlockLength_System_Int64_
+  commentId: M:Extism.Sdk.CurrentPlugin.BlockLength(System.Int64)
+  name.vb: BlockLength(Long)
+  fullName: Extism.Sdk.CurrentPlugin.BlockLength(long)
+  fullName.vb: Extism.Sdk.CurrentPlugin.BlockLength(Long)
+  nameWithType: CurrentPlugin.BlockLength(long)
+  nameWithType.vb: CurrentPlugin.BlockLength(Long)
+- uid: Extism.Sdk.CurrentPlugin.BlockLength*
+  name: BlockLength
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_BlockLength_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.BlockLength
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.BlockLength
+  nameWithType: CurrentPlugin.BlockLength
+- uid: Extism.Sdk.CurrentPlugin.FreeBlock(System.Int64)
+  name: FreeBlock(long)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_FreeBlock_System_Int64_
+  commentId: M:Extism.Sdk.CurrentPlugin.FreeBlock(System.Int64)
+  name.vb: FreeBlock(Long)
+  fullName: Extism.Sdk.CurrentPlugin.FreeBlock(long)
+  fullName.vb: Extism.Sdk.CurrentPlugin.FreeBlock(Long)
+  nameWithType: CurrentPlugin.FreeBlock(long)
+  nameWithType.vb: CurrentPlugin.FreeBlock(Long)
+- uid: Extism.Sdk.CurrentPlugin.FreeBlock*
+  name: FreeBlock
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_FreeBlock_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.FreeBlock
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.FreeBlock
+  nameWithType: CurrentPlugin.FreeBlock
+- uid: Extism.Sdk.CurrentPlugin.GetMemory
+  name: GetMemory()
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetMemory
+  commentId: M:Extism.Sdk.CurrentPlugin.GetMemory
+  fullName: Extism.Sdk.CurrentPlugin.GetMemory()
+  nameWithType: CurrentPlugin.GetMemory()
+- uid: Extism.Sdk.CurrentPlugin.GetMemory*
+  name: GetMemory
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetMemory_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.GetMemory
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.GetMemory
+  nameWithType: CurrentPlugin.GetMemory
+- uid: Extism.Sdk.CurrentPlugin.ReadBytes(System.Int64)
+  name: ReadBytes(long)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadBytes_System_Int64_
+  commentId: M:Extism.Sdk.CurrentPlugin.ReadBytes(System.Int64)
+  name.vb: ReadBytes(Long)
+  fullName: Extism.Sdk.CurrentPlugin.ReadBytes(long)
+  fullName.vb: Extism.Sdk.CurrentPlugin.ReadBytes(Long)
+  nameWithType: CurrentPlugin.ReadBytes(long)
+  nameWithType.vb: CurrentPlugin.ReadBytes(Long)
+- uid: Extism.Sdk.CurrentPlugin.ReadBytes*
+  name: ReadBytes
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadBytes_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.ReadBytes
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.ReadBytes
+  nameWithType: CurrentPlugin.ReadBytes
+- uid: Extism.Sdk.CurrentPlugin.ReadString(System.Int64)
+  name: ReadString(long)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadString_System_Int64_
+  commentId: M:Extism.Sdk.CurrentPlugin.ReadString(System.Int64)
+  name.vb: ReadString(Long)
+  fullName: Extism.Sdk.CurrentPlugin.ReadString(long)
+  fullName.vb: Extism.Sdk.CurrentPlugin.ReadString(Long)
+  nameWithType: CurrentPlugin.ReadString(long)
+  nameWithType.vb: CurrentPlugin.ReadString(Long)
+- uid: Extism.Sdk.CurrentPlugin.ReadString(System.Int64,System.Text.Encoding)
+  name: ReadString(long, Encoding)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadString_System_Int64_System_Text_Encoding_
+  commentId: M:Extism.Sdk.CurrentPlugin.ReadString(System.Int64,System.Text.Encoding)
+  name.vb: ReadString(Long, Encoding)
+  fullName: Extism.Sdk.CurrentPlugin.ReadString(long, System.Text.Encoding)
+  fullName.vb: Extism.Sdk.CurrentPlugin.ReadString(Long, System.Text.Encoding)
+  nameWithType: CurrentPlugin.ReadString(long, Encoding)
+  nameWithType.vb: CurrentPlugin.ReadString(Long, Encoding)
+- uid: Extism.Sdk.CurrentPlugin.ReadString*
+  name: ReadString
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadString_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.ReadString
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.ReadString
+  nameWithType: CurrentPlugin.ReadString
+- uid: Extism.Sdk.CurrentPlugin.UserData
+  name: UserData
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_UserData
+  commentId: P:Extism.Sdk.CurrentPlugin.UserData
+  fullName: Extism.Sdk.CurrentPlugin.UserData
+  nameWithType: CurrentPlugin.UserData
+- uid: Extism.Sdk.CurrentPlugin.UserData*
+  name: UserData
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_UserData_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.UserData
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.UserData
+  nameWithType: CurrentPlugin.UserData
+- uid: Extism.Sdk.CurrentPlugin.WriteBytes(System.Int64,System.Span{System.Byte})
+  name: WriteBytes(long, Span<byte>)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteBytes_System_Int64_System_Span_System_Byte__
+  commentId: M:Extism.Sdk.CurrentPlugin.WriteBytes(System.Int64,System.Span{System.Byte})
+  name.vb: WriteBytes(Long, Span(Of Byte))
+  fullName: Extism.Sdk.CurrentPlugin.WriteBytes(long, System.Span<byte>)
+  fullName.vb: Extism.Sdk.CurrentPlugin.WriteBytes(Long, System.Span(Of Byte))
+  nameWithType: CurrentPlugin.WriteBytes(long, Span<byte>)
+  nameWithType.vb: CurrentPlugin.WriteBytes(Long, Span(Of Byte))
+- uid: Extism.Sdk.CurrentPlugin.WriteBytes(System.Span{System.Byte})
+  name: WriteBytes(Span<byte>)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteBytes_System_Span_System_Byte__
+  commentId: M:Extism.Sdk.CurrentPlugin.WriteBytes(System.Span{System.Byte})
+  name.vb: WriteBytes(Span(Of Byte))
+  fullName: Extism.Sdk.CurrentPlugin.WriteBytes(System.Span<byte>)
+  fullName.vb: Extism.Sdk.CurrentPlugin.WriteBytes(System.Span(Of Byte))
+  nameWithType: CurrentPlugin.WriteBytes(Span<byte>)
+  nameWithType.vb: CurrentPlugin.WriteBytes(Span(Of Byte))
+- uid: Extism.Sdk.CurrentPlugin.WriteBytes*
+  name: WriteBytes
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteBytes_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.WriteBytes
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.WriteBytes
+  nameWithType: CurrentPlugin.WriteBytes
+- uid: Extism.Sdk.CurrentPlugin.WriteString(System.String)
+  name: WriteString(string)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteString_System_String_
+  commentId: M:Extism.Sdk.CurrentPlugin.WriteString(System.String)
+  name.vb: WriteString(String)
+  fullName: Extism.Sdk.CurrentPlugin.WriteString(string)
+  fullName.vb: Extism.Sdk.CurrentPlugin.WriteString(String)
+  nameWithType: CurrentPlugin.WriteString(string)
+  nameWithType.vb: CurrentPlugin.WriteString(String)
+- uid: Extism.Sdk.CurrentPlugin.WriteString(System.String,System.Text.Encoding)
+  name: WriteString(string, Encoding)
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteString_System_String_System_Text_Encoding_
+  commentId: M:Extism.Sdk.CurrentPlugin.WriteString(System.String,System.Text.Encoding)
+  name.vb: WriteString(String, Encoding)
+  fullName: Extism.Sdk.CurrentPlugin.WriteString(string, System.Text.Encoding)
+  fullName.vb: Extism.Sdk.CurrentPlugin.WriteString(String, System.Text.Encoding)
+  nameWithType: CurrentPlugin.WriteString(string, Encoding)
+  nameWithType.vb: CurrentPlugin.WriteString(String, Encoding)
+- uid: Extism.Sdk.CurrentPlugin.WriteString*
+  name: WriteString
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_WriteString_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.WriteString
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.WriteString
+  nameWithType: CurrentPlugin.WriteString
+- uid: Extism.Sdk.ExtismException
+  name: ExtismException
+  href: api/Extism.Sdk.ExtismException.html
+  commentId: T:Extism.Sdk.ExtismException
+  fullName: Extism.Sdk.ExtismException
+  nameWithType: ExtismException
+- uid: Extism.Sdk.ExtismException.#ctor
+  name: ExtismException()
+  href: api/Extism.Sdk.ExtismException.html#Extism_Sdk_ExtismException__ctor
+  commentId: M:Extism.Sdk.ExtismException.#ctor
+  name.vb: New()
+  fullName: Extism.Sdk.ExtismException.ExtismException()
+  fullName.vb: Extism.Sdk.ExtismException.New()
+  nameWithType: ExtismException.ExtismException()
+  nameWithType.vb: ExtismException.New()
+- uid: Extism.Sdk.ExtismException.#ctor(System.String)
+  name: ExtismException(string)
+  href: api/Extism.Sdk.ExtismException.html#Extism_Sdk_ExtismException__ctor_System_String_
+  commentId: M:Extism.Sdk.ExtismException.#ctor(System.String)
+  name.vb: New(String)
+  fullName: Extism.Sdk.ExtismException.ExtismException(string)
+  fullName.vb: Extism.Sdk.ExtismException.New(String)
+  nameWithType: ExtismException.ExtismException(string)
+  nameWithType.vb: ExtismException.New(String)
+- uid: Extism.Sdk.ExtismException.#ctor(System.String,System.Exception)
+  name: ExtismException(string, Exception)
+  href: api/Extism.Sdk.ExtismException.html#Extism_Sdk_ExtismException__ctor_System_String_System_Exception_
+  commentId: M:Extism.Sdk.ExtismException.#ctor(System.String,System.Exception)
+  name.vb: New(String, Exception)
+  fullName: Extism.Sdk.ExtismException.ExtismException(string, System.Exception)
+  fullName.vb: Extism.Sdk.ExtismException.New(String, System.Exception)
+  nameWithType: ExtismException.ExtismException(string, Exception)
+  nameWithType.vb: ExtismException.New(String, Exception)
+- uid: Extism.Sdk.ExtismException.#ctor*
+  name: ExtismException
+  href: api/Extism.Sdk.ExtismException.html#Extism_Sdk_ExtismException__ctor_
+  commentId: Overload:Extism.Sdk.ExtismException.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.ExtismException.ExtismException
+  fullName.vb: Extism.Sdk.ExtismException.New
+  nameWithType: ExtismException.ExtismException
+  nameWithType.vb: ExtismException.New
+- uid: Extism.Sdk.ExtismFunction
+  name: ExtismFunction
+  href: api/Extism.Sdk.ExtismFunction.html
+  commentId: T:Extism.Sdk.ExtismFunction
+  fullName: Extism.Sdk.ExtismFunction
+  nameWithType: ExtismFunction
+- uid: Extism.Sdk.HostFunction
+  name: HostFunction
+  href: api/Extism.Sdk.HostFunction.html
+  commentId: T:Extism.Sdk.HostFunction
+  fullName: Extism.Sdk.HostFunction
+  nameWithType: HostFunction
+- uid: Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.IntPtr,Extism.Sdk.ExtismFunction)
+  name: HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, nint, ExtismFunction)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction__ctor_System_String_System_Span_Extism_Sdk_Native_ExtismValType__System_Span_Extism_Sdk_Native_ExtismValType__System_IntPtr_Extism_Sdk_ExtismFunction_
+  commentId: M:Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.IntPtr,Extism.Sdk.ExtismFunction)
+  name.vb: New(String, Span(Of ExtismValType), Span(Of ExtismValType), IntPtr, ExtismFunction)
+  fullName: Extism.Sdk.HostFunction.HostFunction(string, System.Span<Extism.Sdk.Native.ExtismValType>, System.Span<Extism.Sdk.Native.ExtismValType>, nint, Extism.Sdk.ExtismFunction)
+  fullName.vb: Extism.Sdk.HostFunction.New(String, System.Span(Of Extism.Sdk.Native.ExtismValType), System.Span(Of Extism.Sdk.Native.ExtismValType), System.IntPtr, Extism.Sdk.ExtismFunction)
+  nameWithType: HostFunction.HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, nint, ExtismFunction)
+  nameWithType.vb: HostFunction.New(String, Span(Of ExtismValType), Span(Of ExtismValType), IntPtr, ExtismFunction)
+- uid: Extism.Sdk.HostFunction.#ctor*
+  name: HostFunction
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction__ctor_
+  commentId: Overload:Extism.Sdk.HostFunction.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.HostFunction.HostFunction
+  fullName.vb: Extism.Sdk.HostFunction.New
+  nameWithType: HostFunction.HostFunction
+  nameWithType.vb: HostFunction.New
+- uid: Extism.Sdk.HostFunction.CheckNotDisposed
+  name: CheckNotDisposed()
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_CheckNotDisposed
+  commentId: M:Extism.Sdk.HostFunction.CheckNotDisposed
+  fullName: Extism.Sdk.HostFunction.CheckNotDisposed()
+  nameWithType: HostFunction.CheckNotDisposed()
+- uid: Extism.Sdk.HostFunction.CheckNotDisposed*
+  name: CheckNotDisposed
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_CheckNotDisposed_
+  commentId: Overload:Extism.Sdk.HostFunction.CheckNotDisposed
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.CheckNotDisposed
+  nameWithType: HostFunction.CheckNotDisposed
+- uid: Extism.Sdk.HostFunction.Dispose
+  name: Dispose()
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_Dispose
+  commentId: M:Extism.Sdk.HostFunction.Dispose
+  fullName: Extism.Sdk.HostFunction.Dispose()
+  nameWithType: HostFunction.Dispose()
+- uid: Extism.Sdk.HostFunction.Dispose(System.Boolean)
+  name: Dispose(bool)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_Dispose_System_Boolean_
+  commentId: M:Extism.Sdk.HostFunction.Dispose(System.Boolean)
+  name.vb: Dispose(Boolean)
+  fullName: Extism.Sdk.HostFunction.Dispose(bool)
+  fullName.vb: Extism.Sdk.HostFunction.Dispose(Boolean)
+  nameWithType: HostFunction.Dispose(bool)
+  nameWithType.vb: HostFunction.Dispose(Boolean)
+- uid: Extism.Sdk.HostFunction.Dispose*
+  name: Dispose
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_Dispose_
+  commentId: Overload:Extism.Sdk.HostFunction.Dispose
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.Dispose
+  nameWithType: HostFunction.Dispose
+- uid: Extism.Sdk.HostFunction.Finalize
+  name: ~HostFunction()
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_Finalize
+  commentId: M:Extism.Sdk.HostFunction.Finalize
+  name.vb: ''
+  fullName: Extism.Sdk.HostFunction.~HostFunction()
+  fullName.vb: ''
+  nameWithType: HostFunction.~HostFunction()
+  nameWithType.vb: ''
+- uid: Extism.Sdk.HostFunction.Finalize*
+  name: ~HostFunction
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_Finalize_
+  commentId: Overload:Extism.Sdk.HostFunction.Finalize
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.~HostFunction
+  nameWithType: HostFunction.~HostFunction
+- uid: Extism.Sdk.HostFunction.FromMethod(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin})
+  name: FromMethod(string, nint, Action<CurrentPlugin>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin})
+  name.vb: FromMethod(String, IntPtr, Action(Of CurrentPlugin))
+  fullName: Extism.Sdk.HostFunction.FromMethod(string, nint, System.Action<Extism.Sdk.CurrentPlugin>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin))
+  nameWithType: HostFunction.FromMethod(string, nint, Action<CurrentPlugin>)
+  nameWithType.vb: HostFunction.FromMethod(String, IntPtr, Action(Of CurrentPlugin))
+- uid: Extism.Sdk.HostFunction.FromMethod*
+  name: FromMethod
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod_
+  commentId: Overload:Extism.Sdk.HostFunction.FromMethod
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.FromMethod
+  nameWithType: HostFunction.FromMethod
+- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0})
+  name: FromMethod<I1>(string, nint, Action<CurrentPlugin, I1>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0})
+  name.vb: FromMethod(Of I1)(String, IntPtr, Action(Of CurrentPlugin, I1))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1))
+  nameWithType: HostFunction.FromMethod<I1>(string, nint, Action<CurrentPlugin, I1>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1)(String, IntPtr, Action(Of CurrentPlugin, I1))
+- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0})
+  name: FromMethod<R>(string, nint, Func<CurrentPlugin, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0})
+  name.vb: FromMethod(Of R)(String, IntPtr, Func(Of CurrentPlugin, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, R))
+  nameWithType: HostFunction.FromMethod<R>(string, nint, Func<CurrentPlugin, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of R)(String, IntPtr, Func(Of CurrentPlugin, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
+  name: FromMethod<I1, I2>(string, nint, Action<CurrentPlugin, I1, I2>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0___1__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
+  name.vb: FromMethod(Of I1, I2)(String, IntPtr, Action(Of CurrentPlugin, I1, I2))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1, I2>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2))
+  nameWithType: HostFunction.FromMethod<I1, I2>(string, nint, Action<CurrentPlugin, I1, I2>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2)(String, IntPtr, Action(Of CurrentPlugin, I1, I2))
+- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
+  name: FromMethod<I1, R>(string, nint, Func<CurrentPlugin, I1, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
+  name.vb: FromMethod(Of I1, R)(String, IntPtr, Func(Of CurrentPlugin, I1, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, R))
+  nameWithType: HostFunction.FromMethod<I1, R>(string, nint, Func<CurrentPlugin, I1, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, R)(String, IntPtr, Func(Of CurrentPlugin, I1, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name: FromMethod<I1, I2, I3>(string, nint, Action<CurrentPlugin, I1, I2, I3>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0___1___2__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name.vb: FromMethod(Of I1, I2, I3)(String, IntPtr, Action(Of CurrentPlugin, I1, I2, I3))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1, I2, I3>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2, I3))
+  nameWithType: HostFunction.FromMethod<I1, I2, I3>(string, nint, Action<CurrentPlugin, I1, I2, I3>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3)(String, IntPtr, Action(Of CurrentPlugin, I1, I2, I3))
+- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name: FromMethod<I1, I2, R>(string, nint, Func<CurrentPlugin, I1, I2, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1___2__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name.vb: FromMethod(Of I1, I2, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, R))
+  nameWithType: HostFunction.FromMethod<I1, I2, R>(string, nint, Func<CurrentPlugin, I1, I2, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``4(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
+  name: FromMethod<I1, I2, I3, R>(string, nint, Func<CurrentPlugin, I1, I2, I3, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__4_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1___2___3__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``4(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
+  name.vb: FromMethod(Of I1, I2, I3, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, I3, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, I3, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, I3, R))
+  nameWithType: HostFunction.FromMethod<I1, I2, I3, R>(string, nint, Func<CurrentPlugin, I1, I2, I3, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, I3, R))
+- uid: Extism.Sdk.HostFunction.SetNamespace(System.String)
+  name: SetNamespace(string)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_SetNamespace_System_String_
+  commentId: M:Extism.Sdk.HostFunction.SetNamespace(System.String)
+  name.vb: SetNamespace(String)
+  fullName: Extism.Sdk.HostFunction.SetNamespace(string)
+  fullName.vb: Extism.Sdk.HostFunction.SetNamespace(String)
+  nameWithType: HostFunction.SetNamespace(string)
+  nameWithType.vb: HostFunction.SetNamespace(String)
+- uid: Extism.Sdk.HostFunction.SetNamespace*
+  name: SetNamespace
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_SetNamespace_
+  commentId: Overload:Extism.Sdk.HostFunction.SetNamespace
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.SetNamespace
+  nameWithType: HostFunction.SetNamespace
+- uid: Extism.Sdk.HostFunction.WithNamespace(System.String)
+  name: WithNamespace(string)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_WithNamespace_System_String_
+  commentId: M:Extism.Sdk.HostFunction.WithNamespace(System.String)
+  name.vb: WithNamespace(String)
+  fullName: Extism.Sdk.HostFunction.WithNamespace(string)
+  fullName.vb: Extism.Sdk.HostFunction.WithNamespace(String)
+  nameWithType: HostFunction.WithNamespace(string)
+  nameWithType.vb: HostFunction.WithNamespace(String)
+- uid: Extism.Sdk.HostFunction.WithNamespace*
+  name: WithNamespace
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_WithNamespace_
+  commentId: Overload:Extism.Sdk.HostFunction.WithNamespace
+  isSpec: "True"
+  fullName: Extism.Sdk.HostFunction.WithNamespace
+  nameWithType: HostFunction.WithNamespace
+- uid: Extism.Sdk.HttpMethod
+  name: HttpMethod
+  href: api/Extism.Sdk.HttpMethod.html
+  commentId: T:Extism.Sdk.HttpMethod
+  fullName: Extism.Sdk.HttpMethod
+  nameWithType: HttpMethod
+- uid: Extism.Sdk.HttpMethod.CONNECT
+  name: CONNECT
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_CONNECT
+  commentId: F:Extism.Sdk.HttpMethod.CONNECT
+  fullName: Extism.Sdk.HttpMethod.CONNECT
+  nameWithType: HttpMethod.CONNECT
+- uid: Extism.Sdk.HttpMethod.DELETE
+  name: DELETE
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_DELETE
+  commentId: F:Extism.Sdk.HttpMethod.DELETE
+  fullName: Extism.Sdk.HttpMethod.DELETE
+  nameWithType: HttpMethod.DELETE
+- uid: Extism.Sdk.HttpMethod.GET
+  name: GET
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_GET
+  commentId: F:Extism.Sdk.HttpMethod.GET
+  fullName: Extism.Sdk.HttpMethod.GET
+  nameWithType: HttpMethod.GET
+- uid: Extism.Sdk.HttpMethod.HEAD
+  name: HEAD
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_HEAD
+  commentId: F:Extism.Sdk.HttpMethod.HEAD
+  fullName: Extism.Sdk.HttpMethod.HEAD
+  nameWithType: HttpMethod.HEAD
+- uid: Extism.Sdk.HttpMethod.OPTIONS
+  name: OPTIONS
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_OPTIONS
+  commentId: F:Extism.Sdk.HttpMethod.OPTIONS
+  fullName: Extism.Sdk.HttpMethod.OPTIONS
+  nameWithType: HttpMethod.OPTIONS
+- uid: Extism.Sdk.HttpMethod.PATCH
+  name: PATCH
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_PATCH
+  commentId: F:Extism.Sdk.HttpMethod.PATCH
+  fullName: Extism.Sdk.HttpMethod.PATCH
+  nameWithType: HttpMethod.PATCH
+- uid: Extism.Sdk.HttpMethod.POST
+  name: POST
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_POST
+  commentId: F:Extism.Sdk.HttpMethod.POST
+  fullName: Extism.Sdk.HttpMethod.POST
+  nameWithType: HttpMethod.POST
+- uid: Extism.Sdk.HttpMethod.PUT
+  name: PUT
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_PUT
+  commentId: F:Extism.Sdk.HttpMethod.PUT
+  fullName: Extism.Sdk.HttpMethod.PUT
+  nameWithType: HttpMethod.PUT
+- uid: Extism.Sdk.HttpMethod.TRACE
+  name: TRACE
+  href: api/Extism.Sdk.HttpMethod.html#Extism_Sdk_HttpMethod_TRACE
+  commentId: F:Extism.Sdk.HttpMethod.TRACE
+  fullName: Extism.Sdk.HttpMethod.TRACE
+  nameWithType: HttpMethod.TRACE
+- uid: Extism.Sdk.LogLevel
+  name: LogLevel
+  href: api/Extism.Sdk.LogLevel.html
+  commentId: T:Extism.Sdk.LogLevel
+  fullName: Extism.Sdk.LogLevel
+  nameWithType: LogLevel
+- uid: Extism.Sdk.LogLevel.Debug
+  name: Debug
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Debug
+  commentId: F:Extism.Sdk.LogLevel.Debug
+  fullName: Extism.Sdk.LogLevel.Debug
+  nameWithType: LogLevel.Debug
+- uid: Extism.Sdk.LogLevel.Error
+  name: Error
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Error
+  commentId: F:Extism.Sdk.LogLevel.Error
+  fullName: Extism.Sdk.LogLevel.Error
+  nameWithType: LogLevel.Error
+- uid: Extism.Sdk.LogLevel.Info
+  name: Info
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Info
+  commentId: F:Extism.Sdk.LogLevel.Info
+  fullName: Extism.Sdk.LogLevel.Info
+  nameWithType: LogLevel.Info
+- uid: Extism.Sdk.LogLevel.Trace
+  name: Trace
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Trace
+  commentId: F:Extism.Sdk.LogLevel.Trace
+  fullName: Extism.Sdk.LogLevel.Trace
+  nameWithType: LogLevel.Trace
+- uid: Extism.Sdk.LogLevel.Warning
+  name: Warning
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Warning
+  commentId: F:Extism.Sdk.LogLevel.Warning
+  fullName: Extism.Sdk.LogLevel.Warning
+  nameWithType: LogLevel.Warning
+- uid: Extism.Sdk.Manifest
+  name: Manifest
+  href: api/Extism.Sdk.Manifest.html
+  commentId: T:Extism.Sdk.Manifest
+  fullName: Extism.Sdk.Manifest
+  nameWithType: Manifest
+- uid: Extism.Sdk.Manifest.#ctor
+  name: Manifest()
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest__ctor
+  commentId: M:Extism.Sdk.Manifest.#ctor
+  name.vb: New()
+  fullName: Extism.Sdk.Manifest.Manifest()
+  fullName.vb: Extism.Sdk.Manifest.New()
+  nameWithType: Manifest.Manifest()
+  nameWithType.vb: Manifest.New()
+- uid: Extism.Sdk.Manifest.#ctor(Extism.Sdk.WasmSource[])
+  name: Manifest(params WasmSource[])
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest__ctor_Extism_Sdk_WasmSource___
+  commentId: M:Extism.Sdk.Manifest.#ctor(Extism.Sdk.WasmSource[])
+  name.vb: New(ParamArray WasmSource())
+  fullName: Extism.Sdk.Manifest.Manifest(params Extism.Sdk.WasmSource[])
+  fullName.vb: Extism.Sdk.Manifest.New(ParamArray Extism.Sdk.WasmSource())
+  nameWithType: Manifest.Manifest(params WasmSource[])
+  nameWithType.vb: Manifest.New(ParamArray WasmSource())
+- uid: Extism.Sdk.Manifest.#ctor*
+  name: Manifest
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest__ctor_
+  commentId: Overload:Extism.Sdk.Manifest.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.Manifest.Manifest
+  fullName.vb: Extism.Sdk.Manifest.New
+  nameWithType: Manifest.Manifest
+  nameWithType.vb: Manifest.New
+- uid: Extism.Sdk.Manifest.AllowedHosts
+  name: AllowedHosts
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_AllowedHosts
+  commentId: P:Extism.Sdk.Manifest.AllowedHosts
+  fullName: Extism.Sdk.Manifest.AllowedHosts
+  nameWithType: Manifest.AllowedHosts
+- uid: Extism.Sdk.Manifest.AllowedHosts*
+  name: AllowedHosts
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_AllowedHosts_
+  commentId: Overload:Extism.Sdk.Manifest.AllowedHosts
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.AllowedHosts
+  nameWithType: Manifest.AllowedHosts
+- uid: Extism.Sdk.Manifest.AllowedPaths
+  name: AllowedPaths
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_AllowedPaths
+  commentId: P:Extism.Sdk.Manifest.AllowedPaths
+  fullName: Extism.Sdk.Manifest.AllowedPaths
+  nameWithType: Manifest.AllowedPaths
+- uid: Extism.Sdk.Manifest.AllowedPaths*
+  name: AllowedPaths
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_AllowedPaths_
+  commentId: Overload:Extism.Sdk.Manifest.AllowedPaths
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.AllowedPaths
+  nameWithType: Manifest.AllowedPaths
+- uid: Extism.Sdk.Manifest.Config
+  name: Config
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Config
+  commentId: P:Extism.Sdk.Manifest.Config
+  fullName: Extism.Sdk.Manifest.Config
+  nameWithType: Manifest.Config
+- uid: Extism.Sdk.Manifest.Config*
+  name: Config
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Config_
+  commentId: Overload:Extism.Sdk.Manifest.Config
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.Config
+  nameWithType: Manifest.Config
+- uid: Extism.Sdk.Manifest.MemoryOptions
+  name: MemoryOptions
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_MemoryOptions
+  commentId: P:Extism.Sdk.Manifest.MemoryOptions
+  fullName: Extism.Sdk.Manifest.MemoryOptions
+  nameWithType: Manifest.MemoryOptions
+- uid: Extism.Sdk.Manifest.MemoryOptions*
+  name: MemoryOptions
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_MemoryOptions_
+  commentId: Overload:Extism.Sdk.Manifest.MemoryOptions
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.MemoryOptions
+  nameWithType: Manifest.MemoryOptions
+- uid: Extism.Sdk.Manifest.Sources
+  name: Sources
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Sources
+  commentId: P:Extism.Sdk.Manifest.Sources
+  fullName: Extism.Sdk.Manifest.Sources
+  nameWithType: Manifest.Sources
+- uid: Extism.Sdk.Manifest.Sources*
+  name: Sources
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Sources_
+  commentId: Overload:Extism.Sdk.Manifest.Sources
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.Sources
+  nameWithType: Manifest.Sources
+- uid: Extism.Sdk.Manifest.Timeout
+  name: Timeout
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Timeout
+  commentId: P:Extism.Sdk.Manifest.Timeout
+  fullName: Extism.Sdk.Manifest.Timeout
+  nameWithType: Manifest.Timeout
+- uid: Extism.Sdk.Manifest.Timeout*
+  name: Timeout
+  href: api/Extism.Sdk.Manifest.html#Extism_Sdk_Manifest_Timeout_
+  commentId: Overload:Extism.Sdk.Manifest.Timeout
+  isSpec: "True"
+  fullName: Extism.Sdk.Manifest.Timeout
+  nameWithType: Manifest.Timeout
+- uid: Extism.Sdk.MemoryOptions
+  name: MemoryOptions
+  href: api/Extism.Sdk.MemoryOptions.html
+  commentId: T:Extism.Sdk.MemoryOptions
+  fullName: Extism.Sdk.MemoryOptions
+  nameWithType: MemoryOptions
+- uid: Extism.Sdk.MemoryOptions.MaxPages
+  name: MaxPages
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxPages
+  commentId: P:Extism.Sdk.MemoryOptions.MaxPages
+  fullName: Extism.Sdk.MemoryOptions.MaxPages
+  nameWithType: MemoryOptions.MaxPages
+- uid: Extism.Sdk.MemoryOptions.MaxPages*
+  name: MaxPages
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxPages_
+  commentId: Overload:Extism.Sdk.MemoryOptions.MaxPages
+  isSpec: "True"
+  fullName: Extism.Sdk.MemoryOptions.MaxPages
+  nameWithType: MemoryOptions.MaxPages
+- uid: Extism.Sdk.Native
+  name: Extism.Sdk.Native
+  href: api/Extism.Sdk.Native.html
+  commentId: N:Extism.Sdk.Native
+  fullName: Extism.Sdk.Native
+  nameWithType: Extism.Sdk.Native
+- uid: Extism.Sdk.Native.ExtismVal
+  name: ExtismVal
+  href: api/Extism.Sdk.Native.ExtismVal.html
+  commentId: T:Extism.Sdk.Native.ExtismVal
+  fullName: Extism.Sdk.Native.ExtismVal
+  nameWithType: ExtismVal
+- uid: Extism.Sdk.Native.ExtismVal.t
+  name: t
+  href: api/Extism.Sdk.Native.ExtismVal.html#Extism_Sdk_Native_ExtismVal_t
+  commentId: F:Extism.Sdk.Native.ExtismVal.t
+  fullName: Extism.Sdk.Native.ExtismVal.t
+  nameWithType: ExtismVal.t
+- uid: Extism.Sdk.Native.ExtismVal.v
+  name: v
+  href: api/Extism.Sdk.Native.ExtismVal.html#Extism_Sdk_Native_ExtismVal_v
+  commentId: F:Extism.Sdk.Native.ExtismVal.v
+  fullName: Extism.Sdk.Native.ExtismVal.v
+  nameWithType: ExtismVal.v
+- uid: Extism.Sdk.Native.ExtismValType
+  name: ExtismValType
+  href: api/Extism.Sdk.Native.ExtismValType.html
+  commentId: T:Extism.Sdk.Native.ExtismValType
+  fullName: Extism.Sdk.Native.ExtismValType
+  nameWithType: ExtismValType
+- uid: Extism.Sdk.Native.ExtismValType.ExternRef
+  name: ExternRef
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_ExternRef
+  commentId: F:Extism.Sdk.Native.ExtismValType.ExternRef
+  fullName: Extism.Sdk.Native.ExtismValType.ExternRef
+  nameWithType: ExtismValType.ExternRef
+- uid: Extism.Sdk.Native.ExtismValType.F32
+  name: F32
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_F32
+  commentId: F:Extism.Sdk.Native.ExtismValType.F32
+  fullName: Extism.Sdk.Native.ExtismValType.F32
+  nameWithType: ExtismValType.F32
+- uid: Extism.Sdk.Native.ExtismValType.F64
+  name: F64
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_F64
+  commentId: F:Extism.Sdk.Native.ExtismValType.F64
+  fullName: Extism.Sdk.Native.ExtismValType.F64
+  nameWithType: ExtismValType.F64
+- uid: Extism.Sdk.Native.ExtismValType.FuncRef
+  name: FuncRef
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_FuncRef
+  commentId: F:Extism.Sdk.Native.ExtismValType.FuncRef
+  fullName: Extism.Sdk.Native.ExtismValType.FuncRef
+  nameWithType: ExtismValType.FuncRef
+- uid: Extism.Sdk.Native.ExtismValType.I32
+  name: I32
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_I32
+  commentId: F:Extism.Sdk.Native.ExtismValType.I32
+  fullName: Extism.Sdk.Native.ExtismValType.I32
+  nameWithType: ExtismValType.I32
+- uid: Extism.Sdk.Native.ExtismValType.I64
+  name: I64
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_I64
+  commentId: F:Extism.Sdk.Native.ExtismValType.I64
+  fullName: Extism.Sdk.Native.ExtismValType.I64
+  nameWithType: ExtismValType.I64
+- uid: Extism.Sdk.Native.ExtismValType.PTR
+  name: PTR
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_PTR
+  commentId: F:Extism.Sdk.Native.ExtismValType.PTR
+  fullName: Extism.Sdk.Native.ExtismValType.PTR
+  nameWithType: ExtismValType.PTR
+- uid: Extism.Sdk.Native.ExtismValType.V128
+  name: V128
+  href: api/Extism.Sdk.Native.ExtismValType.html#Extism_Sdk_Native_ExtismValType_V128
+  commentId: F:Extism.Sdk.Native.ExtismValType.V128
+  fullName: Extism.Sdk.Native.ExtismValType.V128
+  nameWithType: ExtismValType.V128
+- uid: Extism.Sdk.Native.ExtismValUnion
+  name: ExtismValUnion
+  href: api/Extism.Sdk.Native.ExtismValUnion.html
+  commentId: T:Extism.Sdk.Native.ExtismValUnion
+  fullName: Extism.Sdk.Native.ExtismValUnion
+  nameWithType: ExtismValUnion
+- uid: Extism.Sdk.Native.ExtismValUnion.f32
+  name: f32
+  href: api/Extism.Sdk.Native.ExtismValUnion.html#Extism_Sdk_Native_ExtismValUnion_f32
+  commentId: F:Extism.Sdk.Native.ExtismValUnion.f32
+  fullName: Extism.Sdk.Native.ExtismValUnion.f32
+  nameWithType: ExtismValUnion.f32
+- uid: Extism.Sdk.Native.ExtismValUnion.f64
+  name: f64
+  href: api/Extism.Sdk.Native.ExtismValUnion.html#Extism_Sdk_Native_ExtismValUnion_f64
+  commentId: F:Extism.Sdk.Native.ExtismValUnion.f64
+  fullName: Extism.Sdk.Native.ExtismValUnion.f64
+  nameWithType: ExtismValUnion.f64
+- uid: Extism.Sdk.Native.ExtismValUnion.i32
+  name: i32
+  href: api/Extism.Sdk.Native.ExtismValUnion.html#Extism_Sdk_Native_ExtismValUnion_i32
+  commentId: F:Extism.Sdk.Native.ExtismValUnion.i32
+  fullName: Extism.Sdk.Native.ExtismValUnion.i32
+  nameWithType: ExtismValUnion.i32
+- uid: Extism.Sdk.Native.ExtismValUnion.i64
+  name: i64
+  href: api/Extism.Sdk.Native.ExtismValUnion.html#Extism_Sdk_Native_ExtismValUnion_i64
+  commentId: F:Extism.Sdk.Native.ExtismValUnion.i64
+  fullName: Extism.Sdk.Native.ExtismValUnion.i64
+  nameWithType: ExtismValUnion.i64
+- uid: Extism.Sdk.Native.ExtismValUnion.ptr
+  name: ptr
+  href: api/Extism.Sdk.Native.ExtismValUnion.html#Extism_Sdk_Native_ExtismValUnion_ptr
+  commentId: F:Extism.Sdk.Native.ExtismValUnion.ptr
+  fullName: Extism.Sdk.Native.ExtismValUnion.ptr
+  nameWithType: ExtismValUnion.ptr
+- uid: Extism.Sdk.PathWasmSource
+  name: PathWasmSource
+  href: api/Extism.Sdk.PathWasmSource.html
+  commentId: T:Extism.Sdk.PathWasmSource
+  fullName: Extism.Sdk.PathWasmSource
+  nameWithType: PathWasmSource
+- uid: Extism.Sdk.PathWasmSource.#ctor(System.String,System.String,System.String)
+  name: PathWasmSource(string, string?, string?)
+  href: api/Extism.Sdk.PathWasmSource.html#Extism_Sdk_PathWasmSource__ctor_System_String_System_String_System_String_
+  commentId: M:Extism.Sdk.PathWasmSource.#ctor(System.String,System.String,System.String)
+  name.vb: New(String, String, String)
+  fullName: Extism.Sdk.PathWasmSource.PathWasmSource(string, string?, string?)
+  fullName.vb: Extism.Sdk.PathWasmSource.New(String, String, String)
+  nameWithType: PathWasmSource.PathWasmSource(string, string?, string?)
+  nameWithType.vb: PathWasmSource.New(String, String, String)
+- uid: Extism.Sdk.PathWasmSource.#ctor*
+  name: PathWasmSource
+  href: api/Extism.Sdk.PathWasmSource.html#Extism_Sdk_PathWasmSource__ctor_
+  commentId: Overload:Extism.Sdk.PathWasmSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.PathWasmSource.PathWasmSource
+  fullName.vb: Extism.Sdk.PathWasmSource.New
+  nameWithType: PathWasmSource.PathWasmSource
+  nameWithType.vb: PathWasmSource.New
+- uid: Extism.Sdk.PathWasmSource.Path
+  name: Path
+  href: api/Extism.Sdk.PathWasmSource.html#Extism_Sdk_PathWasmSource_Path
+  commentId: P:Extism.Sdk.PathWasmSource.Path
+  fullName: Extism.Sdk.PathWasmSource.Path
+  nameWithType: PathWasmSource.Path
+- uid: Extism.Sdk.PathWasmSource.Path*
+  name: Path
+  href: api/Extism.Sdk.PathWasmSource.html#Extism_Sdk_PathWasmSource_Path_
+  commentId: Overload:Extism.Sdk.PathWasmSource.Path
+  isSpec: "True"
+  fullName: Extism.Sdk.PathWasmSource.Path
+  nameWithType: PathWasmSource.Path
+- uid: Extism.Sdk.Plugin
+  name: Plugin
+  href: api/Extism.Sdk.Plugin.html
+  commentId: T:Extism.Sdk.Plugin
+  fullName: Extism.Sdk.Plugin
+  nameWithType: Plugin
+- uid: Extism.Sdk.Plugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
+  name: Plugin(Manifest, HostFunction[], bool)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___System_Boolean_
+  commentId: M:Extism.Sdk.Plugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
+  name.vb: New(Manifest, HostFunction(), Boolean)
+  fullName: Extism.Sdk.Plugin.Plugin(Extism.Sdk.Manifest, Extism.Sdk.HostFunction[], bool)
+  fullName.vb: Extism.Sdk.Plugin.New(Extism.Sdk.Manifest, Extism.Sdk.HostFunction(), Boolean)
+  nameWithType: Plugin.Plugin(Manifest, HostFunction[], bool)
+  nameWithType.vb: Plugin.New(Manifest, HostFunction(), Boolean)
+- uid: Extism.Sdk.Plugin.#ctor(System.ReadOnlySpan{System.Byte},Extism.Sdk.HostFunction[],System.Boolean)
+  name: Plugin(ReadOnlySpan<byte>, HostFunction[], bool)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin__ctor_System_ReadOnlySpan_System_Byte__Extism_Sdk_HostFunction___System_Boolean_
+  commentId: M:Extism.Sdk.Plugin.#ctor(System.ReadOnlySpan{System.Byte},Extism.Sdk.HostFunction[],System.Boolean)
+  name.vb: New(ReadOnlySpan(Of Byte), HostFunction(), Boolean)
+  fullName: Extism.Sdk.Plugin.Plugin(System.ReadOnlySpan<byte>, Extism.Sdk.HostFunction[], bool)
+  fullName.vb: Extism.Sdk.Plugin.New(System.ReadOnlySpan(Of Byte), Extism.Sdk.HostFunction(), Boolean)
+  nameWithType: Plugin.Plugin(ReadOnlySpan<byte>, HostFunction[], bool)
+  nameWithType.vb: Plugin.New(ReadOnlySpan(Of Byte), HostFunction(), Boolean)
+- uid: Extism.Sdk.Plugin.#ctor*
+  name: Plugin
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin__ctor_
+  commentId: Overload:Extism.Sdk.Plugin.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.Plugin.Plugin
+  fullName.vb: Extism.Sdk.Plugin.New
+  nameWithType: Plugin.Plugin
+  nameWithType.vb: Plugin.New
+- uid: Extism.Sdk.Plugin.Call(System.String,System.ReadOnlySpan{System.Byte},System.Nullable{System.Threading.CancellationToken})
+  name: Call(string, ReadOnlySpan<byte>, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call_System_String_System_ReadOnlySpan_System_Byte__System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call(System.String,System.ReadOnlySpan{System.Byte},System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(String, ReadOnlySpan(Of Byte), CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call(string, System.ReadOnlySpan<byte>, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(String, System.ReadOnlySpan(Of Byte), System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call(string, ReadOnlySpan<byte>, CancellationToken?)
+  nameWithType.vb: Plugin.Call(String, ReadOnlySpan(Of Byte), CancellationToken?)
+- uid: Extism.Sdk.Plugin.Call(System.String,System.String,System.Nullable{System.Threading.CancellationToken})
+  name: Call(string, string, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call_System_String_System_String_System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call(System.String,System.String,System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(String, String, CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call(string, string, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(String, String, System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call(string, string, CancellationToken?)
+  nameWithType.vb: Plugin.Call(String, String, CancellationToken?)
+- uid: Extism.Sdk.Plugin.Call*
+  name: Call
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call_
+  commentId: Overload:Extism.Sdk.Plugin.Call
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.Call
+  nameWithType: Plugin.Call
+- uid: Extism.Sdk.Plugin.Call``1(System.String,System.String,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
+  name: Call<TOutput>(string, string, JsonSerializerOptions?, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__1_System_String_System_String_System_Text_Json_JsonSerializerOptions_System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call``1(System.String,System.String,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(Of TOutput)(String, String, JsonSerializerOptions, CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call<TOutput>(string, string, System.Text.Json.JsonSerializerOptions?, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(Of TOutput)(String, String, System.Text.Json.JsonSerializerOptions, System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call<TOutput>(string, string, JsonSerializerOptions?, CancellationToken?)
+  nameWithType.vb: Plugin.Call(Of TOutput)(String, String, JsonSerializerOptions, CancellationToken?)
+- uid: Extism.Sdk.Plugin.Call``2(System.String,``0,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
+  name: Call<TInput, TOutput>(string, TInput, JsonSerializerOptions?, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__2_System_String___0_System_Text_Json_JsonSerializerOptions_System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call``2(System.String,``0,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(Of TInput, TOutput)(String, TInput, JsonSerializerOptions, CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call<TInput, TOutput>(string, TInput, System.Text.Json.JsonSerializerOptions?, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(Of TInput, TOutput)(String, TInput, System.Text.Json.JsonSerializerOptions, System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call<TInput, TOutput>(string, TInput, JsonSerializerOptions?, CancellationToken?)
+  nameWithType.vb: Plugin.Call(Of TInput, TOutput)(String, TInput, JsonSerializerOptions, CancellationToken?)
+- uid: Extism.Sdk.Plugin.CheckNotDisposed
+  name: CheckNotDisposed()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_CheckNotDisposed
+  commentId: M:Extism.Sdk.Plugin.CheckNotDisposed
+  fullName: Extism.Sdk.Plugin.CheckNotDisposed()
+  nameWithType: Plugin.CheckNotDisposed()
+- uid: Extism.Sdk.Plugin.CheckNotDisposed*
+  name: CheckNotDisposed
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_CheckNotDisposed_
+  commentId: Overload:Extism.Sdk.Plugin.CheckNotDisposed
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.CheckNotDisposed
+  nameWithType: Plugin.CheckNotDisposed
+- uid: Extism.Sdk.Plugin.Dispose
+  name: Dispose()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Dispose
+  commentId: M:Extism.Sdk.Plugin.Dispose
+  fullName: Extism.Sdk.Plugin.Dispose()
+  nameWithType: Plugin.Dispose()
+- uid: Extism.Sdk.Plugin.Dispose(System.Boolean)
+  name: Dispose(bool)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Dispose_System_Boolean_
+  commentId: M:Extism.Sdk.Plugin.Dispose(System.Boolean)
+  name.vb: Dispose(Boolean)
+  fullName: Extism.Sdk.Plugin.Dispose(bool)
+  fullName.vb: Extism.Sdk.Plugin.Dispose(Boolean)
+  nameWithType: Plugin.Dispose(bool)
+  nameWithType.vb: Plugin.Dispose(Boolean)
+- uid: Extism.Sdk.Plugin.Dispose*
+  name: Dispose
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Dispose_
+  commentId: Overload:Extism.Sdk.Plugin.Dispose
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.Dispose
+  nameWithType: Plugin.Dispose
+- uid: Extism.Sdk.Plugin.ExtismVersion
+  name: ExtismVersion()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ExtismVersion
+  commentId: M:Extism.Sdk.Plugin.ExtismVersion
+  fullName: Extism.Sdk.Plugin.ExtismVersion()
+  nameWithType: Plugin.ExtismVersion()
+- uid: Extism.Sdk.Plugin.ExtismVersion*
+  name: ExtismVersion
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ExtismVersion_
+  commentId: Overload:Extism.Sdk.Plugin.ExtismVersion
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.ExtismVersion
+  nameWithType: Plugin.ExtismVersion
+- uid: Extism.Sdk.Plugin.Finalize
+  name: ~Plugin()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Finalize
+  commentId: M:Extism.Sdk.Plugin.Finalize
+  name.vb: ''
+  fullName: Extism.Sdk.Plugin.~Plugin()
+  fullName.vb: ''
+  nameWithType: Plugin.~Plugin()
+  nameWithType.vb: ''
+- uid: Extism.Sdk.Plugin.Finalize*
+  name: ~Plugin
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Finalize_
+  commentId: Overload:Extism.Sdk.Plugin.Finalize
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.~Plugin
+  nameWithType: Plugin.~Plugin
+- uid: Extism.Sdk.Plugin.FunctionExists(System.String)
+  name: FunctionExists(string)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_FunctionExists_System_String_
+  commentId: M:Extism.Sdk.Plugin.FunctionExists(System.String)
+  name.vb: FunctionExists(String)
+  fullName: Extism.Sdk.Plugin.FunctionExists(string)
+  fullName.vb: Extism.Sdk.Plugin.FunctionExists(String)
+  nameWithType: Plugin.FunctionExists(string)
+  nameWithType.vb: Plugin.FunctionExists(String)
+- uid: Extism.Sdk.Plugin.FunctionExists*
+  name: FunctionExists
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_FunctionExists_
+  commentId: Overload:Extism.Sdk.Plugin.FunctionExists
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.FunctionExists
+  nameWithType: Plugin.FunctionExists
+- uid: Extism.Sdk.Plugin.UpdateConfig(System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Json.JsonSerializerOptions)
+  name: UpdateConfig(Dictionary<string, string>, JsonSerializerOptions)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_UpdateConfig_System_Collections_Generic_Dictionary_System_String_System_String__System_Text_Json_JsonSerializerOptions_
+  commentId: M:Extism.Sdk.Plugin.UpdateConfig(System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Json.JsonSerializerOptions)
+  name.vb: UpdateConfig(Dictionary(Of String, String), JsonSerializerOptions)
+  fullName: Extism.Sdk.Plugin.UpdateConfig(System.Collections.Generic.Dictionary<string, string>, System.Text.Json.JsonSerializerOptions)
+  fullName.vb: Extism.Sdk.Plugin.UpdateConfig(System.Collections.Generic.Dictionary(Of String, String), System.Text.Json.JsonSerializerOptions)
+  nameWithType: Plugin.UpdateConfig(Dictionary<string, string>, JsonSerializerOptions)
+  nameWithType.vb: Plugin.UpdateConfig(Dictionary(Of String, String), JsonSerializerOptions)
+- uid: Extism.Sdk.Plugin.UpdateConfig(System.ReadOnlySpan{System.Byte})
+  name: UpdateConfig(ReadOnlySpan<byte>)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_UpdateConfig_System_ReadOnlySpan_System_Byte__
+  commentId: M:Extism.Sdk.Plugin.UpdateConfig(System.ReadOnlySpan{System.Byte})
+  name.vb: UpdateConfig(ReadOnlySpan(Of Byte))
+  fullName: Extism.Sdk.Plugin.UpdateConfig(System.ReadOnlySpan<byte>)
+  fullName.vb: Extism.Sdk.Plugin.UpdateConfig(System.ReadOnlySpan(Of Byte))
+  nameWithType: Plugin.UpdateConfig(ReadOnlySpan<byte>)
+  nameWithType.vb: Plugin.UpdateConfig(ReadOnlySpan(Of Byte))
+- uid: Extism.Sdk.Plugin.UpdateConfig*
+  name: UpdateConfig
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_UpdateConfig_
+  commentId: Overload:Extism.Sdk.Plugin.UpdateConfig
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.UpdateConfig
+  nameWithType: Plugin.UpdateConfig
+- uid: Extism.Sdk.UrlWasmSource
+  name: UrlWasmSource
+  href: api/Extism.Sdk.UrlWasmSource.html
+  commentId: T:Extism.Sdk.UrlWasmSource
+  fullName: Extism.Sdk.UrlWasmSource
+  nameWithType: UrlWasmSource
+- uid: Extism.Sdk.UrlWasmSource.#ctor(System.String,System.String,System.String)
+  name: UrlWasmSource(string, string?, string?)
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource__ctor_System_String_System_String_System_String_
+  commentId: M:Extism.Sdk.UrlWasmSource.#ctor(System.String,System.String,System.String)
+  name.vb: New(String, String, String)
+  fullName: Extism.Sdk.UrlWasmSource.UrlWasmSource(string, string?, string?)
+  fullName.vb: Extism.Sdk.UrlWasmSource.New(String, String, String)
+  nameWithType: UrlWasmSource.UrlWasmSource(string, string?, string?)
+  nameWithType.vb: UrlWasmSource.New(String, String, String)
+- uid: Extism.Sdk.UrlWasmSource.#ctor(System.Uri,System.String,System.String)
+  name: UrlWasmSource(Uri, string?, string?)
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource__ctor_System_Uri_System_String_System_String_
+  commentId: M:Extism.Sdk.UrlWasmSource.#ctor(System.Uri,System.String,System.String)
+  name.vb: New(Uri, String, String)
+  fullName: Extism.Sdk.UrlWasmSource.UrlWasmSource(System.Uri, string?, string?)
+  fullName.vb: Extism.Sdk.UrlWasmSource.New(System.Uri, String, String)
+  nameWithType: UrlWasmSource.UrlWasmSource(Uri, string?, string?)
+  nameWithType.vb: UrlWasmSource.New(Uri, String, String)
+- uid: Extism.Sdk.UrlWasmSource.#ctor*
+  name: UrlWasmSource
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource__ctor_
+  commentId: Overload:Extism.Sdk.UrlWasmSource.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.UrlWasmSource.UrlWasmSource
+  fullName.vb: Extism.Sdk.UrlWasmSource.New
+  nameWithType: UrlWasmSource.UrlWasmSource
+  nameWithType.vb: UrlWasmSource.New
+- uid: Extism.Sdk.UrlWasmSource.Headers
+  name: Headers
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Headers
+  commentId: P:Extism.Sdk.UrlWasmSource.Headers
+  fullName: Extism.Sdk.UrlWasmSource.Headers
+  nameWithType: UrlWasmSource.Headers
+- uid: Extism.Sdk.UrlWasmSource.Headers*
+  name: Headers
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Headers_
+  commentId: Overload:Extism.Sdk.UrlWasmSource.Headers
+  isSpec: "True"
+  fullName: Extism.Sdk.UrlWasmSource.Headers
+  nameWithType: UrlWasmSource.Headers
+- uid: Extism.Sdk.UrlWasmSource.Method
+  name: Method
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Method
+  commentId: P:Extism.Sdk.UrlWasmSource.Method
+  fullName: Extism.Sdk.UrlWasmSource.Method
+  nameWithType: UrlWasmSource.Method
+- uid: Extism.Sdk.UrlWasmSource.Method*
+  name: Method
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Method_
+  commentId: Overload:Extism.Sdk.UrlWasmSource.Method
+  isSpec: "True"
+  fullName: Extism.Sdk.UrlWasmSource.Method
+  nameWithType: UrlWasmSource.Method
+- uid: Extism.Sdk.UrlWasmSource.Url
+  name: Url
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Url
+  commentId: P:Extism.Sdk.UrlWasmSource.Url
+  fullName: Extism.Sdk.UrlWasmSource.Url
+  nameWithType: UrlWasmSource.Url
+- uid: Extism.Sdk.UrlWasmSource.Url*
+  name: Url
+  href: api/Extism.Sdk.UrlWasmSource.html#Extism_Sdk_UrlWasmSource_Url_
+  commentId: Overload:Extism.Sdk.UrlWasmSource.Url
+  isSpec: "True"
+  fullName: Extism.Sdk.UrlWasmSource.Url
+  nameWithType: UrlWasmSource.Url
+- uid: Extism.Sdk.WasmSource
+  name: WasmSource
+  href: api/Extism.Sdk.WasmSource.html
+  commentId: T:Extism.Sdk.WasmSource
+  fullName: Extism.Sdk.WasmSource
+  nameWithType: WasmSource
+- uid: Extism.Sdk.WasmSource.Hash
+  name: Hash
+  href: api/Extism.Sdk.WasmSource.html#Extism_Sdk_WasmSource_Hash
+  commentId: P:Extism.Sdk.WasmSource.Hash
+  fullName: Extism.Sdk.WasmSource.Hash
+  nameWithType: WasmSource.Hash
+- uid: Extism.Sdk.WasmSource.Hash*
+  name: Hash
+  href: api/Extism.Sdk.WasmSource.html#Extism_Sdk_WasmSource_Hash_
+  commentId: Overload:Extism.Sdk.WasmSource.Hash
+  isSpec: "True"
+  fullName: Extism.Sdk.WasmSource.Hash
+  nameWithType: WasmSource.Hash
+- uid: Extism.Sdk.WasmSource.Name
+  name: Name
+  href: api/Extism.Sdk.WasmSource.html#Extism_Sdk_WasmSource_Name
+  commentId: P:Extism.Sdk.WasmSource.Name
+  fullName: Extism.Sdk.WasmSource.Name
+  nameWithType: WasmSource.Name
+- uid: Extism.Sdk.WasmSource.Name*
+  name: Name
+  href: api/Extism.Sdk.WasmSource.html#Extism_Sdk_WasmSource_Name_
+  commentId: Overload:Extism.Sdk.WasmSource.Name
+  isSpec: "True"
+  fullName: Extism.Sdk.WasmSource.Name
+  nameWithType: WasmSource.Name
