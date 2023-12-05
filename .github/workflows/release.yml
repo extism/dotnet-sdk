@@ -1,8 +1,5 @@
 on:
   push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
 
 name: Release .NET SDK
 
