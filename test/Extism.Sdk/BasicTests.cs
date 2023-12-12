@@ -1,5 +1,7 @@
 using Extism.Sdk.Native;
+
 using Shouldly;
+
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -176,6 +178,51 @@ public class BasicTests
 
         var response = plugin.Call("run_test", Encoding.UTF8.GetBytes("Frodo"));
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
+    }
+
+    [Fact]
+    public void FileLog()
+    {
+        var tempFile = Path.GetTempFileName();
+        Plugin.ConfigureFileLogging(tempFile, LogLevel.Warn);
+        using (var plugin = Helpers.LoadPlugin("log.wasm"))
+        {
+            plugin.Call("run_test", Array.Empty<byte>());
+        }
+
+        // HACK: tempFile gets locked by the Extism runtime 
+        var tempFile2 = Path.GetTempFileName();
+        File.Copy(tempFile, tempFile2, true);
+
+        var content = File.ReadAllText(tempFile2);
+        content.ShouldContain("warn");
+        content.ShouldContain("error");
+        content.ShouldNotContain("info");
+        content.ShouldNotContain("debug");
+        content.ShouldNotContain("trace");
+    }
+
+
+    // [Fact]
+    // Interferes with FileLog
+    internal void CustomLog()
+    {
+        var builder = new StringBuilder();
+
+        Plugin.ConfigureCustomLogging(LogLevel.Warn);
+        using (var plugin = Helpers.LoadPlugin("log.wasm"))
+        {
+            plugin.Call("run_test", Array.Empty<byte>());
+        }
+
+        Plugin.DrainCustomLogs(line => builder.AppendLine(line));
+
+        var content = builder.ToString();
+        content.ShouldContain("warn");
+        content.ShouldContain("error");
+        content.ShouldNotContain("info");
+        content.ShouldNotContain("debug");
+        content.ShouldNotContain("trace");
     }
 
     public class CountVowelsResponse
