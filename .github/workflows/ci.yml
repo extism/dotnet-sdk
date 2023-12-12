@@ -33,7 +33,7 @@ jobs:
           repository: 'extism/extism'
           tag: latest
           fileName: 'libextism-x86_64-pc-windows-msvc-main.tar.gz'
-          out-file-path: 'test/Extism.Sdk/bin/Debug/net7.0'
+          out-file-path: 'test/Extism.Sdk/bin/Debug/net8.0'
           extract: true
 
       - name: Setup .NET Core SDK
