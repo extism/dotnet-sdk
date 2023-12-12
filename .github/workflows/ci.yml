@@ -20,22 +20,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      # macOS and Linux
-      - name: Install libextism
-        if: runner.os != 'Windows'
-        uses: ./.github/actions/libextism
-
-      # Windows
-      - name: Download Windows binaries
-        if: runner.os == 'Windows'
-        uses: robinraju/release-downloader@v1.8
-        with:
-          repository: 'extism/extism'
-          tag: latest
-          fileName: 'libextism-x86_64-pc-windows-msvc-main.tar.gz'
-          out-file-path: 'test/Extism.Sdk/bin/Debug/net8.0'
-          extract: true
-
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
