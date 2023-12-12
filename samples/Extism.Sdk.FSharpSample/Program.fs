@@ -1,5 +1,4 @@
 ﻿open Extism.Sdk
-open Extism.Sdk.Native
 open System
 open System.Text
 open System.Collections.Generic
@@ -32,8 +31,8 @@ let functions =
         )
     |]
 
-use plugin = 
-    Plugin(manifest, functions, withWasi = true)
+let plugin = 
+    new Plugin(manifest, functions, withWasi = true)
 
 printfn "plugin created"
 

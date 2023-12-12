@@ -1,8 +1,5 @@
-﻿using System.Security.Cryptography;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using System.Text.Json;
-using System.Text;
-using System.Xml.Linq;
 
 namespace Extism.Sdk
 {
@@ -26,14 +23,17 @@ namespace Extism.Sdk
         /// <param name="sources"></param>
         public Manifest(params WasmSource[] sources)
         {
-            Sources.AddRange(sources);
+            foreach (var source in sources)
+            {
+                Sources.Add(source);
+            }
         }
 
         /// <summary>
         /// List of Wasm sources. See <see cref="PathWasmSource"/> and <see cref="ByteArrayWasmSource"/>.
         /// </summary>
         [JsonPropertyName("wasm")]
-        public List<WasmSource> Sources { get; set; } = new();
+        public IList<WasmSource> Sources { get; set; } = new List<WasmSource>();
 
         /// <summary>
         /// Configures memory for the Wasm runtime.
@@ -53,7 +53,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("allowed_hosts")]
-        public List<string> AllowedHosts { get; set; } = new();
+        public IList<string> AllowedHosts { get; set; } = new List<string>();
 
         /// <summary>
         /// List of directories that can be accessed by the plugins. Examples:
@@ -66,7 +66,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("allowed_paths")]
-        public Dictionary<string, string> AllowedPaths { get; set; } = new();
+        public IDictionary<string, string> AllowedPaths { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Configurations available to the plugins. Examples:
@@ -79,7 +79,7 @@ namespace Extism.Sdk
         /// </code>
         /// </summary>
         [JsonPropertyName("config")]
-        public Dictionary<string, string> Config { get; set; } = new();
+        public IDictionary<string, string> Config { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Plugin call timeout.
@@ -193,11 +193,55 @@ namespace Extism.Sdk
         public HttpMethod? Method { get; set; }
     }
 
+    /// <summary>
+    /// HTTP defines a set of request methods to indicate the desired action to be performed for a given resource.
+    /// </summary>
     public enum HttpMethod
     {
+        /// <summary>
+        /// The GET method requests a representation of the specified resource. Requests using GET should only retrieve data.
+        /// </summary>
         GET,
+
+        /// <summary>
+        /// The HEAD method asks for a response identical to a GET request, but without the response body.
+        /// </summary>
+        HEAD,
+
+        /// <summary>
+        /// The POST method submits an entity to the specified resource, often causing a change in state or side effects on the server.
+        /// </summary>
         POST,
+
+        /// <summary>
+        /// The PUT method replaces all current representations of the target resource with the request payload.
+        /// </summary>
         PUT,
+
+        /// <summary>
+        /// The DELETE method deletes the specified resource.
+        /// </summary>
+        DELETE,
+
+        /// <summary>
+        /// The CONNECT method establishes a tunnel to the server identified by the target resource.
+        /// </summary>
+        CONNECT,
+
+        /// <summary>
+        /// The OPTIONS method describes the communication options for the target resource.
+        /// </summary>
+        OPTIONS,
+
+        /// <summary>
+        /// The TRACE method performs a message loop-back test along the path to the target resource.
+        /// </summary>
+        TRACE,
+
+        /// <summary>
+        /// The PATCH method applies partial modifications to a resource.
+        /// </summary>
+        PATCH,
     }
 
     /// <summary>

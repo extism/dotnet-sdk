@@ -9,13 +9,13 @@ This repo houses the .NET SDK for integrating with the [Extism](https://extism.o
 This library depends on the native Extism runtime, we provide [native runtime packages](https://www.nuget.org/packages/Extism.runtime.all) for all supported operating systems. You can install with:
 <img src="https://img.shields.io/nuget/vpre/Extism.runtime.all" />
 ```
-dotnet add package Extism.runtime.win-64 --prerelease
+dotnet add package Extism.runtime.all --prerelease
 ```
 
 Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) to your project:
 <img src="https://img.shields.io/nuget/vpre/Extism.Sdk" />
 ```
-dotnet add package Extism.Sdk
+dotnet add package Extism.Sdk --prerelease
 ```
 
 ## Getting Started
@@ -27,19 +27,15 @@ First you should add a using statement for Extism:
 C#:
 ```csharp
 using System;
-using System.Text;
 
 using Extism.Sdk;
-using Extism.Sdk.Native;
 ```
 
 F#:
 ```fsharp
 open System
-open System.Text
 
 open Extism.Sdk
-open Extism.Sdk.Native
 ```
 
 ## Creating A Plug-in
@@ -60,8 +56,7 @@ F#:
 let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
 let manifest = Manifest(new UrlWasmSource(uri))
 
-use plugin = 
-    Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
+let plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
 ```
 
 > **Note**: The schema for this manifest can be found here: https://extism.org/docs/concepts/manifest/
@@ -72,17 +67,14 @@ This plug-in was written in Rust and it does one thing, it counts vowels in a st
 
 C#:
 ```csharp
-var inputBytes = Encoding.UTF8.GetBytes("Hello, World!");
-var output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes));
-
+var output = plugin.Call("count_vowels", "Hello, World!");
+Console.WriteLine(output);
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
 F#:
 ```fsharp
-let inputBytes = Encoding.UTF8.GetBytes("Hello, World!")
-let output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
-
+let output = plugin.Call("count_vowels", "Hello, World!")
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
@@ -94,26 +86,21 @@ Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by 
 
 C#:
 ```csharp
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
-);
-
+var output = plugin.Call("count_vowels", "Hello, World!");
+Console.WriteLine(output);
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
-output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello, World!"))
-);
+output = plugin.Call("count_vowels", "Hello, World!");
+Console.WriteLine(output);
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
 
 F#:
 ```fsharp
-let inputBytes = Encoding.UTF8.GetBytes("Hello, World!")
-
-let output1 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output1 = plugin.Call("count_vowels", "Hello, World!")
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
-let output2 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output2 = plugin.Call("count_vowels", "Hello, World!")
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
 
@@ -125,17 +112,15 @@ Plug-ins may optionally take a configuration object. This is a static way to con
 
 C#:
 ```csharp
-var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"));
+var manifest = new Manifest(new UrlWasmSource("<https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm>"));
 
 using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-);
-
+var output = plugin.Call("count_vowels", "Yellow, World!");
+Console.WriteLine(output);
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"))
+manifest = new Manifest(new UrlWasmSource("<https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm>"))
 {
     Config = new Dictionary<string, string>
     {
@@ -143,12 +128,10 @@ var manifest = new Manifest(new UrlWasmSource("https://github.com/extism/plugins
     },
 };
 
-using var plugin = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
+using var plugin2 = new Plugin(manifest, new HostFunction[] { }, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-);
-
+var output2 = plugin2.Call("count_vowels", "Yellow, World!");
+Console.WriteLine(output2);
 // => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
 ```
 
@@ -156,23 +139,24 @@ F#:
 ```fsharp
 let uri = Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")
 let manifest = Manifest(new UrlWasmSource(uri))
-manifest.Config.Add("vowels", "aeiouyAEIOUY")
+manifest.Config <- dict [("vowels", "aeiouAEIOU")]
 
-use plugin = Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
+let plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
 
-let outputBytes = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-let output = Encoding.UTF8.GetString(outputBytes)
+let output = plugin.Call("count_vowels", "Yellow, World!")
+Console.WriteLine(output)
+// => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-let manifest = 
-    Manifest(new UrlWasmSource(Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")),
-            Config = Dictionary<string, string>([("vowels", "aeiouyAEIOUY")]))
+let manifest2 = 
+    Manifest(new UrlWasmSource(Uri("https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm")))
+manifest2.Config <- dict [("vowels", "aeiouyAEIOUY")]
 
-use plugin = 
-    Plugin(manifest, Array.empty<HostFunction>(), withWasi = true)
+let plugin2 =
+    new Plugin(manifest2, Array.Empty<HostFunction>(), withWasi = true)
 
-let outputBytes = 
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Yellow, World!"))
-let output = Encoding.UTF8.GetString(outputBytes)
+let output2 = plugin2.Call("count_vowels", "Yellow, World!")
+Console.WriteLine(output2)
+// => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
 ```
 
 ### Host Functions
@@ -266,38 +250,34 @@ C#:
 ```csharp
 using var plugin = new Plugin(manifest, functions, withWasi: true);
 
-var output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
-);
+var output = plugin.Call("count_vowels", "Hello World!");
 
 Console.WriteLine(output);
-// => Read from key=count-vowels"
+// => Read 0 from key=count-vowels"
 // => Writing value=3 from key=count-vowels"
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-output = Encoding.UTF8.GetString(
-    plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World!"))
-);
+output = plugin.Call("count_vowels", "Hello World!");
 
 Console.WriteLine(output);
-// => Read from key=count-vowels"
+// => Read 3 from key=count-vowels"
 // => Writing value=6 from key=count-vowels"
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 ```
 
 F#:
 ```fsharp
-use plugin = Plugin(manifest, functions, withWasi = true)
+let plugin = new Plugin(manifest, functions, withWasi = true)
 
-let output = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output = plugin.Call("count_vowels", "Hello World!")
 printfn "%s" output
-// => Read from key=count-vowels
+// => Read 0 from key=count-vowels
 // => Writing value=3 from key=count-vowels
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 
-let output2 = Encoding.UTF8.GetString(plugin.Call("count_vowels", inputBytes))
+let output2 = plugin.Call("count_vowels", "Hello World!")
 printfn "%s" output2
-// => Read from key=count-vowels
+// => Read 3 from key=count-vowels
 // => Writing value=6 from key=count-vowels
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 ```
