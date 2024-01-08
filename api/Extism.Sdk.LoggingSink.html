@@ -2,10 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Struct ExtismVal
+      <title>Delegate LoggingSink
  | Extism .NET SDK </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct ExtismVal
+      <meta name="title" content="Delegate LoggingSink
  | Extism .NET SDK ">
       
       <link rel="icon" href="../images/favicon.ico">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/new/v1.0.1/apiSpec/new?filename=Extism_Sdk_Native_ExtismVal.md&amp;value=---%0Auid%3A%20Extism.Sdk.Native.ExtismVal%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/new/v1.0.1/apiSpec/new?filename=Extism_Sdk_LoggingSink.md&amp;value=---%0Auid%3A%20Extism.Sdk.LoggingSink%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -85,119 +85,36 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="Extism.Sdk.Native.ExtismVal">
+        <article data-uid="Extism.Sdk.LoggingSink">
 
 
 
-  <h1 id="Extism_Sdk_Native_ExtismVal" data-uid="Extism.Sdk.Native.ExtismVal" class="text-break">
-    Struct ExtismVal
-  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/LibExtism.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <h1 id="Extism_Sdk_LoggingSink" data-uid="Extism.Sdk.LoggingSink" class="text-break">
+    Delegate LoggingSink
+  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/Plugin.cs/#L360"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="Extism.html">Extism</a>.<a class="xref" href="Extism.Sdk.html">Sdk</a>.<a class="xref" href="Extism.Sdk.Native.html">Native</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Extism.html">Extism</a>.<a class="xref" href="Extism.Sdk.html">Sdk</a></dd></dl>
   <dl><dt>Assembly</dt><dd>Extism.Sdk.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p><code>ExtismVal</code> holds the type and value of a function argument/return</p>
+  <div class="markdown summary"><p>Custom logging callback.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct ExtismVal</code></pre>
+    <pre><code class="lang-csharp hljs">public delegate void LoggingSink(string line)</code></pre>
   </div>
 
-
-
-
-
-
-
-  <dl class="typelist derived">
-    <dt>Inherited Members</dt>
-    <dd>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.equals">ValueType.Equals(object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.gethashcode">ValueType.GetHashCode()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.valuetype.tostring">ValueType.ToString()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
-    </div>
-    <div>
-      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
-    </div>
-  </dd></dl>
-
-
-
-
-
-
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="Extism_Sdk_Native_ExtismVal_t" data-uid="Extism.Sdk.Native.ExtismVal.t">
-  t
-  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/LibExtism.cs/#L97"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The type for the argument</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExtismValType t</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
+  <h4 class="section">Parameters</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="Extism.Sdk.Native.ExtismValType.html">ExtismValType</a></dt>
+    <dt><code>line</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
     <dd></dd>
   </dl>
 
 
 
-
-
-
-
-
-
-
-  <h3 id="Extism_Sdk_Native_ExtismVal_v" data-uid="Extism.Sdk.Native.ExtismVal.v">
-  v
-  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/LibExtism.cs/#L102"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The value for the argument</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ExtismValUnion v</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="Extism.Sdk.Native.ExtismValUnion.html">ExtismValUnion</a></dt>
-    <dd></dd>
-  </dl>
 
 
 
@@ -211,7 +128,7 @@
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/LibExtism.cs/#L91" class="edit-link">Edit this page</a>
+          <a href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/Plugin.cs/#L360" class="edit-link">Edit this page</a>
         </div>
 
 

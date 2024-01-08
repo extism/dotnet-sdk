@@ -542,12 +542,18 @@ references:
   commentId: F:Extism.Sdk.LogLevel.Trace
   fullName: Extism.Sdk.LogLevel.Trace
   nameWithType: LogLevel.Trace
-- uid: Extism.Sdk.LogLevel.Warning
-  name: Warning
-  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Warning
-  commentId: F:Extism.Sdk.LogLevel.Warning
-  fullName: Extism.Sdk.LogLevel.Warning
-  nameWithType: LogLevel.Warning
+- uid: Extism.Sdk.LogLevel.Warn
+  name: Warn
+  href: api/Extism.Sdk.LogLevel.html#Extism_Sdk_LogLevel_Warn
+  commentId: F:Extism.Sdk.LogLevel.Warn
+  fullName: Extism.Sdk.LogLevel.Warn
+  nameWithType: LogLevel.Warn
+- uid: Extism.Sdk.LoggingSink
+  name: LoggingSink
+  href: api/Extism.Sdk.LoggingSink.html
+  commentId: T:Extism.Sdk.LoggingSink
+  fullName: Extism.Sdk.LoggingSink
+  nameWithType: LoggingSink
 - uid: Extism.Sdk.Manifest
   name: Manifest
   href: api/Extism.Sdk.Manifest.html
@@ -921,6 +927,35 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.Plugin.CheckNotDisposed
   nameWithType: Plugin.CheckNotDisposed
+- uid: Extism.Sdk.Plugin.ConfigureCustomLogging(Extism.Sdk.LogLevel)
+  name: ConfigureCustomLogging(LogLevel)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ConfigureCustomLogging_Extism_Sdk_LogLevel_
+  commentId: M:Extism.Sdk.Plugin.ConfigureCustomLogging(Extism.Sdk.LogLevel)
+  fullName: Extism.Sdk.Plugin.ConfigureCustomLogging(Extism.Sdk.LogLevel)
+  nameWithType: Plugin.ConfigureCustomLogging(LogLevel)
+- uid: Extism.Sdk.Plugin.ConfigureCustomLogging*
+  name: ConfigureCustomLogging
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ConfigureCustomLogging_
+  commentId: Overload:Extism.Sdk.Plugin.ConfigureCustomLogging
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.ConfigureCustomLogging
+  nameWithType: Plugin.ConfigureCustomLogging
+- uid: Extism.Sdk.Plugin.ConfigureFileLogging(System.String,Extism.Sdk.LogLevel)
+  name: ConfigureFileLogging(string, LogLevel)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ConfigureFileLogging_System_String_Extism_Sdk_LogLevel_
+  commentId: M:Extism.Sdk.Plugin.ConfigureFileLogging(System.String,Extism.Sdk.LogLevel)
+  name.vb: ConfigureFileLogging(String, LogLevel)
+  fullName: Extism.Sdk.Plugin.ConfigureFileLogging(string, Extism.Sdk.LogLevel)
+  fullName.vb: Extism.Sdk.Plugin.ConfigureFileLogging(String, Extism.Sdk.LogLevel)
+  nameWithType: Plugin.ConfigureFileLogging(string, LogLevel)
+  nameWithType.vb: Plugin.ConfigureFileLogging(String, LogLevel)
+- uid: Extism.Sdk.Plugin.ConfigureFileLogging*
+  name: ConfigureFileLogging
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ConfigureFileLogging_
+  commentId: Overload:Extism.Sdk.Plugin.ConfigureFileLogging
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.ConfigureFileLogging
+  nameWithType: Plugin.ConfigureFileLogging
 - uid: Extism.Sdk.Plugin.Dispose
   name: Dispose()
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Dispose
@@ -943,6 +978,19 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.Plugin.Dispose
   nameWithType: Plugin.Dispose
+- uid: Extism.Sdk.Plugin.DrainCustomLogs(Extism.Sdk.LoggingSink)
+  name: DrainCustomLogs(LoggingSink)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_DrainCustomLogs_Extism_Sdk_LoggingSink_
+  commentId: M:Extism.Sdk.Plugin.DrainCustomLogs(Extism.Sdk.LoggingSink)
+  fullName: Extism.Sdk.Plugin.DrainCustomLogs(Extism.Sdk.LoggingSink)
+  nameWithType: Plugin.DrainCustomLogs(LoggingSink)
+- uid: Extism.Sdk.Plugin.DrainCustomLogs*
+  name: DrainCustomLogs
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_DrainCustomLogs_
+  commentId: Overload:Extism.Sdk.Plugin.DrainCustomLogs
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.DrainCustomLogs
+  nameWithType: Plugin.DrainCustomLogs
 - uid: Extism.Sdk.Plugin.ExtismVersion
   name: ExtismVersion()
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_ExtismVersion
