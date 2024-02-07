@@ -98,8 +98,15 @@ namespace Extism.Sdk
         /// <summary>
         /// Max number of pages. Each page is 64KB.
         /// </summary>
-        [JsonPropertyName("max")]
+        [JsonPropertyName("max_pages")]
         public int MaxPages { get; set; }
+
+        
+        /// <summary>
+        /// Max number of bytes allowed in an HTTP response when using extism_http_request.
+        /// </summary>
+        [JsonPropertyName("max_http_response_bytes")]
+        public int MaxHttpResponseBytes { get; set; }
     }
 
     /// <summary>
