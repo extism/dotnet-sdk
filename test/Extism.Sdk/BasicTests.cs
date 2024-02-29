@@ -87,7 +87,7 @@ public class BasicTests
             m.AllowedPaths.Add("data", "/mnt");
         });
 
-        var output = plugin.Call("run_test", Array.Empty<byte>());
+        var output = plugin.Call("_start", Array.Empty<byte>());
         var text = Encoding.UTF8.GetString(output);
 
         text.ShouldBe("hello world!");
