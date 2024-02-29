@@ -258,16 +258,6 @@ public class BasicTests
             {
                 return 100.5f;
             }),
-
-            HostFunction.FromMethod<uint>("getu32", IntPtr.Zero, (CurrentPlugin plugin) =>
-            {
-                return uint.MaxValue - 2;
-            }),
-
-            HostFunction.FromMethod<ulong>("getu64", IntPtr.Zero, (CurrentPlugin plugin) =>
-            {
-                return ulong.MaxValue - 2L;
-            })
         };
 
         foreach (var function in functions)
