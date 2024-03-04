@@ -181,9 +181,8 @@ public class BasicTests
     }
 
 
-    //[Fact]
-    // Flaky
-    internal void FileLog()
+    [Fact]
+    public void FileLog()
     {
         var tempFile = Path.GetTempFileName();
         Plugin.ConfigureFileLogging(tempFile, LogLevel.Warn);
