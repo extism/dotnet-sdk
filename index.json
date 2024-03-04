@@ -52,7 +52,7 @@
   "api/Extism.Sdk.MemoryOptions.html": {
     "href": "api/Extism.Sdk.MemoryOptions.html",
     "title": "Class MemoryOptions | Extism .NET SDK",
-    "keywords": "Class MemoryOptions Namespace Extism.Sdk Assembly Extism.Sdk.dll Configures memory for the Wasm runtime. Memory is described in units of pages (64KB) and represent contiguous chunks of addressable memory. public class MemoryOptions Inheritance object MemoryOptions Inherited Members object.Equals(object) object.Equals(object, object) object.GetHashCode() object.GetType() object.MemberwiseClone() object.ReferenceEquals(object, object) object.ToString() Properties MaxPages Max number of pages. Each page is 64KB. [JsonPropertyName(\"max\")] public int MaxPages { get; set; } Property Value int"
+    "keywords": "Class MemoryOptions Namespace Extism.Sdk Assembly Extism.Sdk.dll Configures memory for the Wasm runtime. Memory is described in units of pages (64KB) and represent contiguous chunks of addressable memory. public class MemoryOptions Inheritance object MemoryOptions Inherited Members object.Equals(object) object.Equals(object, object) object.GetHashCode() object.GetType() object.MemberwiseClone() object.ReferenceEquals(object, object) object.ToString() Properties MaxHttpResponseBytes Max number of bytes allowed in an HTTP response when using extism_http_request. [JsonPropertyName(\"max_http_response_bytes\")] public int MaxHttpResponseBytes { get; set; } Property Value int MaxPages Max number of pages. Each page is 64KB. [JsonPropertyName(\"max_pages\")] public int MaxPages { get; set; } Property Value int"
   },
   "api/Extism.Sdk.Native.ExtismVal.html": {
     "href": "api/Extism.Sdk.Native.ExtismVal.html",

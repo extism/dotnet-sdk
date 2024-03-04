@@ -672,6 +672,19 @@ references:
   commentId: T:Extism.Sdk.MemoryOptions
   fullName: Extism.Sdk.MemoryOptions
   nameWithType: MemoryOptions
+- uid: Extism.Sdk.MemoryOptions.MaxHttpResponseBytes
+  name: MaxHttpResponseBytes
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxHttpResponseBytes
+  commentId: P:Extism.Sdk.MemoryOptions.MaxHttpResponseBytes
+  fullName: Extism.Sdk.MemoryOptions.MaxHttpResponseBytes
+  nameWithType: MemoryOptions.MaxHttpResponseBytes
+- uid: Extism.Sdk.MemoryOptions.MaxHttpResponseBytes*
+  name: MaxHttpResponseBytes
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxHttpResponseBytes_
+  commentId: Overload:Extism.Sdk.MemoryOptions.MaxHttpResponseBytes
+  isSpec: "True"
+  fullName: Extism.Sdk.MemoryOptions.MaxHttpResponseBytes
+  nameWithType: MemoryOptions.MaxHttpResponseBytes
 - uid: Extism.Sdk.MemoryOptions.MaxPages
   name: MaxPages
   href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxPages

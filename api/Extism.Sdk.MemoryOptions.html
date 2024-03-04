@@ -2,12 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>Class MemoryOptions
- | Extism .NET SDK </title>
+      <title>Class MemoryOptions | Extism .NET SDK </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class MemoryOptions
- | Extism .NET SDK ">
+      <meta name="title" content="Class MemoryOptions | Extism .NET SDK ">
       
+      <meta name="description" content="Configures memory for the Wasm runtime. Memory is described in units of pages (64KB) and represent contiguous chunks of addressable memory.">
       <link rel="icon" href="../images/favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -17,7 +16,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/new/v1.0.1/apiSpec/new?filename=Extism_Sdk_MemoryOptions.md&amp;value=---%0Auid%3A%20Extism.Sdk.MemoryOptions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/new/v1.1.0/apiSpec/new?filename=Extism_Sdk_MemoryOptions.md&amp;value=---%0Auid%3A%20Extism.Sdk.MemoryOptions%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -90,8 +89,7 @@
 
 
   <h1 id="Extism_Sdk_MemoryOptions" data-uid="Extism.Sdk.MemoryOptions" class="text-break">
-    Class MemoryOptions
-  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/Manifest.cs/#L96"><i class="bi bi-code-slash"></i></a>
+Class MemoryOptions  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.1.0/src/Extism.Sdk/Manifest.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -121,7 +119,7 @@ Memory is described in units of pages (64KB) and represent contiguous chunks of 
 
 
 
-  <dl class="typelist derived">
+  <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
     <div>
@@ -156,11 +154,44 @@ Memory is described in units of pages (64KB) and represent contiguous chunks of 
 </h2>
 
 
+  <a id="Extism_Sdk_MemoryOptions_MaxHttpResponseBytes_" data-uid="Extism.Sdk.MemoryOptions.MaxHttpResponseBytes*"></a>
+
+  <h3 id="Extism_Sdk_MemoryOptions_MaxHttpResponseBytes" data-uid="Extism.Sdk.MemoryOptions.MaxHttpResponseBytes">
+  MaxHttpResponseBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.1.0/src/Extism.Sdk/Manifest.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Max number of bytes allowed in an HTTP response when using extism_http_request.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;max_http_response_bytes&quot;)]
+public int MaxHttpResponseBytes { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <a id="Extism_Sdk_MemoryOptions_MaxPages_" data-uid="Extism.Sdk.MemoryOptions.MaxPages*"></a>
 
   <h3 id="Extism_Sdk_MemoryOptions_MaxPages" data-uid="Extism.Sdk.MemoryOptions.MaxPages">
   MaxPages
-  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/Manifest.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/extism/dotnet-sdk/blob/v1.1.0/src/Extism.Sdk/Manifest.cs/#L101"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Max number of pages. Each page is 64KB.</p>
@@ -168,7 +199,7 @@ Memory is described in units of pages (64KB) and represent contiguous chunks of 
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;max&quot;)]
+    <pre><code class="lang-csharp hljs">[JsonPropertyName(&quot;max_pages&quot;)]
 public int MaxPages { get; set; }</code></pre>
   </div>
 
@@ -193,7 +224,7 @@ public int MaxPages { get; set; }</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/extism/dotnet-sdk/blob/v1.0.1/src/Extism.Sdk/Manifest.cs/#L96" class="edit-link">Edit this page</a>
+          <a href="https://github.com/extism/dotnet-sdk/blob/v1.1.0/src/Extism.Sdk/Manifest.cs/#L96" class="edit-link">Edit this page</a>
         </div>
 
 
