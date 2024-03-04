@@ -225,6 +225,49 @@ public class BasicTests
         content.ShouldNotContain("trace");
     }
 
+    [Fact]
+    public void F64Return()
+    {
+        using var plugin = Helpers.LoadPlugin("float.wasm", config: null, HostFunctions());
+
+        var response = plugin.Call("addf64", Array.Empty<byte>());
+        var result = BitConverter.ToDouble(response);
+        result.ShouldBe(101.5);
+    }
+
+    [Fact]
+    public void F32Return()
+    {
+        using var plugin = Helpers.LoadPlugin("float.wasm", config: null, HostFunctions());
+
+        var response = plugin.Call("addf32", Array.Empty<byte>());
+        var result = BitConverter.ToSingle(response);
+        result.ShouldBe(101.5f);
+    }
+
+    private HostFunction[] HostFunctions()
+    {
+        var functions = new HostFunction[]
+        {
+            HostFunction.FromMethod<double>("getf64", IntPtr.Zero, (CurrentPlugin plugin) =>
+            {
+                return 100.5;
+            }),
+
+            HostFunction.FromMethod<float>("getf32", IntPtr.Zero, (CurrentPlugin plugin) =>
+            {
+                return 100.5f;
+            }),
+        };
+
+        foreach (var function in functions)
+        {
+            function.SetNamespace("example");
+        }
+
+        return functions;
+    }
+
     public class CountVowelsResponse
     {
         public int Count { get; set; }

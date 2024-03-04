@@ -364,12 +364,12 @@ public class HostFunction : IDisposable
         else if (t is float f32)
         {
             val.t = ExtismValType.F32;
-            val.v.f32 = f32;
+            val.v.f32 = BitConverter.SingleToInt32Bits(f32);
         }
         else if (t is double f64)
         {
             val.t = ExtismValType.F64;
-            val.v.f64 = f64;
+            val.v.f64 = BitConverter.DoubleToInt64Bits(f64);
         }
         else
         {
