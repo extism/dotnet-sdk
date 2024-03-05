@@ -3,6 +3,18 @@ using System.Text.Json;
 
 namespace Extism.Sdk
 {
+    [JsonSerializable(typeof(Manifest))]
+    [JsonSerializable(typeof(HttpMethod))]
+    [JsonSerializable(typeof(Dictionary<string, string>))]
+    [JsonSerializable(typeof(WasmSource))]
+    [JsonSerializable(typeof(ByteArrayWasmSource))]
+    [JsonSerializable(typeof(PathWasmSource))]
+    [JsonSerializable(typeof(UrlWasmSource))]
+    internal partial class ManifestJsonContext : JsonSerializerContext
+    {
+
+    }
+
     /// <summary>
     /// The manifest is a description of your plugin and some of the runtime constraints to apply to it.
     /// You can think of it as a blueprint to build your plugin.
@@ -101,7 +113,7 @@ namespace Extism.Sdk
         [JsonPropertyName("max_pages")]
         public int MaxPages { get; set; }
 
-        
+
         /// <summary>
         /// Max number of bytes allowed in an HTTP response when using extism_http_request.
         /// </summary>
@@ -285,14 +297,24 @@ namespace Extism.Sdk
 
         public override void Write(Utf8JsonWriter writer, WasmSource value, JsonSerializerOptions options)
         {
+            // Clone it because a JsonSerializerOptions can't be shared by multiple JsonSerializerContexts
+            var context = new ManifestJsonContext(new JsonSerializerOptions(options));
             if (value is PathWasmSource path)
-                JsonSerializer.Serialize(writer, path, typeof(PathWasmSource), options);
+            {
+                JsonSerializer.Serialize(writer, path, context.PathWasmSource);
+            }
             else if (value is ByteArrayWasmSource bytes)
-                JsonSerializer.Serialize(writer, bytes, typeof(ByteArrayWasmSource), options);
+            {
+                JsonSerializer.Serialize(writer, bytes, context.ByteArrayWasmSource);
+            }
             else if (value is UrlWasmSource uri)
-                JsonSerializer.Serialize(writer, uri, typeof(UrlWasmSource), options);
+            {
+                JsonSerializer.Serialize(writer, uri, context.UrlWasmSource);
+            }
             else
+            {
                 throw new ArgumentOutOfRangeException(nameof(value), "Unknown Wasm Source");
+            }
         }
     }
 
