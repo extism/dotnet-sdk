@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+
 using Extism.Sdk.Native;
 
 namespace Extism.Sdk;
@@ -45,8 +47,10 @@ public unsafe class Plugin : IDisposable
         };
 
         options.Converters.Add(new WasmSourceConverter());
-        options.Converters.Add(new JsonStringEnumConverter());
-        var json = JsonSerializer.Serialize(manifest, options);
+        options.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
+
+        var jsonContext = new ManifestJsonContext(options);
+        var json = JsonSerializer.Serialize(manifest, jsonContext.Manifest);
 
         var bytes = Encoding.UTF8.GetBytes(json);
 
@@ -94,7 +98,7 @@ public unsafe class Plugin : IDisposable
                 msg = Marshal.PtrToStringAnsi(new IntPtr(errorMsgPtr));
             }
 
-            throw new ExtismException(msg);
+            throw new ExtismException(msg ?? "Unknown error");
         }
 
         return handle;
@@ -108,7 +112,9 @@ public unsafe class Plugin : IDisposable
     /// <returns></returns>
     public bool UpdateConfig(Dictionary<string, string> value, JsonSerializerOptions serializerOptions)
     {
-        var json = JsonSerializer.Serialize(value, serializerOptions);
+        var jsonContext = new ManifestJsonContext(serializerOptions);
+
+        var json = JsonSerializer.Serialize(value, jsonContext.DictionaryStringString);
         var bytes = Encoding.UTF8.GetBytes(json);
         return UpdateConfig(bytes);
     }
@@ -191,6 +197,11 @@ public unsafe class Plugin : IDisposable
     /// <param name="serializerOptions">JSON serialization options used for serialization/derserialization</param>
     /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
     /// <returns></returns>
+
+#if NET7_0_OR_GREATER
+    [RequiresUnreferencedCode("This function call can break in AOT compiled apps because it uses reflection for serialization. Use an overload that accepts an JsonTypeInfo instead.")]
+    [RequiresDynamicCode("This function call can break in AOT compiled apps because it uses reflection for serialization. Use an overload that accepts an JsonTypeInfo instead.")]
+#endif
     public TOutput? Call<TInput, TOutput>(string functionName, TInput input, JsonSerializerOptions? serializerOptions = null, CancellationToken? cancellationToken = null)
     {
         var inputJson = JsonSerializer.Serialize(input, serializerOptions ?? _serializerOptions);
@@ -199,18 +210,55 @@ public unsafe class Plugin : IDisposable
     }
 
     /// <summary>
+    /// Calls a function on the plugin with a payload. The payload is serialized into JSON and encoded in UTF8.
+    /// </summary>
+    /// <typeparam name="TInput">Type of the input payload.</typeparam>
+    /// <typeparam name="TOutput">Type of the output payload returned by the function.</typeparam>
+    /// <param name="functionName">Name of the function in the plugin to invoke.</param>
+    /// <param name="input">An object that will be serialized into JSON and passed into the function as a UTF8 encoded string.</param>
+    /// <param name="inputJsonInfo">Metadata about input type.</param>
+    /// <param name="outputJsonInfo">Metadata about output type.</param>
+    /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
+    /// <returns></returns>
+    public TOutput? Call<TInput, TOutput>(string functionName, TInput input, JsonTypeInfo<TInput> inputJsonInfo, JsonTypeInfo<TOutput?> outputJsonInfo, CancellationToken? cancellationToken = null)
+    {
+        var inputJson = JsonSerializer.Serialize(input, inputJsonInfo);
+        var outputJson = Call(functionName, inputJson, cancellationToken);
+        return JsonSerializer.Deserialize(outputJson, outputJsonInfo);
+    }
+
+    /// <summary>
     /// Calls a function on the plugin and deserializes the output as UTF8 encoded JSON.
     /// </summary>
     /// <typeparam name="TOutput">Type of the output payload returned by the function.</typeparam>
     /// <param name="functionName">Name of the function in the plugin to invoke.</param>
-    /// <param name="input">An object that will be serialized into JSON and passed into the function as a UTF8 encoded string.</param>
-    /// <param name="serializerOptions">JSON serialization options used for serialization/derserialization</param>
+    /// <param name="input">Function input.</param>
+    /// <param name="serializerOptions">JSON serialization options used for serialization/derserialization.</param>
     /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
     /// <returns></returns>
+#if NET7_0_OR_GREATER
+    [RequiresUnreferencedCode("This function call can break in AOT compiled apps because it uses reflection for serialization. Use an overload that accepts an JsonTypeInfo instead.")]
+    [RequiresDynamicCode("This function call can break in AOT compiled apps because it uses reflection for serialization. Use an overload that accepts an JsonTypeInfo instead.")]
+#endif
     public TOutput? Call<TOutput>(string functionName, string input, JsonSerializerOptions? serializerOptions = null, CancellationToken? cancellationToken = null)
     {
         var outputJson = Call(functionName, input, cancellationToken);
         return JsonSerializer.Deserialize<TOutput>(outputJson, serializerOptions ?? _serializerOptions);
+    }
+
+    /// <summary>
+    /// Calls a function on the plugin with a payload. The payload is serialized into JSON and encoded in UTF8.
+    /// </summary>
+    /// <typeparam name="TOutput">Type of the output payload returned by the function.</typeparam>
+    /// <param name="functionName">Name of the function in the plugin to invoke.</param>
+    /// <param name="input">Function input.</param>
+    /// <param name="outputJsonInfo">Metadata about output type.</param>
+    /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
+    /// <returns></returns>
+    public TOutput? Call<TOutput>(string functionName, string input, JsonTypeInfo<TOutput?> outputJsonInfo, CancellationToken? cancellationToken = null)
+    {
+        var outputJson = Call(functionName, input, cancellationToken);
+        return JsonSerializer.Deserialize(outputJson, outputJsonInfo);
     }
 
     /// <summary>
@@ -315,7 +363,7 @@ public unsafe class Plugin : IDisposable
     public static string ExtismVersion()
     {
         var version = LibExtism.extism_version();
-        return Marshal.PtrToStringAnsi(version);
+        return Marshal.PtrToStringAnsi(version) ?? "unknown";
     }
 
     /// <summary>
@@ -325,7 +373,9 @@ public unsafe class Plugin : IDisposable
     /// <param name="level">Minimum log level</param>
     public static void ConfigureFileLogging(string path, LogLevel level)
     {
-        var logLevel = Enum.GetName(typeof(LogLevel), level).ToLowerInvariant();
+        var logLevel = Enum.GetName(typeof(LogLevel), level)?.ToLowerInvariant() 
+            ?? throw new ArgumentOutOfRangeException(nameof(level));
+
         LibExtism.extism_log_file(path, logLevel);
     }
 
@@ -335,7 +385,9 @@ public unsafe class Plugin : IDisposable
     /// <param name="level"></param>
     public static void ConfigureCustomLogging(LogLevel level)
     {
-        var logLevel = Enum.GetName(typeof(LogLevel), level).ToLowerInvariant();
+        var logLevel = Enum.GetName(typeof(LogLevel), level)?.ToLowerInvariant()
+            ?? throw new ArgumentOutOfRangeException(nameof(level));
+
         LibExtism.extism_log_custom(logLevel);
     }
 
