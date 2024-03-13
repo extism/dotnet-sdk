@@ -698,6 +698,19 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.MemoryOptions.MaxPages
   nameWithType: MemoryOptions.MaxPages
+- uid: Extism.Sdk.MemoryOptions.MaxVarBytes
+  name: MaxVarBytes
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxVarBytes
+  commentId: P:Extism.Sdk.MemoryOptions.MaxVarBytes
+  fullName: Extism.Sdk.MemoryOptions.MaxVarBytes
+  nameWithType: MemoryOptions.MaxVarBytes
+- uid: Extism.Sdk.MemoryOptions.MaxVarBytes*
+  name: MaxVarBytes
+  href: api/Extism.Sdk.MemoryOptions.html#Extism_Sdk_MemoryOptions_MaxVarBytes_
+  commentId: Overload:Extism.Sdk.MemoryOptions.MaxVarBytes
+  isSpec: "True"
+  fullName: Extism.Sdk.MemoryOptions.MaxVarBytes
+  nameWithType: MemoryOptions.MaxVarBytes
 - uid: Extism.Sdk.Native
   name: Extism.Sdk.Native
   href: api/Extism.Sdk.Native.html
@@ -918,6 +931,15 @@ references:
   fullName.vb: Extism.Sdk.Plugin.Call(Of TOutput)(String, String, System.Text.Json.JsonSerializerOptions, System.Threading.CancellationToken?)
   nameWithType: Plugin.Call<TOutput>(string, string, JsonSerializerOptions?, CancellationToken?)
   nameWithType.vb: Plugin.Call(Of TOutput)(String, String, JsonSerializerOptions, CancellationToken?)
+- uid: Extism.Sdk.Plugin.Call``1(System.String,System.String,System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0},System.Nullable{System.Threading.CancellationToken})
+  name: Call<TOutput>(string, string, JsonTypeInfo<TOutput?>, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__1_System_String_System_String_System_Text_Json_Serialization_Metadata_JsonTypeInfo___0__System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call``1(System.String,System.String,System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0},System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(Of TOutput)(String, String, JsonTypeInfo(Of TOutput), CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call<TOutput>(string, string, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TOutput?>, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(Of TOutput)(String, String, System.Text.Json.Serialization.Metadata.JsonTypeInfo(Of TOutput), System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call<TOutput>(string, string, JsonTypeInfo<TOutput?>, CancellationToken?)
+  nameWithType.vb: Plugin.Call(Of TOutput)(String, String, JsonTypeInfo(Of TOutput), CancellationToken?)
 - uid: Extism.Sdk.Plugin.Call``2(System.String,``0,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
   name: Call<TInput, TOutput>(string, TInput, JsonSerializerOptions?, CancellationToken?)
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__2_System_String___0_System_Text_Json_JsonSerializerOptions_System_Nullable_System_Threading_CancellationToken__
@@ -927,6 +949,15 @@ references:
   fullName.vb: Extism.Sdk.Plugin.Call(Of TInput, TOutput)(String, TInput, System.Text.Json.JsonSerializerOptions, System.Threading.CancellationToken?)
   nameWithType: Plugin.Call<TInput, TOutput>(string, TInput, JsonSerializerOptions?, CancellationToken?)
   nameWithType.vb: Plugin.Call(Of TInput, TOutput)(String, TInput, JsonSerializerOptions, CancellationToken?)
+- uid: Extism.Sdk.Plugin.Call``2(System.String,``0,System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0},System.Text.Json.Serialization.Metadata.JsonTypeInfo{``1},System.Nullable{System.Threading.CancellationToken})
+  name: Call<TInput, TOutput>(string, TInput, JsonTypeInfo<TInput>, JsonTypeInfo<TOutput?>, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__2_System_String___0_System_Text_Json_Serialization_Metadata_JsonTypeInfo___0__System_Text_Json_Serialization_Metadata_JsonTypeInfo___1__System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.Call``2(System.String,``0,System.Text.Json.Serialization.Metadata.JsonTypeInfo{``0},System.Text.Json.Serialization.Metadata.JsonTypeInfo{``1},System.Nullable{System.Threading.CancellationToken})
+  name.vb: Call(Of TInput, TOutput)(String, TInput, JsonTypeInfo(Of TInput), JsonTypeInfo(Of TOutput), CancellationToken?)
+  fullName: Extism.Sdk.Plugin.Call<TInput, TOutput>(string, TInput, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput>, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TOutput?>, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.Call(Of TInput, TOutput)(String, TInput, System.Text.Json.Serialization.Metadata.JsonTypeInfo(Of TInput), System.Text.Json.Serialization.Metadata.JsonTypeInfo(Of TOutput), System.Threading.CancellationToken?)
+  nameWithType: Plugin.Call<TInput, TOutput>(string, TInput, JsonTypeInfo<TInput>, JsonTypeInfo<TOutput?>, CancellationToken?)
+  nameWithType.vb: Plugin.Call(Of TInput, TOutput)(String, TInput, JsonTypeInfo(Of TInput), JsonTypeInfo(Of TOutput), CancellationToken?)
 - uid: Extism.Sdk.Plugin.CheckNotDisposed
   name: CheckNotDisposed()
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_CheckNotDisposed
