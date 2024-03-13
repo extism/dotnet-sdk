@@ -119,6 +119,13 @@ namespace Extism.Sdk
         /// </summary>
         [JsonPropertyName("max_http_response_bytes")]
         public int MaxHttpResponseBytes { get; set; }
+
+
+        /// <summary>
+        /// Max number of bytes allowed in the Extism var store
+        /// </summary>
+        [JsonPropertyName("max_var_bytes")]
+        public int MaxVarBytes { get; set; }
     }
 
     /// <summary>
