@@ -73,6 +73,7 @@ Console.WriteLine(output);
 F#:
 ```fsharp
 let output = plugin.Call("count_vowels", "Hello, World!")
+printfn "%s" output
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
@@ -96,9 +97,11 @@ Console.WriteLine(output);
 F#:
 ```fsharp
 let output1 = plugin.Call("count_vowels", "Hello, World!")
+printfn "%s" output1
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 
 let output2 = plugin.Call("count_vowels", "Hello, World!")
+printfn "%s" output2
 // => {"count": 3, "total": 9, "vowels": "aeiouAEIOU"}
 ```
 
@@ -153,7 +156,7 @@ let plugin2 =
     new Plugin(manifest2, Array.Empty<HostFunction>(), withWasi = true)
 
 let output2 = plugin2.Call("count_vowels", "Yellow, World!")
-Console.WriteLine(output2)
+printfn "%s" output2
 // => {"count": 4, "total": 4, "vowels": "aeiouAEIOUY"}
 ```
 
