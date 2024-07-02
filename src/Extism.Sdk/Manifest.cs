@@ -209,7 +209,7 @@ namespace Extism.Sdk
         /// <summary>
         /// HTTP headers
         /// </summary>
-        [JsonPropertyName("header")]
+        [JsonPropertyName("headers")]
         public Dictionary<string, string> Headers { get; set; } = new();
 
         /// <summary>
