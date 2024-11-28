@@ -113,6 +113,9 @@ internal static class LibExtism
     [StructLayout(LayoutKind.Sequential)]
     internal struct ExtismPlugin { }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExtismCompiledPlugin { }
+
     /// <summary>
     /// Host function signature
     /// </summary>
@@ -217,6 +220,32 @@ internal static class LibExtism
     /// <param name="plugin">Pointer to the plugin you want to free.</param>
     [DllImport("extism")]
     unsafe internal static extern void extism_plugin_free(ExtismPlugin* plugin);
+    /// <summary>
+    /// Pre-compile an Extism plugin
+    /// </summary>
+    /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
+    /// <param name="wasmSize">The length of the `wasm` parameter.</param>
+    /// <param name="functions">Array of host function pointers.</param>
+    /// <param name="nFunctions">Number of host functions.</param>
+    /// <param name="withWasi">Enables/disables WASI.</param>
+    /// <param name="errmsg"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismCompiledPlugin* extism_compiled_plugin_new(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
+
+    /// <summary>
+    /// Free `ExtismCompiledPlugin`
+    /// </summary>
+    /// <param name="plugin"></param>
+    [DllImport("extism")]
+    unsafe internal static extern void extism_compiled_plugin_free(ExtismCompiledPlugin* plugin);
+
+    /// <summary>
+    ///  Create a new plugin from an `ExtismCompiledPlugin`
+    /// </summary>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_new_from_compiled(ExtismCompiledPlugin* compiled, out char** errmsg);
 
     /// <summary>
     /// Get handle for plugin cancellation

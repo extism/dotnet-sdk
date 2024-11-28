@@ -31,6 +31,32 @@ public unsafe class Plugin : IDisposable
     internal LibExtism.ExtismPlugin* NativeHandle { get; }
 
     /// <summary>
+    /// Instantiate a plugin from a compiled plugin.
+    /// </summary>
+    /// <param name="plugin"></param>
+    internal Plugin(CompiledPlugin plugin)
+    {
+        char** errorMsgPtr;
+
+        var handle = LibExtism.extism_plugin_new_from_compiled(plugin.NativeHandle, out errorMsgPtr);
+        if (handle == null)
+        {
+            var msg = "Unable to intialize a plugin from compiled plugin";
+
+            if (errorMsgPtr is not null)
+            {
+                msg = Marshal.PtrToStringAnsi(new IntPtr(errorMsgPtr));
+            }
+
+            throw new ExtismException(msg ?? "Unknown error");
+        }
+
+        NativeHandle = handle;
+        _functions = plugin.Functions;
+        _cancelHandle = LibExtism.extism_plugin_cancel_handle(NativeHandle);
+    }
+
+    /// <summary>
     /// Create a plugin from a Manifest.
     /// </summary>
     /// <param name="manifest"></param>
@@ -373,7 +399,7 @@ public unsafe class Plugin : IDisposable
     /// <param name="level">Minimum log level</param>
     public static void ConfigureFileLogging(string path, LogLevel level)
     {
-        var logLevel = Enum.GetName(typeof(LogLevel), level)?.ToLowerInvariant() 
+        var logLevel = Enum.GetName(typeof(LogLevel), level)?.ToLowerInvariant()
             ?? throw new ArgumentOutOfRangeException(nameof(level));
 
         LibExtism.extism_log_file(path, logLevel);
@@ -410,3 +436,134 @@ public unsafe class Plugin : IDisposable
 /// </summary>
 /// <param name="line"></param>
 public delegate void LoggingSink(string line);
+
+/// <summary>
+/// 
+/// </summary>
+public unsafe class CompiledPlugin : IDisposable
+{
+    private const int DisposedMarker = 1;
+    private int _disposed;
+
+    internal LibExtism.ExtismCompiledPlugin* NativeHandle { get; }
+    internal HostFunction[] Functions { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="manifest"></param>
+    /// <param name="functions"></param>
+    /// <param name="withWasi"></param>
+    public CompiledPlugin(Manifest manifest, HostFunction[] functions, bool withWasi)
+    {
+        Functions = functions;
+
+        var options = new JsonSerializerOptions
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
+        options.Converters.Add(new WasmSourceConverter());
+        options.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
+
+        var jsonContext = new ManifestJsonContext(options);
+        var json = JsonSerializer.Serialize(manifest, jsonContext.Manifest);
+
+        var bytes = Encoding.UTF8.GetBytes(json);
+
+        var functionHandles = functions.Select(f => f.NativeHandle).ToArray();
+        fixed (byte* wasmPtr = bytes)
+        fixed (IntPtr* functionsPtr = functionHandles)
+        {
+            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, withWasi, functionsPtr);
+        }
+    }
+
+    /// <summary>
+    /// Instantiate a plugin from this compiled plugin.
+    /// </summary>
+    /// <returns></returns>
+    public Plugin Instantiate()
+    {
+        CheckNotDisposed();
+        return new Plugin(this);
+    }
+
+    private unsafe LibExtism.ExtismCompiledPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, IntPtr* functionsPtr)
+    {
+        char** errorMsgPtr;
+
+        var handle = LibExtism.extism_compiled_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, out errorMsgPtr);
+        if (handle == null)
+        {
+            var msg = "Unable to compile plugin";
+
+            if (errorMsgPtr is not null)
+            {
+                msg = Marshal.PtrToStringAnsi(new IntPtr(errorMsgPtr));
+            }
+
+            throw new ExtismException(msg ?? "Unknown error");
+        }
+
+        return handle;
+    }
+
+
+    /// <summary>
+    /// Frees all resources held by this Plugin.
+    /// </summary>
+    public void Dispose()
+    {
+        if (Interlocked.Exchange(ref _disposed, DisposedMarker) == DisposedMarker)
+        {
+            // Already disposed.
+            return;
+        }
+
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Throw an appropriate exception if the plugin has been disposed.
+    /// </summary>
+    /// <exception cref="ObjectDisposedException"></exception>
+    protected void CheckNotDisposed()
+    {
+        Interlocked.MemoryBarrier();
+        if (_disposed == DisposedMarker)
+        {
+            ThrowDisposedException();
+        }
+    }
+
+    [DoesNotReturn]
+    private static void ThrowDisposedException()
+    {
+        throw new ObjectDisposedException(nameof(Plugin));
+    }
+
+    /// <summary>
+    /// Frees all resources held by this Plugin.
+    /// </summary>
+    unsafe protected virtual void Dispose(bool disposing)
+    {
+        if (disposing)
+        {
+            // Free up any managed resources here
+        }
+
+        // Free up unmanaged resources
+        LibExtism.extism_compiled_plugin_free(NativeHandle);
+    }
+
+    /// <summary>
+    /// Destructs the current Plugin and frees all resources used by it.
+    /// </summary>
+    ~CompiledPlugin()
+    {
+        Dispose(false);
+    }
+}
