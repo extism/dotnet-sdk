@@ -145,6 +145,14 @@ public unsafe class Plugin : IDisposable
     }
 
     /// <summary>
+    /// Enable HTTP response headers in plugins using `extism:host/env::http_request`
+    /// </summary>
+    public void AllowHttpResponseHeaders()
+    {
+        LibExtism.extism_plugin_allow_http_response_headers(NativeHandle);
+    }
+
+    /// <summary>
     /// Update plugin config values, this will merge with the existing values.
     /// </summary>
     /// <param name="value"></param>

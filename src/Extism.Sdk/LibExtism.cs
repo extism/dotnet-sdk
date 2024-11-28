@@ -262,6 +262,14 @@ internal static class LibExtism
     unsafe internal static extern ExtismPlugin* extism_plugin_new_from_compiled(ExtismCompiledPlugin* compiled, out char** errmsg);
 
     /// <summary>
+    /// Enable HTTP response headers in plugins using `extism:host/env::http_request`
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_allow_http_response_headers(ExtismPlugin* plugin);
+
+    /// <summary>
     /// Get handle for plugin cancellation
     /// </summary>
     /// <param name="plugin"></param>
