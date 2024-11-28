@@ -62,27 +62,27 @@ public class HostFunction : IDisposable
         }
     }
 
-        /// <summary>
-        /// Sets the function namespace. By default it's set to `extism:host/user`.
-        /// </summary>
-        /// <param name="ns"></param>
-        /// <returns></returns>
-        public HostFunction WithNamespace(string ns)
-        {
-            this.SetNamespace(ns);
-            return this;
-        }
+    /// <summary>
+    /// Sets the function namespace. By default it's set to `extism:host/user`.
+    /// </summary>
+    /// <param name="ns"></param>
+    /// <returns></returns>
+    public HostFunction WithNamespace(string ns)
+    {
+        this.SetNamespace(ns);
+        return this;
+    }
 
-        private unsafe void CallbackImpl(
-            long plugin,
-            ExtismVal* inputsPtr,
-            uint n_inputs,
-            ExtismVal* outputsPtr,
-            uint n_outputs,
-            nint data)
-        {
-            var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
-            var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
+    private unsafe void CallbackImpl(
+        long plugin,
+        ExtismVal* inputsPtr,
+        uint n_inputs,
+        ExtismVal* outputsPtr,
+        uint n_outputs,
+        nint data)
+    {
+        var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
+        var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
 
         _function(new CurrentPlugin(plugin, data), inputs, outputs);
     }
@@ -165,28 +165,28 @@ public class HostFunction : IDisposable
             });
     }
 
-        /// <summary>
-        /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
-        /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
-        /// </summary>
-        /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-        /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
-        /// <param name="callback">The host function implementation.</param>
-        /// <returns></returns>
-        public static HostFunction FromMethod<I1, I2, I3>(
-            string functionName,
-            nint userdata,
-            Action<CurrentPlugin, I1, I2, I3> callback)
-            where I1 : struct
-            where I2 : struct
-            where I3 : struct
-        {
-            var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
-            var returnType = new ExtismValType[] { };
+    /// <summary>
+    /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
+    /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
+    /// </summary>
+    /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
+    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
+    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="callback">The host function implementation.</param>
+    /// <returns></returns>
+    public static HostFunction FromMethod<I1, I2, I3>(
+        string functionName,
+        nint userdata,
+        Action<CurrentPlugin, I1, I2, I3> callback)
+        where I1 : struct
+        where I2 : struct
+        where I3 : struct
+    {
+        var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
+        var returnType = new ExtismValType[] { };
 
         return new HostFunction(functionName, inputTypes, returnType, userdata,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
@@ -364,12 +364,12 @@ public class HostFunction : IDisposable
         else if (t is float f32)
         {
             val.t = ExtismValType.F32;
-            val.v.f32 = BitConverter.SingleToInt32Bits(f32);
+            val.v.f32 = f32;
         }
         else if (t is double f64)
         {
             val.t = ExtismValType.F64;
-            val.v.f64 = BitConverter.DoubleToInt64Bits(f64);
+            val.v.f64 = f64;
         }
         else
         {
