@@ -145,6 +145,28 @@ public unsafe class Plugin : IDisposable
     }
 
     /// <summary>
+    /// Get the plugin's ID.
+    /// </summary>
+    public Guid Id
+    {
+        get
+        {
+            var bytes = new Span<byte>(LibExtism.extism_plugin_id(NativeHandle), 16);
+            return new Guid(bytes);
+        }
+    }
+
+    /// <summary>
+    /// Reset the Extism runtime, this will invalidate all allocated memory
+    /// </summary>
+    /// <returns></returns>
+    public bool Reset()
+    {
+        CheckNotDisposed();
+        return LibExtism.extism_plugin_reset(NativeHandle);
+    }
+
+    /// <summary>
     /// Enable HTTP response headers in plugins using `extism:host/env::http_request`
     /// </summary>
     public void AllowHttpResponseHeaders()

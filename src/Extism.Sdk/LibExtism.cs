@@ -340,6 +340,22 @@ internal static class LibExtism
     unsafe internal static extern IntPtr extism_plugin_output_data(ExtismPlugin* plugin);
 
     /// <summary>
+    /// Reset the Extism runtime, this will invalidate all allocated memory
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern bool extism_plugin_reset(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Get a plugin's ID, the returned bytes are a 16 byte buffer that represent a UUIDv4
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern byte* extism_plugin_id(ExtismPlugin* plugin);
+
+    /// <summary>
     /// Set log file and level for file logger.
     /// </summary>
     /// <param name="filename"></param>

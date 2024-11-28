@@ -19,6 +19,14 @@ public class BasicTests
     }
 
     [Fact]
+    public void GetId()
+    {
+        using var plugin = Helpers.LoadPlugin("alloc.wasm");
+        var id = plugin.Id;
+        Assert.NotEqual(Guid.Empty, id);
+    }
+
+    [Fact]
     public void Fail()
     {
         using var plugin = Helpers.LoadPlugin("fail.wasm");
