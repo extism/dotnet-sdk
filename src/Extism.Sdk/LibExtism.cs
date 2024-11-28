@@ -208,6 +208,20 @@ internal static class LibExtism
     unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
 
     /// <summary>
+    /// Load a WASM plugin with fuel limit.
+    /// </summary>
+    /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
+    /// <param name="wasmSize">The length of the `wasm` parameter.</param>
+    /// <param name="functions">Array of host function pointers.</param>
+    /// <param name="nFunctions">Number of host functions.</param>
+    /// <param name="withWasi">Enables/disables WASI.</param>
+    /// <param name="fuelLimit">Max number of instructions that can be executed by the plugin.</param>
+    /// <param name="errmsg"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_new_with_fuel_limit(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, long fuelLimit, out char** errmsg);
+
+    /// <summary>
     /// Frees a plugin error message.
     /// </summary>
     /// <param name="errorMessage"></param>

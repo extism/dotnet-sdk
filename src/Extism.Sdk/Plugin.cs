@@ -57,25 +57,25 @@ public unsafe class Plugin : IDisposable
     }
 
     /// <summary>
-    /// Create a plugin from a Manifest.
+    /// Initialize a plugin from a Manifest.
     /// </summary>
     /// <param name="manifest"></param>
     /// <param name="functions"></param>
-    /// <param name="withWasi"></param>
-    public Plugin(Manifest manifest, HostFunction[] functions, bool withWasi)
+    /// <param name="options"></param>
+    public Plugin(Manifest manifest, HostFunction[] functions, PluginIntializationOptions options)
     {
         _functions = functions;
 
-        var options = new JsonSerializerOptions
+        var jsonOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
-        options.Converters.Add(new WasmSourceConverter());
-        options.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
+        jsonOptions.Converters.Add(new WasmSourceConverter());
+        jsonOptions.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
 
-        var jsonContext = new ManifestJsonContext(options);
+        var jsonContext = new ManifestJsonContext(jsonOptions);
         var json = JsonSerializer.Serialize(manifest, jsonContext.Manifest);
 
         var bytes = Encoding.UTF8.GetBytes(json);
@@ -84,10 +84,21 @@ public unsafe class Plugin : IDisposable
         fixed (byte* wasmPtr = bytes)
         fixed (IntPtr* functionsPtr = functionHandles)
         {
-            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, withWasi, functionsPtr);
+            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, functionsPtr, options);
         }
 
         _cancelHandle = LibExtism.extism_plugin_cancel_handle(NativeHandle);
+    }
+
+    /// <summary>
+    /// Create a plugin from a Manifest.
+    /// </summary>
+    /// <param name="manifest"></param>
+    /// <param name="functions"></param>
+    /// <param name="withWasi"></param>
+    public Plugin(Manifest manifest, HostFunction[] functions, bool withWasi) : this(manifest, functions, new PluginIntializationOptions { WithWasi = withWasi })
+    {
+
     }
 
     /// <summary>
@@ -104,17 +115,20 @@ public unsafe class Plugin : IDisposable
         fixed (byte* wasmPtr = wasm)
         fixed (IntPtr* functionsPtr = functionHandles)
         {
-            NativeHandle = Initialize(wasmPtr, wasm.Length, functions, withWasi, functionsPtr);
+            NativeHandle = Initialize(wasmPtr, wasm.Length, functions, functionsPtr, new PluginIntializationOptions { WithWasi = withWasi });
         }
 
         _cancelHandle = LibExtism.extism_plugin_cancel_handle(NativeHandle);
     }
 
-    private unsafe LibExtism.ExtismPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, IntPtr* functionsPtr)
+    private unsafe LibExtism.ExtismPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, IntPtr* functionsPtr, PluginIntializationOptions options)
     {
         char** errorMsgPtr;
 
-        var handle = LibExtism.extism_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, out errorMsgPtr);
+        var handle = options.FuelLimit is null ?
+                LibExtism.extism_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, options.WithWasi, out errorMsgPtr) :
+                LibExtism.extism_plugin_new_with_fuel_limit(wasmPtr, wasmLength, functionsPtr, functions.Length, options.WithWasi, options.FuelLimit.Value, out errorMsgPtr);
+
         if (handle == null)
         {
             var msg = "Unable to create plugin";
@@ -432,13 +446,29 @@ public unsafe class Plugin : IDisposable
 }
 
 /// <summary>
+/// Options for initializing a plugin.
+/// </summary>
+public class PluginIntializationOptions
+{
+    /// <summary>
+    /// Enable WASI support.
+    /// </summary>
+    public bool WithWasi { get; set; }
+
+    /// <summary>
+    /// Limits number of instructions that can be executed by the plugin.
+    /// </summary>
+    public long? FuelLimit { get; set; }
+}
+
+/// <summary>
 /// Custom logging callback.
 /// </summary>
 /// <param name="line"></param>
 public delegate void LoggingSink(string line);
 
 /// <summary>
-/// 
+/// A pre-compiled plugin ready to be instantiated.
 /// </summary>
 public unsafe class CompiledPlugin : IDisposable
 {
@@ -449,7 +479,7 @@ public unsafe class CompiledPlugin : IDisposable
     internal HostFunction[] Functions { get; }
 
     /// <summary>
-    /// 
+    /// Compile a plugin from a Manifest.
     /// </summary>
     /// <param name="manifest"></param>
     /// <param name="functions"></param>

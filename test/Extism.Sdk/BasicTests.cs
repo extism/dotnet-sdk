@@ -180,6 +180,18 @@ public class BasicTests
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
     }
 
+    [Fact]
+    public void FuelLimit()
+    {
+        using var plugin = Helpers.LoadPlugin("loop.wasm", options: new PluginIntializationOptions
+        {
+            FuelLimit = 1000,
+            WithWasi = true
+        });
+
+        Should.Throw<ExtismException>(() => plugin.Call("loop_forever", Array.Empty<byte>()))
+            .Message.ShouldContain("fuel");
+    }
 
     //[Fact]
     // flakey
