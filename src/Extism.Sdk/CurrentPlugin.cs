@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
+
 using Extism.Sdk.Native;
 
 namespace Extism.Sdk;
@@ -6,20 +8,45 @@ namespace Extism.Sdk;
 /// <summary>
 /// Represents the current plugin. Can only be used within <see cref="HostFunction"/>s.
 /// </summary>
-public class CurrentPlugin
+public unsafe class CurrentPlugin
 {
-    internal CurrentPlugin(long nativeHandle, nint userData)
+    internal CurrentPlugin(LibExtism.ExtismCurrentPlugin* nativeHandle, nint userData)
     {
         NativeHandle = nativeHandle;
         UserData = userData;
     }
 
-    internal long NativeHandle { get; }
+    internal LibExtism.ExtismCurrentPlugin* NativeHandle { get; }
+
+    internal IntPtr UserData { get; set; }
 
     /// <summary>
-    /// An opaque pointer to an object from the host, passed in when a <see cref="HostFunction"/> is registered.
+    /// Returns the user data object that was passed in when a <see cref="HostFunction"/> was registered.
     /// </summary>
-    public nint UserData { get; set; }
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T? GetUserData<T>()
+    {
+        var handle1 = GCHandle.FromIntPtr(UserData);
+        return (T?)handle1.Target;
+    }
+
+    /// <summary>
+    /// Get the current plugin call's associated host context data. Returns null if call was made without host context.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    public T? GetHostContext<T>()
+    {
+        var ptr = LibExtism.extism_current_plugin_host_context(NativeHandle);
+        if (ptr == null)
+        {
+            return default;
+        }
+
+        var handle = GCHandle.FromIntPtr(new IntPtr(ptr));
+        return (T?)handle.Target;
+    }
 
     /// <summary>
     /// Returns a offset to the memory of the currently running plugin.

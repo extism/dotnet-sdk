@@ -223,22 +223,49 @@ public unsafe class Plugin : IDisposable
     /// <exception cref="ExtismException"></exception>
     unsafe public ReadOnlySpan<byte> Call(string functionName, ReadOnlySpan<byte> input, CancellationToken? cancellationToken = null)
     {
+        return CallImpl(functionName, input, hostContext: null, cancellationToken);
+    }
+
+    /// <summary>
+    /// Calls a function in the current plugin and returns the output as a byte buffer.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="functionName">Name of the function in the plugin to invoke.</param>
+    /// <param name="input">A buffer to provide as input to the function.</param>
+    /// <param name="hostContext">An object that will be passed back to HostFunctions</param>
+    /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
+    /// <returns>The output of the function call</returns>
+    /// <exception cref="ExtismException"></exception>
+    unsafe public ReadOnlySpan<byte> Call<T>(string functionName, ReadOnlySpan<byte> input, T hostContext, CancellationToken? cancellationToken = null)
+    {
+        GCHandle handle = GCHandle.Alloc(hostContext);
+        try
+        {
+            return CallImpl(functionName, input, GCHandle.ToIntPtr(handle), cancellationToken);
+        }
+        finally
+        {
+            handle.Free();
+        }
+    }
+
+    private ReadOnlySpan<byte> CallImpl(string functionName, ReadOnlySpan<byte> input, IntPtr? hostContext, CancellationToken? cancellationToken = null)
+    {
         CheckNotDisposed();
-
         cancellationToken?.ThrowIfCancellationRequested();
-
         using var _ = cancellationToken?.Register(() => LibExtism.extism_plugin_cancel(_cancelHandle));
 
         fixed (byte* dataPtr = input)
         {
-            int response = LibExtism.extism_plugin_call(NativeHandle, functionName, dataPtr, input.Length);
-            var errorMsg = GetError();
+            int response = hostContext.HasValue ?
+                LibExtism.extism_plugin_call_with_host_context(NativeHandle, functionName, dataPtr, input.Length, hostContext.Value) :
+                LibExtism.extism_plugin_call(NativeHandle, functionName, dataPtr, input.Length);
 
+            var errorMsg = GetError();
             if (errorMsg != null)
             {
                 throw new ExtismException($"{errorMsg}. Exit Code: {response}");
             }
-
             return OutputData();
         }
     }

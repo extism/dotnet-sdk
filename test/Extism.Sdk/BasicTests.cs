@@ -137,7 +137,7 @@ public class BasicTests
     {
         for (int i = 0; i < 100; i++)
         {
-            var userData = Marshal.StringToHGlobalAnsi("Hello again!");
+            var userData = "Hello again!";
 
             using var helloWorld = new HostFunction(
                 "hello_world",
@@ -148,7 +148,12 @@ public class BasicTests
 
             using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
 
-            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+            var dict = new Dictionary<string, object>
+            {
+                { "answer", 42 }
+            };
+
+            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"), dict);
             Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
         }
 
@@ -156,8 +161,16 @@ public class BasicTests
         {
             Console.WriteLine("Hello from .NET!");
 
-            var text = Marshal.PtrToStringAnsi(plugin.UserData);
-            Console.WriteLine(text);
+            var text = plugin.GetUserData<string>();
+            Assert.Equal("Hello again!", text);
+
+            var context = plugin.GetHostContext<Dictionary<string, object>>();
+            if (context is null || !context.ContainsKey("answer"))
+            {
+                throw new InvalidOperationException("Context not found");
+            }
+
+            Assert.Equal(42, context["answer"]);
 
             var input = plugin.ReadString(new nint(inputs[0].v.ptr));
             Console.WriteLine($"Input: {input}");

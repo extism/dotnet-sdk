@@ -30,7 +30,7 @@ public class CompiledPluginTests
     [Fact]
     public void CountVowelsHostFunctions()
     {
-        var userData = Marshal.StringToHGlobalAnsi("Hello again!");
+        var userData = "Hello again!";
         using var helloWorld = HostFunction.FromMethod<long, long>("hello_world", userData, HelloWorld);
 
         using var compiledPlugin = Helpers.CompilePlugin("code-functions.wasm", null, helloWorld);
@@ -46,7 +46,7 @@ public class CompiledPluginTests
         {
             Console.WriteLine("Hello from .NET!");
 
-            var text = Marshal.PtrToStringAnsi(plugin.UserData);
+            var text = plugin.GetUserData<string>();
             Console.WriteLine(text);
 
             var input = plugin.ReadString(ptr);
