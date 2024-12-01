@@ -25,7 +25,7 @@ public unsafe class CurrentPlugin
     /// Returns the user data object that was passed in when a <see cref="HostFunction"/> was registered.
     /// </summary>
     [Obsolete("Use GetUserData<T> instead.")]
-    public IntPtr UserData => _userData;
+    public nint UserData => _userData;
 
     /// <summary>
     /// Returns the user data object that was passed in when a <see cref="HostFunction"/> was registered.
