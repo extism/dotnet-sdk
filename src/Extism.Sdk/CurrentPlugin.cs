@@ -48,7 +48,7 @@ public unsafe class CurrentPlugin
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public T? GetHostContext<T>()
+    public T? GetCallHostContext<T>()
     {
         var ptr = LibExtism.extism_current_plugin_host_context(NativeHandle);
         if (ptr == null)

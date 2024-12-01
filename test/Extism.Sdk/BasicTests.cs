@@ -202,7 +202,7 @@ public class BasicTests
             var text = plugin.GetUserData<string>();
             Assert.Equal("Hello again!", text);
 
-            var context = plugin.GetHostContext<Dictionary<string, object>>();
+            var context = plugin.GetCallHostContext<Dictionary<string, object>>();
             if (context is null || !context.ContainsKey("answer"))
             {
                 throw new InvalidOperationException("Context not found");

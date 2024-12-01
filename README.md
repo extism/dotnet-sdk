@@ -372,9 +372,9 @@ let hostFunc = new HostFunction(
 
 The userData object is preserved for the lifetime of the host function and can be retrieved in any call using `CurrentPlugin.GetUserData<T>()`. If no userData was provided, `GetUserData<T>()` will return the default value for type `T`.
 
-### Host Context 
+### Call Host Context 
 
-Host context provides a way to pass per-call context data when invoking a plugin function. This is useful when you need to provide data specific to a particular function call rather than data that persists across all calls.
+Call Host Context provides a way to pass per-call context data when invoking a plugin function. This is useful when you need to provide data specific to a particular function call rather than data that persists across all calls.
 
 C#:
 
@@ -386,7 +386,7 @@ var result = plugin.CallWithHostContext("function_name", inputData, context);
 // Access in host function
 void HostFunction(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
 {
-    var context = plugin.GetHostContext<Dictionary<string, object>>();
+    var context = plugin.GetCallHostContext<Dictionary<string, object>>();
     // Use context...
 }
 ```
@@ -402,7 +402,7 @@ let result = plugin.CallWithHostContext("function_name", inputData, context)
 
 // Access context in host function
 let hostFunction (plugin: CurrentPlugin) (inputs: Span<ExtismVal>) (outputs: Span<ExtismVal>) =
-    match plugin.GetHostContext<IDictionary<string, obj>>() with
+    match plugin.GetCallHostContext<IDictionary<string, obj>>() with
     | null -> printfn "No context available"
     | context -> 
         let requestId = context.["requestId"] :?> int
@@ -434,23 +434,13 @@ var plugin = new Plugin(manifest, functions, options);
 F#:
 
 ```fsharp
-// Create manifest and options
 let manifest = Manifest(PathWasmSource("/path/to/plugin.wasm"))
 let options = PluginIntializationOptions(
     FuelLimit = Nullable<int64>(1000L), // plugin can execute 1000 instructions
     WithWasi = true
 )
 
-// Create plugin with fuel limit
 use plugin = new Plugin(manifest, Array.empty<HostFunction>, options)
-
-// Handle potential fuel limit exception
-try
-    let result = plugin.Call("some_function", input)
-    printfn "%s" result
-with 
-| :? ExtismException as ex when ex.Message.Contains("fuel") -> 
-    printfn "Fuel limit exceeded: %s" ex.Message
 ```
 
 When the fuel limit is exceeded, the plugin execution is terminated and an `ExtismException` is thrown containing "fuel" in the error message.
