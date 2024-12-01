@@ -10,15 +10,22 @@ namespace Extism.Sdk;
 /// </summary>
 public unsafe class CurrentPlugin
 {
+    private readonly nint _userData;
     internal CurrentPlugin(LibExtism.ExtismCurrentPlugin* nativeHandle, nint userData)
     {
         NativeHandle = nativeHandle;
-        UserData = userData;
+
+
+        _userData = userData;
     }
 
     internal LibExtism.ExtismCurrentPlugin* NativeHandle { get; }
 
-    internal IntPtr UserData { get; set; }
+    /// <summary>
+    /// Returns the user data object that was passed in when a <see cref="HostFunction"/> was registered.
+    /// </summary>
+    [Obsolete("Use GetUserData<T> instead.")]
+    public IntPtr UserData => _userData;
 
     /// <summary>
     /// Returns the user data object that was passed in when a <see cref="HostFunction"/> was registered.
@@ -27,7 +34,7 @@ public unsafe class CurrentPlugin
     /// <returns></returns>
     public T? GetUserData<T>()
     {
-        var handle1 = GCHandle.FromIntPtr(UserData);
+        var handle1 = GCHandle.FromIntPtr(_userData);
         return (T?)handle1.Target;
     }
 

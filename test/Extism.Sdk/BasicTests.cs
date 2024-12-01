@@ -133,6 +133,52 @@ public class BasicTests
     }
 
     [Fact]
+    public void CountVowelsHostFunctionsBackCompat()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            var userData = Marshal.StringToHGlobalAnsi("Hello again!");
+
+            using var helloWorld = new HostFunction(
+                "hello_world",
+                new[] { ExtismValType.PTR },
+                new[] { ExtismValType.PTR },
+                userData,
+                HelloWorld);
+
+            using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
+
+            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+            Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        }
+
+        void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
+        {
+            Console.WriteLine("Hello from .NET!");
+
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            var text = Marshal.PtrToStringAnsi(plugin.UserData);
+#pragma warning restore CS0618 // Type or member is obsolete
+            Console.WriteLine(text);
+
+            var context = plugin.GetHostContext<Dictionary<string, object>>();
+            if (context is null || !context.ContainsKey("answer"))
+            {
+                throw new InvalidOperationException("Context not found");
+            }
+
+            Assert.Equal(42, context["answer"]);
+
+            var input = plugin.ReadString(new nint(inputs[0].v.ptr));
+            Console.WriteLine($"Input: {input}");
+
+            var output = new string(input); // clone the string
+            outputs[0].v.ptr = plugin.WriteString(output);
+        }
+    }
+
+    [Fact]
     public void CountVowelsHostFunctions()
     {
         for (int i = 0; i < 100; i++)
