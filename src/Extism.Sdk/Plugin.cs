@@ -236,7 +236,7 @@ public unsafe class Plugin : IDisposable
     /// <param name="cancellationToken">CancellationToken used for cancelling the Extism call.</param>
     /// <returns>The output of the function call</returns>
     /// <exception cref="ExtismException"></exception>
-    unsafe public ReadOnlySpan<byte> Call<T>(string functionName, ReadOnlySpan<byte> input, T hostContext, CancellationToken? cancellationToken = null)
+    unsafe public ReadOnlySpan<byte> CallWithHostContext<T>(string functionName, ReadOnlySpan<byte> input, T hostContext, CancellationToken? cancellationToken = null)
     {
         GCHandle handle = GCHandle.Alloc(hostContext);
         try

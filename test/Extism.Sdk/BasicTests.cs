@@ -191,7 +191,7 @@ public class BasicTests
                 { "answer", 42 }
             };
 
-            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"), dict);
+            var response = plugin.CallWithHostContext("count_vowels", Encoding.UTF8.GetBytes("Hello World"), dict);
             Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
         }
 
@@ -238,7 +238,7 @@ public class BasicTests
                 { "answer", 42 }
             };
 
-            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"), dict);
+            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
             Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
         }
 
