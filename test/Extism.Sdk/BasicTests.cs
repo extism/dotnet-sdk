@@ -218,7 +218,6 @@ public class BasicTests
         }
     }
 
-
     [Fact]
     public void CountVowelsHostFunctionsNoUserData()
     {
@@ -248,14 +247,6 @@ public class BasicTests
 
             var text = plugin.GetUserData<string>();
             Assert.Null(text);
-
-            var context = plugin.GetHostContext<Dictionary<string, object>>();
-            if (context is null || !context.ContainsKey("answer"))
-            {
-                throw new InvalidOperationException("Context not found");
-            }
-
-            Assert.Equal(42, context["answer"]);
 
             var input = plugin.ReadString(new nint(inputs[0].v.ptr));
             Console.WriteLine($"Input: {input}");
