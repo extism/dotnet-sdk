@@ -95,6 +95,19 @@ using var compiledPlugin = new CompiledPlugin(_manifest, [], withWasi: true);
 using var plugin = compiledPlugin.Instantiate();
 ```
 
+F#:
+
+```fsharp
+// Create manifest
+let manifest = Manifest(PathWasmSource("/path/to/plugin.wasm"))
+
+// Pre-compile the wasm file
+use compiledPlugin = new CompiledPlugin(manifest, Array.empty<HostFunction>, withWasi = true)
+
+// Instantiate plugins
+use plugin = compiledPlugin.Instantiate()
+```
+
 This can have a dramatic effect on performance*:
 
 ```
@@ -229,7 +242,7 @@ var kvStore = new Dictionary<string, byte[]>();
 
 var functions = new[]
 {
-    HostFunction.FromMethod("kv_read", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =>
+    HostFunction.FromMethod("kv_read", null, (CurrentPlugin plugin, long keyOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         if (!kvStore.TryGetValue(key, out var value))
@@ -241,7 +254,7 @@ var functions = new[]
         return plugin.WriteBytes(value);
     }),
 
-    HostFunction.FromMethod("kv_write", IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
+    HostFunction.FromMethod("kv_write", null, (CurrentPlugin plugin, long keyOffset, long valueOffset) =>
     {
         var key = plugin.ReadString(keyOffset);
         var value = plugin.ReadBytes(valueOffset);
@@ -258,7 +271,7 @@ let kvStore = new Dictionary<string, byte[]>()
 
 let functions =
     [|
-        HostFunction.FromMethod("kv_read", IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) ->
+        HostFunction.FromMethod("kv_read", null, fun (plugin: CurrentPlugin) (offs: int64) ->
             let key = plugin.ReadString(offs)
             let value = 
                 match kvStore.TryGetValue(key) with
@@ -269,7 +282,7 @@ let functions =
             plugin.WriteBytes(value)
         )
 
-        HostFunction.FromMethod("kv_write", IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) ->
+        HostFunction.FromMethod("kv_write", null, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) ->
             let key = plugin.ReadString(kOffs)
             let value = plugin.ReadBytes(vOffs).ToArray()
 
@@ -318,3 +331,126 @@ printfn "%s" output2
 // => Writing value=6 from key=count-vowels
 // => {"count": 3, "total": 6, "vowels": "aeiouAEIOU"}
 ```
+
+## Passing context to host functions
+
+Extism provides two ways to pass context to host functions:
+
+### UserData
+UserData allows you to associate persistent state with a host function that remains available across all calls to that function. This is useful for maintaining configuration or state that should be available throughout the lifetime of the host function.
+
+C#:
+
+```csharp
+var hostFunc = new HostFunction(
+    "hello_world",
+    new[] { ExtismValType.PTR },
+    new[] { ExtismValType.PTR }, 
+    "Hello again!",  // <= userData, this can be any .NET object
+    (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) => {
+        var text = plugin.GetUserData<string>(); // <= We're retrieving the data back
+        // Use text...
+    });
+```
+
+F#:
+
+```fsharp
+// Create host function with userData
+let hostFunc = new HostFunction(
+    "hello_world",
+    [| ExtismValType.PTR |],
+    [| ExtismValType.PTR |], 
+    "Hello again!",  // userData can be any .NET object
+    (fun (plugin: CurrentPlugin) (inputs: Span<ExtismVal>) (outputs: Span<ExtismVal>) ->
+        // Retrieve the userData
+        let text = plugin.GetUserData<string>()
+        printfn "%s" text // Prints: "Hello again!"
+        // Rest of function implementation...
+    ))
+```
+
+The userData object is preserved for the lifetime of the host function and can be retrieved in any call using `CurrentPlugin.GetUserData<T>()`. If no userData was provided, `GetUserData<T>()` will return the default value for type `T`.
+
+### Host Context 
+
+Host context provides a way to pass per-call context data when invoking a plugin function. This is useful when you need to provide data specific to a particular function call rather than data that persists across all calls.
+
+C#:
+
+```csharp
+// Pass context for specific call
+var context = new Dictionary<string, object> { { "requestId", 42 } };
+var result = plugin.CallWithHostContext("function_name", inputData, context);
+
+// Access in host function
+void HostFunction(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
+{
+    var context = plugin.GetHostContext<Dictionary<string, object>>();
+    // Use context...
+}
+```
+
+F#:
+
+```fsharp
+// Create context for specific call
+let context = dict [ "requestId", box 42 ]
+
+// Call plugin with context
+let result = plugin.CallWithHostContext("function_name", inputData, context)
+
+// Access context in host function
+let hostFunction (plugin: CurrentPlugin) (inputs: Span<ExtismVal>) (outputs: Span<ExtismVal>) =
+    match plugin.GetHostContext<IDictionary<string, obj>>() with
+    | null -> printfn "No context available"
+    | context -> 
+        let requestId = context.["requestId"] :?> int
+        printfn "Request ID: %d" requestId
+```
+
+Host context is only available for the duration of the specific function call and can be retrieved using `CurrentPlugin.GetHostContext<T>()`. If no context was provided for the call, `GetHostContext<T>()` will return the default value for type `T`.
+
+## Fuel limit
+
+The fuel limit feature allows you to constrain plugin execution by limiting the number of instructions it can execute. This provides a safeguard against infinite loops or excessive resource consumption.
+
+### Setting a fuel limit
+
+Set the fuel limit when initializing a plugin:
+
+C#:
+
+```csharp
+var manifest = new Manifest(...);
+var options = new PluginIntializationOptions {
+    FuelLimit = 1000,  // plugin can execute 1000 instructions
+    WithWasi = true
+};
+
+var plugin = new Plugin(manifest, functions, options);
+```
+
+F#:
+
+```fsharp
+// Create manifest and options
+let manifest = Manifest(PathWasmSource("/path/to/plugin.wasm"))
+let options = PluginIntializationOptions(
+    FuelLimit = Nullable<int64>(1000L), // plugin can execute 1000 instructions
+    WithWasi = true
+)
+
+// Create plugin with fuel limit
+use plugin = new Plugin(manifest, Array.empty<HostFunction>, options)
+
+// Handle potential fuel limit exception
+try
+    let result = plugin.Call("some_function", input)
+    printfn "%s" result
+with 
+| :? ExtismException as ex when ex.Message.Contains("fuel") -> 
+    printfn "Fuel limit exceeded: %s" ex.Message
+```
+
+When the fuel limit is exceeded, the plugin execution is terminated and an `ExtismException` is thrown containing "fuel" in the error message.
