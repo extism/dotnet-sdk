@@ -34,6 +34,11 @@ public unsafe class CurrentPlugin
     /// <returns></returns>
     public T? GetUserData<T>()
     {
+        if (_userData == IntPtr.Zero)
+        {
+            return default;
+        }
+
         var handle1 = GCHandle.FromIntPtr(_userData);
         return (T?)handle1.Target;
     }

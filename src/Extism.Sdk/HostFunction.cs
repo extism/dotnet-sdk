@@ -21,7 +21,7 @@ public class HostFunction : IDisposable
     private int _disposed;
     private readonly ExtismFunction _function;
     private readonly LibExtism.InternalExtismFunction _callback;
-    private readonly GCHandle _userDataHandle;
+    private readonly GCHandle? _userDataHandle;
 
     /// <summary>
     /// Registers a Host Function.
@@ -37,13 +37,13 @@ public class HostFunction : IDisposable
         string functionName,
         Span<ExtismValType> inputTypes,
         Span<ExtismValType> outputTypes,
-        object userData,
+        object? userData,
         ExtismFunction hostFunction)
     {
         // Make sure we store the delegate reference in a field so that it doesn't get garbage collected
         _function = hostFunction;
         _callback = CallbackImpl;
-        _userDataHandle = GCHandle.Alloc(userData);
+        _userDataHandle = userData is null ? null : GCHandle.Alloc(userData);
 
         fixed (ExtismValType* inputs = inputTypes)
         fixed (ExtismValType* outputs = outputTypes)
@@ -55,7 +55,7 @@ public class HostFunction : IDisposable
                 outputs, 
                 outputTypes.Length,
                 _callback, 
-                GCHandle.ToIntPtr(_userDataHandle), 
+                _userDataHandle is null ? IntPtr.Zero : GCHandle.ToIntPtr(_userDataHandle.Value), 
                 IntPtr.Zero);
         }
     }
@@ -438,7 +438,7 @@ public class HostFunction : IDisposable
     {
         if (disposing)
         {
-            _userDataHandle.Free();
+            _userDataHandle?.Free();
         }
 
         // Free up unmanaged resources
