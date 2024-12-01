@@ -79,6 +79,42 @@ printfn "%s" output
 
 All exports have a simple interface of optional bytes in, and optional bytes out. This plug-in happens to take a string and return a JSON encoded string with a report of results.
 
+## Precompiling plugins
+
+If you're going to create more than one instance of the same plugin, we recommend pre-compiling the plugin and instantiate them:
+
+C#:
+
+```csharp
+var manifest = new Manifest(new PathWasmSource("/path/to/plugin.wasm"), "main"));
+
+// pre-compile the wasm file
+using var compiledPlugin = new CompiledPlugin(_manifest, [], withWasi: true);
+
+// instantiate plugins
+using var plugin = compiledPlugin.Instantiate();
+```
+
+This can have a dramatic effect on performance*:
+
+```
+// * Summary *
+
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.22631.4460/23H2/2023Update/SunValley3)
+13th Gen Intel Core i7-1365U, 1 CPU, 12 logical and 10 physical cores
+.NET SDK 9.0.100
+  [Host]     : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX2
+  DefaultJob : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX2
+
+
+| Method                    | Mean        | Error     | StdDev      |
+|-------------------------- |------------:|----------:|------------:|
+| CompiledPluginInstantiate |    266.2 ms |   6.66 ms |    19.11 ms |
+| PluginInstantiate         | 27,592.4 ms | 635.90 ms | 1,783.12 ms |
+```
+
+*: See [the complete benchmark](./test/Extism.Sdk.Benchmarks/Program.cs)
+
 ### Plug-in State
 
 Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the "total" key in the result. You can see this by making subsequent calls to the export:

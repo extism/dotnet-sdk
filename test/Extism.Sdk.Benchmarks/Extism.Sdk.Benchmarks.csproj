@@ -5,13 +5,14 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-		<PublishAot>true</PublishAot>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\wasm\*.wasm">
+		<PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="../../wasm/*.wasm" Link="wasm/%(Filename)%(Extension)">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
@@ -21,8 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Extism.Sdk\Extism.Sdk.csproj" />
+		<ProjectReference Include="..\src\Extism.Sdk\Extism.Sdk.csproj" />
 	</ItemGroup>
-
 
 </Project>
