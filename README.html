@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="">
       
       
-      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/blob/v1.2.1/README.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/blob/v1.9.0/README.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -54,7 +54,7 @@
             <div id="navbar">
               <form class="search" role="search" id="search">
                 <i class="bi bi-search"></i>
-                <input class="form-control" id="search-query" type="search" disabled="" placeholder="Search" autocomplete="off" aria-label="Search">
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
               </form>
             </div>
           </div>
@@ -126,6 +126,43 @@ printfn &quot;%s&quot; output
 // =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
 </code></pre>
 <p>All exports have a simple interface of optional bytes in, and optional bytes out. This plug-in happens to take a string and return a JSON encoded string with a report of results.</p>
+<h2 id="precompiling-plugins">Precompiling plugins</h2>
+<p>If you're going to create more than one instance of the same plugin, we recommend pre-compiling the plugin and instantiate them:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var manifest = new Manifest(new PathWasmSource(&quot;/path/to/plugin.wasm&quot;), &quot;main&quot;));
+
+// pre-compile the wasm file
+using var compiledPlugin = new CompiledPlugin(_manifest, [], withWasi: true);
+
+// instantiate plugins
+using var plugin = compiledPlugin.Instantiate();
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">// Create manifest
+let manifest = Manifest(PathWasmSource(&quot;/path/to/plugin.wasm&quot;))
+
+// Pre-compile the wasm file
+use compiledPlugin = new CompiledPlugin(manifest, Array.empty&lt;HostFunction&gt;, withWasi = true)
+
+// Instantiate plugins
+use plugin = compiledPlugin.Instantiate()
+</code></pre>
+<p>This can have a dramatic effect on performance*:</p>
+<pre><code>// * Summary *
+
+BenchmarkDotNet v0.14.0, Windows 11 (10.0.22631.4460/23H2/2023Update/SunValley3)
+13th Gen Intel Core i7-1365U, 1 CPU, 12 logical and 10 physical cores
+.NET SDK 9.0.100
+  [Host]     : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX2
+  DefaultJob : .NET 9.0.0 (9.0.24.52809), X64 RyuJIT AVX2
+
+
+| Method                    | Mean        | Error     | StdDev      |
+|-------------------------- |------------:|----------:|------------:|
+| CompiledPluginInstantiate |    266.2 ms |   6.66 ms |    19.11 ms |
+| PluginInstantiate         | 27,592.4 ms | 635.90 ms | 1,783.12 ms |
+</code></pre>
+<p>*: See <a href="./test/Extism.Sdk.Benchmarks/Program.cs">the complete benchmark</a></p>
 <h3 id="plug-in-state">Plug-in State</h3>
 <p>Plug-ins may be stateful or stateless. Plug-ins can maintain state b/w calls by the use of variables. Our count vowels plug-in remembers the total number of vowels it's ever counted in the &quot;total&quot; key in the result. You can see this by making subsequent calls to the export:</p>
 <p>C#:</p>
@@ -216,7 +253,7 @@ var kvStore = new Dictionary&lt;string, byte[]&gt;();
 
 var functions = new[]
 {
-    HostFunction.FromMethod(&quot;kv_read&quot;, IntPtr.Zero, (CurrentPlugin plugin, long keyOffset) =&gt;
+    HostFunction.FromMethod(&quot;kv_read&quot;, null, (CurrentPlugin plugin, long keyOffset) =&gt;
     {
         var key = plugin.ReadString(keyOffset);
         if (!kvStore.TryGetValue(key, out var value))
@@ -228,7 +265,7 @@ var functions = new[]
         return plugin.WriteBytes(value);
     }),
 
-    HostFunction.FromMethod(&quot;kv_write&quot;, IntPtr.Zero, (CurrentPlugin plugin, long keyOffset, long valueOffset) =&gt;
+    HostFunction.FromMethod(&quot;kv_write&quot;, null, (CurrentPlugin plugin, long keyOffset, long valueOffset) =&gt;
     {
         var key = plugin.ReadString(keyOffset);
         var value = plugin.ReadBytes(valueOffset);
@@ -243,7 +280,7 @@ var functions = new[]
 
 let functions =
     [|
-        HostFunction.FromMethod(&quot;kv_read&quot;, IntPtr.Zero, fun (plugin: CurrentPlugin) (offs: int64) -&gt;
+        HostFunction.FromMethod(&quot;kv_read&quot;, null, fun (plugin: CurrentPlugin) (offs: int64) -&gt;
             let key = plugin.ReadString(offs)
             let value = 
                 match kvStore.TryGetValue(key) with
@@ -254,7 +291,7 @@ let functions =
             plugin.WriteBytes(value)
         )
 
-        HostFunction.FromMethod(&quot;kv_write&quot;, IntPtr.Zero, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) -&gt;
+        HostFunction.FromMethod(&quot;kv_write&quot;, null, fun (plugin: CurrentPlugin) (kOffs: int64) (vOffs: int64) -&gt;
             let key = plugin.ReadString(kOffs)
             let value = plugin.ReadBytes(vOffs).ToArray()
 
@@ -299,11 +336,94 @@ printfn &quot;%s&quot; output2
 // =&gt; Writing value=6 from key=count-vowels
 // =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 6, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
 </code></pre>
+<h2 id="passing-context-to-host-functions">Passing context to host functions</h2>
+<p>Extism provides two ways to pass context to host functions:</p>
+<h3 id="userdata">UserData</h3>
+<p>UserData allows you to associate persistent state with a host function that remains available across all calls to that function. This is useful for maintaining configuration or state that should be available throughout the lifetime of the host function.</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var hostFunc = new HostFunction(
+    &quot;hello_world&quot;,
+    new[] { ExtismValType.PTR },
+    new[] { ExtismValType.PTR }, 
+    &quot;Hello again!&quot;,  // &lt;= userData, this can be any .NET object
+    (CurrentPlugin plugin, Span&lt;ExtismVal&gt; inputs, Span&lt;ExtismVal&gt; outputs) =&gt; {
+        var text = plugin.GetUserData&lt;string&gt;(); // &lt;= We're retrieving the data back
+        // Use text...
+    });
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">// Create host function with userData
+let hostFunc = new HostFunction(
+    &quot;hello_world&quot;,
+    [| ExtismValType.PTR |],
+    [| ExtismValType.PTR |], 
+    &quot;Hello again!&quot;,  // userData can be any .NET object
+    (fun (plugin: CurrentPlugin) (inputs: Span&lt;ExtismVal&gt;) (outputs: Span&lt;ExtismVal&gt;) -&gt;
+        // Retrieve the userData
+        let text = plugin.GetUserData&lt;string&gt;()
+        printfn &quot;%s&quot; text // Prints: &quot;Hello again!&quot;
+        // Rest of function implementation...
+    ))
+</code></pre>
+<p>The userData object is preserved for the lifetime of the host function and can be retrieved in any call using <code>CurrentPlugin.GetUserData&lt;T&gt;()</code>. If no userData was provided, <code>GetUserData&lt;T&gt;()</code> will return the default value for type <code>T</code>.</p>
+<h3 id="call-host-context">Call Host Context</h3>
+<p>Call Host Context provides a way to pass per-call context data when invoking a plugin function. This is useful when you need to provide data specific to a particular function call rather than data that persists across all calls.</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">// Pass context for specific call
+var context = new Dictionary&lt;string, object&gt; { { &quot;requestId&quot;, 42 } };
+var result = plugin.CallWithHostContext(&quot;function_name&quot;, inputData, context);
+
+// Access in host function
+void HostFunction(CurrentPlugin plugin, Span&lt;ExtismVal&gt; inputs, Span&lt;ExtismVal&gt; outputs)
+{
+    var context = plugin.GetCallHostContext&lt;Dictionary&lt;string, object&gt;&gt;();
+    // Use context...
+}
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">// Create context for specific call
+let context = dict [ &quot;requestId&quot;, box 42 ]
+
+// Call plugin with context
+let result = plugin.CallWithHostContext(&quot;function_name&quot;, inputData, context)
+
+// Access context in host function
+let hostFunction (plugin: CurrentPlugin) (inputs: Span&lt;ExtismVal&gt;) (outputs: Span&lt;ExtismVal&gt;) =
+    match plugin.GetCallHostContext&lt;IDictionary&lt;string, obj&gt;&gt;() with
+    | null -&gt; printfn &quot;No context available&quot;
+    | context -&gt; 
+        let requestId = context.[&quot;requestId&quot;] :?&gt; int
+        printfn &quot;Request ID: %d&quot; requestId
+</code></pre>
+<p>Host context is only available for the duration of the specific function call and can be retrieved using <code>CurrentPlugin.GetHostContext&lt;T&gt;()</code>. If no context was provided for the call, <code>GetHostContext&lt;T&gt;()</code> will return the default value for type <code>T</code>.</p>
+<h2 id="fuel-limit">Fuel limit</h2>
+<p>The fuel limit feature allows you to constrain plugin execution by limiting the number of instructions it can execute. This provides a safeguard against infinite loops or excessive resource consumption.</p>
+<h3 id="setting-a-fuel-limit">Setting a fuel limit</h3>
+<p>Set the fuel limit when initializing a plugin:</p>
+<p>C#:</p>
+<pre><code class="lang-csharp">var manifest = new Manifest(...);
+var options = new PluginIntializationOptions {
+    FuelLimit = 1000,  // plugin can execute 1000 instructions
+    WithWasi = true
+};
+
+var plugin = new Plugin(manifest, functions, options);
+</code></pre>
+<p>F#:</p>
+<pre><code class="lang-fsharp">let manifest = Manifest(PathWasmSource(&quot;/path/to/plugin.wasm&quot;))
+let options = PluginIntializationOptions(
+    FuelLimit = Nullable&lt;int64&gt;(1000L), // plugin can execute 1000 instructions
+    WithWasi = true
+)
+
+use plugin = new Plugin(manifest, Array.empty&lt;HostFunction&gt;, options)
+</code></pre>
+<p>When the fuel limit is exceeded, the plugin execution is terminated and an <code>ExtismException</code> is thrown containing &quot;fuel&quot; in the error message.</p>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/extism/dotnet-sdk/blob/v1.2.1/README.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/extism/dotnet-sdk/blob/v1.9.0/README.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>

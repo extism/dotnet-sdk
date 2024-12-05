@@ -32,6 +32,16 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.CompiledPlugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.CompiledPlugin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/Extism.Sdk.CurrentPlugin.yml",
       "output": {
         ".html": {
@@ -176,6 +186,16 @@
       "output": {
         ".html": {
           "relative_path": "api/Extism.Sdk.Plugin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Extism.Sdk.PluginIntializationOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Extism.Sdk.PluginIntializationOptions.html"
         }
       },
       "version": ""

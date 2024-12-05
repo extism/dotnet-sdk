@@ -45,6 +45,95 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.ByteArrayWasmSource.Data
   nameWithType: ByteArrayWasmSource.Data
+- uid: Extism.Sdk.CompiledPlugin
+  name: CompiledPlugin
+  href: api/Extism.Sdk.CompiledPlugin.html
+  commentId: T:Extism.Sdk.CompiledPlugin
+  fullName: Extism.Sdk.CompiledPlugin
+  nameWithType: CompiledPlugin
+- uid: Extism.Sdk.CompiledPlugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
+  name: CompiledPlugin(Manifest, HostFunction[], bool)
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___System_Boolean_
+  commentId: M:Extism.Sdk.CompiledPlugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
+  name.vb: New(Manifest, HostFunction(), Boolean)
+  fullName: Extism.Sdk.CompiledPlugin.CompiledPlugin(Extism.Sdk.Manifest, Extism.Sdk.HostFunction[], bool)
+  fullName.vb: Extism.Sdk.CompiledPlugin.New(Extism.Sdk.Manifest, Extism.Sdk.HostFunction(), Boolean)
+  nameWithType: CompiledPlugin.CompiledPlugin(Manifest, HostFunction[], bool)
+  nameWithType.vb: CompiledPlugin.New(Manifest, HostFunction(), Boolean)
+- uid: Extism.Sdk.CompiledPlugin.#ctor*
+  name: CompiledPlugin
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin__ctor_
+  commentId: Overload:Extism.Sdk.CompiledPlugin.#ctor
+  isSpec: "True"
+  name.vb: New
+  fullName: Extism.Sdk.CompiledPlugin.CompiledPlugin
+  fullName.vb: Extism.Sdk.CompiledPlugin.New
+  nameWithType: CompiledPlugin.CompiledPlugin
+  nameWithType.vb: CompiledPlugin.New
+- uid: Extism.Sdk.CompiledPlugin.CheckNotDisposed
+  name: CheckNotDisposed()
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_CheckNotDisposed
+  commentId: M:Extism.Sdk.CompiledPlugin.CheckNotDisposed
+  fullName: Extism.Sdk.CompiledPlugin.CheckNotDisposed()
+  nameWithType: CompiledPlugin.CheckNotDisposed()
+- uid: Extism.Sdk.CompiledPlugin.CheckNotDisposed*
+  name: CheckNotDisposed
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_CheckNotDisposed_
+  commentId: Overload:Extism.Sdk.CompiledPlugin.CheckNotDisposed
+  isSpec: "True"
+  fullName: Extism.Sdk.CompiledPlugin.CheckNotDisposed
+  nameWithType: CompiledPlugin.CheckNotDisposed
+- uid: Extism.Sdk.CompiledPlugin.Dispose
+  name: Dispose()
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Dispose
+  commentId: M:Extism.Sdk.CompiledPlugin.Dispose
+  fullName: Extism.Sdk.CompiledPlugin.Dispose()
+  nameWithType: CompiledPlugin.Dispose()
+- uid: Extism.Sdk.CompiledPlugin.Dispose(System.Boolean)
+  name: Dispose(bool)
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Dispose_System_Boolean_
+  commentId: M:Extism.Sdk.CompiledPlugin.Dispose(System.Boolean)
+  name.vb: Dispose(Boolean)
+  fullName: Extism.Sdk.CompiledPlugin.Dispose(bool)
+  fullName.vb: Extism.Sdk.CompiledPlugin.Dispose(Boolean)
+  nameWithType: CompiledPlugin.Dispose(bool)
+  nameWithType.vb: CompiledPlugin.Dispose(Boolean)
+- uid: Extism.Sdk.CompiledPlugin.Dispose*
+  name: Dispose
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Dispose_
+  commentId: Overload:Extism.Sdk.CompiledPlugin.Dispose
+  isSpec: "True"
+  fullName: Extism.Sdk.CompiledPlugin.Dispose
+  nameWithType: CompiledPlugin.Dispose
+- uid: Extism.Sdk.CompiledPlugin.Finalize
+  name: ~CompiledPlugin()
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Finalize
+  commentId: M:Extism.Sdk.CompiledPlugin.Finalize
+  name.vb: ''
+  fullName: Extism.Sdk.CompiledPlugin.~CompiledPlugin()
+  fullName.vb: ''
+  nameWithType: CompiledPlugin.~CompiledPlugin()
+  nameWithType.vb: ''
+- uid: Extism.Sdk.CompiledPlugin.Finalize*
+  name: ~CompiledPlugin
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Finalize_
+  commentId: Overload:Extism.Sdk.CompiledPlugin.Finalize
+  isSpec: "True"
+  fullName: Extism.Sdk.CompiledPlugin.~CompiledPlugin
+  nameWithType: CompiledPlugin.~CompiledPlugin
+- uid: Extism.Sdk.CompiledPlugin.Instantiate
+  name: Instantiate()
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Instantiate
+  commentId: M:Extism.Sdk.CompiledPlugin.Instantiate
+  fullName: Extism.Sdk.CompiledPlugin.Instantiate()
+  nameWithType: CompiledPlugin.Instantiate()
+- uid: Extism.Sdk.CompiledPlugin.Instantiate*
+  name: Instantiate
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin_Instantiate_
+  commentId: Overload:Extism.Sdk.CompiledPlugin.Instantiate
+  isSpec: "True"
+  fullName: Extism.Sdk.CompiledPlugin.Instantiate
+  nameWithType: CompiledPlugin.Instantiate
 - uid: Extism.Sdk.CurrentPlugin
   name: CurrentPlugin
   href: api/Extism.Sdk.CurrentPlugin.html
@@ -99,6 +188,22 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.CurrentPlugin.FreeBlock
   nameWithType: CurrentPlugin.FreeBlock
+- uid: Extism.Sdk.CurrentPlugin.GetCallHostContext*
+  name: GetCallHostContext
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetCallHostContext_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.GetCallHostContext
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.GetCallHostContext
+  nameWithType: CurrentPlugin.GetCallHostContext
+- uid: Extism.Sdk.CurrentPlugin.GetCallHostContext``1
+  name: GetCallHostContext<T>()
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetCallHostContext__1
+  commentId: M:Extism.Sdk.CurrentPlugin.GetCallHostContext``1
+  name.vb: GetCallHostContext(Of T)()
+  fullName: Extism.Sdk.CurrentPlugin.GetCallHostContext<T>()
+  fullName.vb: Extism.Sdk.CurrentPlugin.GetCallHostContext(Of T)()
+  nameWithType: CurrentPlugin.GetCallHostContext<T>()
+  nameWithType.vb: CurrentPlugin.GetCallHostContext(Of T)()
 - uid: Extism.Sdk.CurrentPlugin.GetMemory
   name: GetMemory()
   href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetMemory
@@ -112,6 +217,22 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.CurrentPlugin.GetMemory
   nameWithType: CurrentPlugin.GetMemory
+- uid: Extism.Sdk.CurrentPlugin.GetUserData*
+  name: GetUserData
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetUserData_
+  commentId: Overload:Extism.Sdk.CurrentPlugin.GetUserData
+  isSpec: "True"
+  fullName: Extism.Sdk.CurrentPlugin.GetUserData
+  nameWithType: CurrentPlugin.GetUserData
+- uid: Extism.Sdk.CurrentPlugin.GetUserData``1
+  name: GetUserData<T>()
+  href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_GetUserData__1
+  commentId: M:Extism.Sdk.CurrentPlugin.GetUserData``1
+  name.vb: GetUserData(Of T)()
+  fullName: Extism.Sdk.CurrentPlugin.GetUserData<T>()
+  fullName.vb: Extism.Sdk.CurrentPlugin.GetUserData(Of T)()
+  nameWithType: CurrentPlugin.GetUserData<T>()
+  nameWithType.vb: CurrentPlugin.GetUserData(Of T)()
 - uid: Extism.Sdk.CurrentPlugin.ReadBytes(System.Int64)
   name: ReadBytes(long)
   href: api/Extism.Sdk.CurrentPlugin.html#Extism_Sdk_CurrentPlugin_ReadBytes_System_Int64_
@@ -271,15 +392,15 @@ references:
   commentId: T:Extism.Sdk.HostFunction
   fullName: Extism.Sdk.HostFunction
   nameWithType: HostFunction
-- uid: Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.IntPtr,Extism.Sdk.ExtismFunction)
-  name: HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, nint, ExtismFunction)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction__ctor_System_String_System_Span_Extism_Sdk_Native_ExtismValType__System_Span_Extism_Sdk_Native_ExtismValType__System_IntPtr_Extism_Sdk_ExtismFunction_
-  commentId: M:Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.IntPtr,Extism.Sdk.ExtismFunction)
-  name.vb: New(String, Span(Of ExtismValType), Span(Of ExtismValType), IntPtr, ExtismFunction)
-  fullName: Extism.Sdk.HostFunction.HostFunction(string, System.Span<Extism.Sdk.Native.ExtismValType>, System.Span<Extism.Sdk.Native.ExtismValType>, nint, Extism.Sdk.ExtismFunction)
-  fullName.vb: Extism.Sdk.HostFunction.New(String, System.Span(Of Extism.Sdk.Native.ExtismValType), System.Span(Of Extism.Sdk.Native.ExtismValType), System.IntPtr, Extism.Sdk.ExtismFunction)
-  nameWithType: HostFunction.HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, nint, ExtismFunction)
-  nameWithType.vb: HostFunction.New(String, Span(Of ExtismValType), Span(Of ExtismValType), IntPtr, ExtismFunction)
+- uid: Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.Object,Extism.Sdk.ExtismFunction)
+  name: HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, object?, ExtismFunction)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction__ctor_System_String_System_Span_Extism_Sdk_Native_ExtismValType__System_Span_Extism_Sdk_Native_ExtismValType__System_Object_Extism_Sdk_ExtismFunction_
+  commentId: M:Extism.Sdk.HostFunction.#ctor(System.String,System.Span{Extism.Sdk.Native.ExtismValType},System.Span{Extism.Sdk.Native.ExtismValType},System.Object,Extism.Sdk.ExtismFunction)
+  name.vb: New(String, Span(Of ExtismValType), Span(Of ExtismValType), Object, ExtismFunction)
+  fullName: Extism.Sdk.HostFunction.HostFunction(string, System.Span<Extism.Sdk.Native.ExtismValType>, System.Span<Extism.Sdk.Native.ExtismValType>, object?, Extism.Sdk.ExtismFunction)
+  fullName.vb: Extism.Sdk.HostFunction.New(String, System.Span(Of Extism.Sdk.Native.ExtismValType), System.Span(Of Extism.Sdk.Native.ExtismValType), Object, Extism.Sdk.ExtismFunction)
+  nameWithType: HostFunction.HostFunction(string, Span<ExtismValType>, Span<ExtismValType>, object?, ExtismFunction)
+  nameWithType.vb: HostFunction.New(String, Span(Of ExtismValType), Span(Of ExtismValType), Object, ExtismFunction)
 - uid: Extism.Sdk.HostFunction.#ctor*
   name: HostFunction
   href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction__ctor_
@@ -341,15 +462,15 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.HostFunction.~HostFunction
   nameWithType: HostFunction.~HostFunction
-- uid: Extism.Sdk.HostFunction.FromMethod(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin})
-  name: FromMethod(string, nint, Action<CurrentPlugin>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin})
-  name.vb: FromMethod(String, IntPtr, Action(Of CurrentPlugin))
-  fullName: Extism.Sdk.HostFunction.FromMethod(string, nint, System.Action<Extism.Sdk.CurrentPlugin>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin))
-  nameWithType: HostFunction.FromMethod(string, nint, Action<CurrentPlugin>)
-  nameWithType.vb: HostFunction.FromMethod(String, IntPtr, Action(Of CurrentPlugin))
+- uid: Extism.Sdk.HostFunction.FromMethod(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin})
+  name: FromMethod(string, object, Action<CurrentPlugin>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod_System_String_System_Object_System_Action_Extism_Sdk_CurrentPlugin__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin})
+  name.vb: FromMethod(String, Object, Action(Of CurrentPlugin))
+  fullName: Extism.Sdk.HostFunction.FromMethod(string, object, System.Action<Extism.Sdk.CurrentPlugin>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(String, Object, System.Action(Of Extism.Sdk.CurrentPlugin))
+  nameWithType: HostFunction.FromMethod(string, object, Action<CurrentPlugin>)
+  nameWithType.vb: HostFunction.FromMethod(String, Object, Action(Of CurrentPlugin))
 - uid: Extism.Sdk.HostFunction.FromMethod*
   name: FromMethod
   href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod_
@@ -357,69 +478,69 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.HostFunction.FromMethod
   nameWithType: HostFunction.FromMethod
-- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0})
-  name: FromMethod<I1>(string, nint, Action<CurrentPlugin, I1>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0})
-  name.vb: FromMethod(Of I1)(String, IntPtr, Action(Of CurrentPlugin, I1))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1))
-  nameWithType: HostFunction.FromMethod<I1>(string, nint, Action<CurrentPlugin, I1>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1)(String, IntPtr, Action(Of CurrentPlugin, I1))
-- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0})
-  name: FromMethod<R>(string, nint, Func<CurrentPlugin, R>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0})
-  name.vb: FromMethod(Of R)(String, IntPtr, Func(Of CurrentPlugin, R))
-  fullName: Extism.Sdk.HostFunction.FromMethod<R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, R>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, R))
-  nameWithType: HostFunction.FromMethod<R>(string, nint, Func<CurrentPlugin, R>)
-  nameWithType.vb: HostFunction.FromMethod(Of R)(String, IntPtr, Func(Of CurrentPlugin, R))
-- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
-  name: FromMethod<I1, I2>(string, nint, Action<CurrentPlugin, I1, I2>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0___1__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
-  name.vb: FromMethod(Of I1, I2)(String, IntPtr, Action(Of CurrentPlugin, I1, I2))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1, I2>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2))
-  nameWithType: HostFunction.FromMethod<I1, I2>(string, nint, Action<CurrentPlugin, I1, I2>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1, I2)(String, IntPtr, Action(Of CurrentPlugin, I1, I2))
-- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
-  name: FromMethod<I1, R>(string, nint, Func<CurrentPlugin, I1, R>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
-  name.vb: FromMethod(Of I1, R)(String, IntPtr, Func(Of CurrentPlugin, I1, R))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, R>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, R))
-  nameWithType: HostFunction.FromMethod<I1, R>(string, nint, Func<CurrentPlugin, I1, R>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1, R)(String, IntPtr, Func(Of CurrentPlugin, I1, R))
-- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
-  name: FromMethod<I1, I2, I3>(string, nint, Action<CurrentPlugin, I1, I2, I3>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_IntPtr_System_Action_Extism_Sdk_CurrentPlugin___0___1___2__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
-  name.vb: FromMethod(Of I1, I2, I3)(String, IntPtr, Action(Of CurrentPlugin, I1, I2, I3))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3>(string, nint, System.Action<Extism.Sdk.CurrentPlugin, I1, I2, I3>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3)(String, System.IntPtr, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2, I3))
-  nameWithType: HostFunction.FromMethod<I1, I2, I3>(string, nint, Action<CurrentPlugin, I1, I2, I3>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3)(String, IntPtr, Action(Of CurrentPlugin, I1, I2, I3))
-- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
-  name: FromMethod<I1, I2, R>(string, nint, Func<CurrentPlugin, I1, I2, R>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1___2__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
-  name.vb: FromMethod(Of I1, I2, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, R))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, R>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, R))
-  nameWithType: HostFunction.FromMethod<I1, I2, R>(string, nint, Func<CurrentPlugin, I1, I2, R>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, R))
-- uid: Extism.Sdk.HostFunction.FromMethod``4(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
-  name: FromMethod<I1, I2, I3, R>(string, nint, Func<CurrentPlugin, I1, I2, I3, R>)
-  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__4_System_String_System_IntPtr_System_Func_Extism_Sdk_CurrentPlugin___0___1___2___3__
-  commentId: M:Extism.Sdk.HostFunction.FromMethod``4(System.String,System.IntPtr,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
-  name.vb: FromMethod(Of I1, I2, I3, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, I3, R))
-  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3, R>(string, nint, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, I3, R>)
-  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3, R)(String, System.IntPtr, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, I3, R))
-  nameWithType: HostFunction.FromMethod<I1, I2, I3, R>(string, nint, Func<CurrentPlugin, I1, I2, I3, R>)
-  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3, R)(String, IntPtr, Func(Of CurrentPlugin, I1, I2, I3, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0})
+  name: FromMethod<I1>(string, object, Action<CurrentPlugin, I1>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_Object_System_Action_Extism_Sdk_CurrentPlugin___0__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0})
+  name.vb: FromMethod(Of I1)(String, Object, Action(Of CurrentPlugin, I1))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1>(string, object, System.Action<Extism.Sdk.CurrentPlugin, I1>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1)(String, Object, System.Action(Of Extism.Sdk.CurrentPlugin, I1))
+  nameWithType: HostFunction.FromMethod<I1>(string, object, Action<CurrentPlugin, I1>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1)(String, Object, Action(Of CurrentPlugin, I1))
+- uid: Extism.Sdk.HostFunction.FromMethod``1(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0})
+  name: FromMethod<R>(string, object, Func<CurrentPlugin, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__1_System_String_System_Object_System_Func_Extism_Sdk_CurrentPlugin___0__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``1(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0})
+  name.vb: FromMethod(Of R)(String, Object, Func(Of CurrentPlugin, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<R>(string, object, System.Func<Extism.Sdk.CurrentPlugin, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of R)(String, Object, System.Func(Of Extism.Sdk.CurrentPlugin, R))
+  nameWithType: HostFunction.FromMethod<R>(string, object, Func<CurrentPlugin, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of R)(String, Object, Func(Of CurrentPlugin, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
+  name: FromMethod<I1, I2>(string, object, Action<CurrentPlugin, I1, I2>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_Object_System_Action_Extism_Sdk_CurrentPlugin___0___1__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0,``1})
+  name.vb: FromMethod(Of I1, I2)(String, Object, Action(Of CurrentPlugin, I1, I2))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2>(string, object, System.Action<Extism.Sdk.CurrentPlugin, I1, I2>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2)(String, Object, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2))
+  nameWithType: HostFunction.FromMethod<I1, I2>(string, object, Action<CurrentPlugin, I1, I2>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2)(String, Object, Action(Of CurrentPlugin, I1, I2))
+- uid: Extism.Sdk.HostFunction.FromMethod``2(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
+  name: FromMethod<I1, R>(string, object, Func<CurrentPlugin, I1, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__2_System_String_System_Object_System_Func_Extism_Sdk_CurrentPlugin___0___1__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``2(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1})
+  name.vb: FromMethod(Of I1, R)(String, Object, Func(Of CurrentPlugin, I1, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, R>(string, object, System.Func<Extism.Sdk.CurrentPlugin, I1, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, R)(String, Object, System.Func(Of Extism.Sdk.CurrentPlugin, I1, R))
+  nameWithType: HostFunction.FromMethod<I1, R>(string, object, Func<CurrentPlugin, I1, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, R)(String, Object, Func(Of CurrentPlugin, I1, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name: FromMethod<I1, I2, I3>(string, object, Action<CurrentPlugin, I1, I2, I3>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_Object_System_Action_Extism_Sdk_CurrentPlugin___0___1___2__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.Object,System.Action{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name.vb: FromMethod(Of I1, I2, I3)(String, Object, Action(Of CurrentPlugin, I1, I2, I3))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3>(string, object, System.Action<Extism.Sdk.CurrentPlugin, I1, I2, I3>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3)(String, Object, System.Action(Of Extism.Sdk.CurrentPlugin, I1, I2, I3))
+  nameWithType: HostFunction.FromMethod<I1, I2, I3>(string, object, Action<CurrentPlugin, I1, I2, I3>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3)(String, Object, Action(Of CurrentPlugin, I1, I2, I3))
+- uid: Extism.Sdk.HostFunction.FromMethod``3(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name: FromMethod<I1, I2, R>(string, object, Func<CurrentPlugin, I1, I2, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__3_System_String_System_Object_System_Func_Extism_Sdk_CurrentPlugin___0___1___2__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``3(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2})
+  name.vb: FromMethod(Of I1, I2, R)(String, Object, Func(Of CurrentPlugin, I1, I2, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, R>(string, object, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, R)(String, Object, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, R))
+  nameWithType: HostFunction.FromMethod<I1, I2, R>(string, object, Func<CurrentPlugin, I1, I2, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, R)(String, Object, Func(Of CurrentPlugin, I1, I2, R))
+- uid: Extism.Sdk.HostFunction.FromMethod``4(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
+  name: FromMethod<I1, I2, I3, R>(string, object, Func<CurrentPlugin, I1, I2, I3, R>)
+  href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_FromMethod__4_System_String_System_Object_System_Func_Extism_Sdk_CurrentPlugin___0___1___2___3__
+  commentId: M:Extism.Sdk.HostFunction.FromMethod``4(System.String,System.Object,System.Func{Extism.Sdk.CurrentPlugin,``0,``1,``2,``3})
+  name.vb: FromMethod(Of I1, I2, I3, R)(String, Object, Func(Of CurrentPlugin, I1, I2, I3, R))
+  fullName: Extism.Sdk.HostFunction.FromMethod<I1, I2, I3, R>(string, object, System.Func<Extism.Sdk.CurrentPlugin, I1, I2, I3, R>)
+  fullName.vb: Extism.Sdk.HostFunction.FromMethod(Of I1, I2, I3, R)(String, Object, System.Func(Of Extism.Sdk.CurrentPlugin, I1, I2, I3, R))
+  nameWithType: HostFunction.FromMethod<I1, I2, I3, R>(string, object, Func<CurrentPlugin, I1, I2, I3, R>)
+  nameWithType.vb: HostFunction.FromMethod(Of I1, I2, I3, R)(String, Object, Func(Of CurrentPlugin, I1, I2, I3, R))
 - uid: Extism.Sdk.HostFunction.SetNamespace(System.String)
   name: SetNamespace(string)
   href: api/Extism.Sdk.HostFunction.html#Extism_Sdk_HostFunction_SetNamespace_System_String_
@@ -869,6 +990,15 @@ references:
   commentId: T:Extism.Sdk.Plugin
   fullName: Extism.Sdk.Plugin
   nameWithType: Plugin
+- uid: Extism.Sdk.Plugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],Extism.Sdk.PluginIntializationOptions)
+  name: Plugin(Manifest, HostFunction[], PluginIntializationOptions)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___Extism_Sdk_PluginIntializationOptions_
+  commentId: M:Extism.Sdk.Plugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],Extism.Sdk.PluginIntializationOptions)
+  name.vb: New(Manifest, HostFunction(), PluginIntializationOptions)
+  fullName: Extism.Sdk.Plugin.Plugin(Extism.Sdk.Manifest, Extism.Sdk.HostFunction[], Extism.Sdk.PluginIntializationOptions)
+  fullName.vb: Extism.Sdk.Plugin.New(Extism.Sdk.Manifest, Extism.Sdk.HostFunction(), Extism.Sdk.PluginIntializationOptions)
+  nameWithType: Plugin.Plugin(Manifest, HostFunction[], PluginIntializationOptions)
+  nameWithType.vb: Plugin.New(Manifest, HostFunction(), PluginIntializationOptions)
 - uid: Extism.Sdk.Plugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
   name: Plugin(Manifest, HostFunction[], bool)
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___System_Boolean_
@@ -897,6 +1027,19 @@ references:
   fullName.vb: Extism.Sdk.Plugin.New
   nameWithType: Plugin.Plugin
   nameWithType.vb: Plugin.New
+- uid: Extism.Sdk.Plugin.AllowHttpResponseHeaders
+  name: AllowHttpResponseHeaders()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_AllowHttpResponseHeaders
+  commentId: M:Extism.Sdk.Plugin.AllowHttpResponseHeaders
+  fullName: Extism.Sdk.Plugin.AllowHttpResponseHeaders()
+  nameWithType: Plugin.AllowHttpResponseHeaders()
+- uid: Extism.Sdk.Plugin.AllowHttpResponseHeaders*
+  name: AllowHttpResponseHeaders
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_AllowHttpResponseHeaders_
+  commentId: Overload:Extism.Sdk.Plugin.AllowHttpResponseHeaders
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.AllowHttpResponseHeaders
+  nameWithType: Plugin.AllowHttpResponseHeaders
 - uid: Extism.Sdk.Plugin.Call(System.String,System.ReadOnlySpan{System.Byte},System.Nullable{System.Threading.CancellationToken})
   name: Call(string, ReadOnlySpan<byte>, CancellationToken?)
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call_System_String_System_ReadOnlySpan_System_Byte__System_Nullable_System_Threading_CancellationToken__
@@ -922,6 +1065,22 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.Plugin.Call
   nameWithType: Plugin.Call
+- uid: Extism.Sdk.Plugin.CallWithHostContext*
+  name: CallWithHostContext
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_CallWithHostContext_
+  commentId: Overload:Extism.Sdk.Plugin.CallWithHostContext
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.CallWithHostContext
+  nameWithType: Plugin.CallWithHostContext
+- uid: Extism.Sdk.Plugin.CallWithHostContext``1(System.String,System.ReadOnlySpan{System.Byte},``0,System.Nullable{System.Threading.CancellationToken})
+  name: CallWithHostContext<T>(string, ReadOnlySpan<byte>, T, CancellationToken?)
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_CallWithHostContext__1_System_String_System_ReadOnlySpan_System_Byte____0_System_Nullable_System_Threading_CancellationToken__
+  commentId: M:Extism.Sdk.Plugin.CallWithHostContext``1(System.String,System.ReadOnlySpan{System.Byte},``0,System.Nullable{System.Threading.CancellationToken})
+  name.vb: CallWithHostContext(Of T)(String, ReadOnlySpan(Of Byte), T, CancellationToken?)
+  fullName: Extism.Sdk.Plugin.CallWithHostContext<T>(string, System.ReadOnlySpan<byte>, T, System.Threading.CancellationToken?)
+  fullName.vb: Extism.Sdk.Plugin.CallWithHostContext(Of T)(String, System.ReadOnlySpan(Of Byte), T, System.Threading.CancellationToken?)
+  nameWithType: Plugin.CallWithHostContext<T>(string, ReadOnlySpan<byte>, T, CancellationToken?)
+  nameWithType.vb: Plugin.CallWithHostContext(Of T)(String, ReadOnlySpan(Of Byte), T, CancellationToken?)
 - uid: Extism.Sdk.Plugin.Call``1(System.String,System.String,System.Text.Json.JsonSerializerOptions,System.Nullable{System.Threading.CancellationToken})
   name: Call<TOutput>(string, string, JsonSerializerOptions?, CancellationToken?)
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Call__1_System_String_System_String_System_Text_Json_JsonSerializerOptions_System_Nullable_System_Threading_CancellationToken__
@@ -1080,6 +1239,32 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.Plugin.FunctionExists
   nameWithType: Plugin.FunctionExists
+- uid: Extism.Sdk.Plugin.Id
+  name: Id
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Id
+  commentId: P:Extism.Sdk.Plugin.Id
+  fullName: Extism.Sdk.Plugin.Id
+  nameWithType: Plugin.Id
+- uid: Extism.Sdk.Plugin.Id*
+  name: Id
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Id_
+  commentId: Overload:Extism.Sdk.Plugin.Id
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.Id
+  nameWithType: Plugin.Id
+- uid: Extism.Sdk.Plugin.Reset
+  name: Reset()
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Reset
+  commentId: M:Extism.Sdk.Plugin.Reset
+  fullName: Extism.Sdk.Plugin.Reset()
+  nameWithType: Plugin.Reset()
+- uid: Extism.Sdk.Plugin.Reset*
+  name: Reset
+  href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_Reset_
+  commentId: Overload:Extism.Sdk.Plugin.Reset
+  isSpec: "True"
+  fullName: Extism.Sdk.Plugin.Reset
+  nameWithType: Plugin.Reset
 - uid: Extism.Sdk.Plugin.UpdateConfig(System.Collections.Generic.Dictionary{System.String,System.String},System.Text.Json.JsonSerializerOptions)
   name: UpdateConfig(Dictionary<string, string>, JsonSerializerOptions)
   href: api/Extism.Sdk.Plugin.html#Extism_Sdk_Plugin_UpdateConfig_System_Collections_Generic_Dictionary_System_String_System_String__System_Text_Json_JsonSerializerOptions_
@@ -1105,6 +1290,38 @@ references:
   isSpec: "True"
   fullName: Extism.Sdk.Plugin.UpdateConfig
   nameWithType: Plugin.UpdateConfig
+- uid: Extism.Sdk.PluginIntializationOptions
+  name: PluginIntializationOptions
+  href: api/Extism.Sdk.PluginIntializationOptions.html
+  commentId: T:Extism.Sdk.PluginIntializationOptions
+  fullName: Extism.Sdk.PluginIntializationOptions
+  nameWithType: PluginIntializationOptions
+- uid: Extism.Sdk.PluginIntializationOptions.FuelLimit
+  name: FuelLimit
+  href: api/Extism.Sdk.PluginIntializationOptions.html#Extism_Sdk_PluginIntializationOptions_FuelLimit
+  commentId: P:Extism.Sdk.PluginIntializationOptions.FuelLimit
+  fullName: Extism.Sdk.PluginIntializationOptions.FuelLimit
+  nameWithType: PluginIntializationOptions.FuelLimit
+- uid: Extism.Sdk.PluginIntializationOptions.FuelLimit*
+  name: FuelLimit
+  href: api/Extism.Sdk.PluginIntializationOptions.html#Extism_Sdk_PluginIntializationOptions_FuelLimit_
+  commentId: Overload:Extism.Sdk.PluginIntializationOptions.FuelLimit
+  isSpec: "True"
+  fullName: Extism.Sdk.PluginIntializationOptions.FuelLimit
+  nameWithType: PluginIntializationOptions.FuelLimit
+- uid: Extism.Sdk.PluginIntializationOptions.WithWasi
+  name: WithWasi
+  href: api/Extism.Sdk.PluginIntializationOptions.html#Extism_Sdk_PluginIntializationOptions_WithWasi
+  commentId: P:Extism.Sdk.PluginIntializationOptions.WithWasi
+  fullName: Extism.Sdk.PluginIntializationOptions.WithWasi
+  nameWithType: PluginIntializationOptions.WithWasi
+- uid: Extism.Sdk.PluginIntializationOptions.WithWasi*
+  name: WithWasi
+  href: api/Extism.Sdk.PluginIntializationOptions.html#Extism_Sdk_PluginIntializationOptions_WithWasi_
+  commentId: Overload:Extism.Sdk.PluginIntializationOptions.WithWasi
+  isSpec: "True"
+  fullName: Extism.Sdk.PluginIntializationOptions.WithWasi
+  nameWithType: PluginIntializationOptions.WithWasi
 - uid: Extism.Sdk.UrlWasmSource
   name: UrlWasmSource
   href: api/Extism.Sdk.UrlWasmSource.html
