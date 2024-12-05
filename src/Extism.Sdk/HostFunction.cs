@@ -1,5 +1,6 @@
 ﻿using Extism.Sdk.Native;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace Extism.Sdk;
 
@@ -20,6 +21,7 @@ public class HostFunction : IDisposable
     private int _disposed;
     private readonly ExtismFunction _function;
     private readonly LibExtism.InternalExtismFunction _callback;
+    private readonly GCHandle? _userDataHandle;
 
     /// <summary>
     /// Registers a Host Function.
@@ -27,24 +29,34 @@ public class HostFunction : IDisposable
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
     /// <param name="inputTypes">The types of the input arguments/parameters the <see cref="Plugin"/> caller will provide.</param>
     /// <param name="outputTypes">The types of the output returned from the host function to the <see cref="Plugin"/>.</param>
-    /// <param name="userData">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="hostFunction"></param>
     unsafe public HostFunction(
         string functionName,
         Span<ExtismValType> inputTypes,
         Span<ExtismValType> outputTypes,
-        nint userData,
+        object? userData,
         ExtismFunction hostFunction)
     {
-        // Make sure we store the delegate referene in a field so that it doesn't get garbage collected
+        // Make sure we store the delegate reference in a field so that it doesn't get garbage collected
         _function = hostFunction;
         _callback = CallbackImpl;
+        _userDataHandle = userData is null ? null : GCHandle.Alloc(userData);
 
         fixed (ExtismValType* inputs = inputTypes)
         fixed (ExtismValType* outputs = outputTypes)
         {
-            NativeHandle = LibExtism.extism_function_new(functionName, inputs, inputTypes.Length, outputs, outputTypes.Length, _callback, userData, IntPtr.Zero);
+            NativeHandle = LibExtism.extism_function_new(
+                functionName, 
+                inputs, 
+                inputTypes.Length, 
+                outputs, 
+                outputTypes.Length,
+                _callback, 
+                _userDataHandle is null ? IntPtr.Zero : GCHandle.ToIntPtr(_userDataHandle.Value), 
+                IntPtr.Zero);
         }
     }
 
@@ -62,27 +74,27 @@ public class HostFunction : IDisposable
         }
     }
 
-        /// <summary>
-        /// Sets the function namespace. By default it's set to `extism:host/user`.
-        /// </summary>
-        /// <param name="ns"></param>
-        /// <returns></returns>
-        public HostFunction WithNamespace(string ns)
-        {
-            this.SetNamespace(ns);
-            return this;
-        }
+    /// <summary>
+    /// Sets the function namespace. By default it's set to `extism:host/user`.
+    /// </summary>
+    /// <param name="ns"></param>
+    /// <returns></returns>
+    public HostFunction WithNamespace(string ns)
+    {
+        this.SetNamespace(ns);
+        return this;
+    }
 
-        private unsafe void CallbackImpl(
-            long plugin,
-            ExtismVal* inputsPtr,
-            uint n_inputs,
-            ExtismVal* outputsPtr,
-            uint n_outputs,
-            nint data)
-        {
-            var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
-            var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
+    private unsafe void CallbackImpl(
+        LibExtism.ExtismCurrentPlugin* plugin,
+        ExtismVal* inputsPtr,
+        uint n_inputs,
+        ExtismVal* outputsPtr,
+        uint n_outputs,
+        nint data)
+    {
+        var outputs = new Span<ExtismVal>(outputsPtr, (int)n_outputs);
+        var inputs = new Span<ExtismVal>(inputsPtr, (int)n_inputs);
 
         _function(new CurrentPlugin(plugin, data), inputs, outputs);
     }
@@ -91,19 +103,20 @@ public class HostFunction : IDisposable
     /// Registers a <see cref="HostFunction"/> from a method that takes no parameters an returns no values.
     /// </summary>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod(
         string functionName,
-        nint userdata,
+        object userData,
         Action<CurrentPlugin> callback)
     {
         var inputTypes = new ExtismValType[] { };
         var returnType = new ExtismValType[] { };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 callback(plugin);
@@ -116,20 +129,21 @@ public class HostFunction : IDisposable
     /// </summary>
     /// <typeparam name="I1">Type of first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<I1>(
         string functionName,
-        nint userdata,
+        object userData,
         Action<CurrentPlugin, I1> callback)
         where I1 : struct
     {
         var inputTypes = new ExtismValType[] { ToExtismType<I1>() };
         var returnType = new ExtismValType[] { };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 callback(plugin, GetValue<I1>(inputs[0]));
@@ -143,13 +157,14 @@ public class HostFunction : IDisposable
     /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<I1, I2>(
         string functionName,
-        nint userdata,
+        object userData,
         Action<CurrentPlugin, I1, I2> callback)
         where I1 : struct
         where I2 : struct
@@ -158,37 +173,38 @@ public class HostFunction : IDisposable
 
         var returnType = new ExtismValType[] { };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]));
             });
     }
 
-        /// <summary>
-        /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
-        /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
-        /// </summary>
-        /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
-        /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-        /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-        /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
-        /// <param name="callback">The host function implementation.</param>
-        /// <returns></returns>
-        public static HostFunction FromMethod<I1, I2, I3>(
-            string functionName,
-            nint userdata,
-            Action<CurrentPlugin, I1, I2, I3> callback)
-            where I1 : struct
-            where I2 : struct
-            where I3 : struct
-        {
-            var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
-            var returnType = new ExtismValType[] { };
+    /// <summary>
+    /// Registers a <see cref="HostFunction"/> from a method that takes 3 parameters an returns no values. Supported parameter types:
+    /// <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/>
+    /// </summary>
+    /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
+    /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
+    /// <param name="callback">The host function implementation.</param>
+    /// <returns></returns>
+    public static HostFunction FromMethod<I1, I2, I3>(
+        string functionName,
+        object userData,
+        Action<CurrentPlugin, I1, I2, I3> callback)
+        where I1 : struct
+        where I2 : struct
+        where I3 : struct
+    {
+        var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
+        var returnType = new ExtismValType[] { };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]), GetValue<I3>(inputs[2]));
@@ -201,20 +217,21 @@ public class HostFunction : IDisposable
     /// </summary>
     /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<R>(
         string functionName,
-        nint userdata,
+        object userData,
         Func<CurrentPlugin, R> callback)
         where R : struct
     {
         var inputTypes = new ExtismValType[] { };
         var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 var value = callback(plugin);
@@ -229,13 +246,14 @@ public class HostFunction : IDisposable
     /// <typeparam name="I1">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<I1, R>(
         string functionName,
-        nint userdata,
+        object userData,
         Func<CurrentPlugin, I1, R> callback)
         where I1 : struct
         where R : struct
@@ -243,7 +261,7 @@ public class HostFunction : IDisposable
         var inputTypes = new ExtismValType[] { ToExtismType<I1>() };
         var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 var value = callback(plugin, GetValue<I1>(inputs[0]));
@@ -259,13 +277,14 @@ public class HostFunction : IDisposable
     /// <typeparam name="I2">Type of the second parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<I1, I2, R>(
         string functionName,
-        nint userdata,
+        object userData,
         Func<CurrentPlugin, I1, I2, R> callback)
         where I1 : struct
         where I2 : struct
@@ -274,7 +293,7 @@ public class HostFunction : IDisposable
         var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>() };
         var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 var value = callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]));
@@ -291,13 +310,14 @@ public class HostFunction : IDisposable
     /// <typeparam name="I3">Type of the third parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <typeparam name="R">Type of the first parameter. Supported parameter types: <see cref="int"/>, <see cref="uint"/>, <see cref="long"/>, <see cref="ulong"/>, <see cref="float"/>, <see cref="double"/></typeparam>
     /// <param name="functionName">The literal name of the function, how it would be called from a <see cref="Plugin"/>.</param>
-    /// <param name="userdata">An opaque pointer to an object from the host, accessible on <see cref="CurrentPlugin"/>.
-    /// NOTE: it is the shared responsibility of the host and <see cref="Plugin"/> to cast/dereference this value properly.</param>
+    /// <param name="userData">
+    /// A state object that will be preserved and can be retrieved during function execution using <see cref="CurrentPlugin.GetUserData{T}"/>. 
+    /// This allows you to maintain context between function calls.</param>
     /// <param name="callback">The host function implementation.</param>
     /// <returns></returns>
     public static HostFunction FromMethod<I1, I2, I3, R>(
         string functionName,
-        nint userdata,
+        object userData,
         Func<CurrentPlugin, I1, I2, I3, R> callback)
         where I1 : struct
         where I2 : struct
@@ -307,7 +327,7 @@ public class HostFunction : IDisposable
         var inputTypes = new ExtismValType[] { ToExtismType<I1>(), ToExtismType<I2>(), ToExtismType<I3>() };
         var returnType = new ExtismValType[] { ToExtismType<R>() };
 
-        return new HostFunction(functionName, inputTypes, returnType, userdata,
+        return new HostFunction(functionName, inputTypes, returnType, userData,
             (CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs) =>
             {
                 var value = callback(plugin, GetValue<I1>(inputs[0]), GetValue<I2>(inputs[1]), GetValue<I3>(inputs[2]));
@@ -364,12 +384,12 @@ public class HostFunction : IDisposable
         else if (t is float f32)
         {
             val.t = ExtismValType.F32;
-            val.v.f32 = BitConverter.SingleToInt32Bits(f32);
+            val.v.f32 = f32;
         }
         else if (t is double f64)
         {
             val.t = ExtismValType.F64;
-            val.v.f64 = BitConverter.DoubleToInt64Bits(f64);
+            val.v.f64 = f64;
         }
         else
         {
@@ -418,7 +438,7 @@ public class HostFunction : IDisposable
     {
         if (disposing)
         {
-            // Free up any managed resources here
+            _userDataHandle?.Free();
         }
 
         // Free up unmanaged resources

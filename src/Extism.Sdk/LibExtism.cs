@@ -113,6 +113,12 @@ internal static class LibExtism
     [StructLayout(LayoutKind.Sequential)]
     internal struct ExtismPlugin { }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExtismCompiledPlugin { }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ExtismCurrentPlugin { }
+
     /// <summary>
     /// Host function signature
     /// </summary>
@@ -122,7 +128,7 @@ internal static class LibExtism
     /// <param name="outputs"></param>
     /// <param name="n_outputs"></param>
     /// <param name="data"></param>
-    unsafe internal delegate void InternalExtismFunction(long plugin, ExtismVal* inputs, uint n_inputs, ExtismVal* outputs, uint n_outputs, IntPtr data);
+    unsafe internal delegate void InternalExtismFunction(ExtismCurrentPlugin* plugin, ExtismVal* inputs, uint n_inputs, ExtismVal* outputs, uint n_outputs, IntPtr data);
 
     /// <summary>
     /// Returns a pointer to the memory of the currently running plugin.
@@ -131,7 +137,7 @@ internal static class LibExtism
     /// <param name="plugin"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory")]
-    internal static extern long extism_current_plugin_memory(long plugin);
+    unsafe internal static extern long extism_current_plugin_memory(ExtismCurrentPlugin* plugin);
 
     /// <summary>
     /// Allocate a memory block in the currently running plugin
@@ -140,7 +146,7 @@ internal static class LibExtism
     /// <param name="n"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_alloc")]
-    internal static extern long extism_current_plugin_memory_alloc(long plugin, long n);
+    unsafe internal static extern long extism_current_plugin_memory_alloc(ExtismCurrentPlugin* plugin, long n);
 
     /// <summary>
     /// Get the length of an allocated block.
@@ -150,7 +156,7 @@ internal static class LibExtism
     /// <param name="n"></param>
     /// <returns></returns>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_length")]
-    internal static extern long extism_current_plugin_memory_length(long plugin, long n);
+    unsafe internal static extern long extism_current_plugin_memory_length(ExtismCurrentPlugin* plugin, long n);
 
     /// <summary>
     /// Get the length of an allocated block.
@@ -159,7 +165,7 @@ internal static class LibExtism
     /// <param name="plugin"></param>
     /// <param name="ptr"></param>
     [DllImport("extism", EntryPoint = "extism_current_plugin_memory_free")]
-    internal static extern void extism_current_plugin_memory_free(long plugin, long ptr);
+    unsafe internal static extern void extism_current_plugin_memory_free(ExtismCurrentPlugin* plugin, long ptr);
 
     /// <summary>
     /// Create a new host function.
@@ -205,6 +211,20 @@ internal static class LibExtism
     unsafe internal static extern ExtismPlugin* extism_plugin_new(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
 
     /// <summary>
+    /// Load a WASM plugin with fuel limit.
+    /// </summary>
+    /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
+    /// <param name="wasmSize">The length of the `wasm` parameter.</param>
+    /// <param name="functions">Array of host function pointers.</param>
+    /// <param name="nFunctions">Number of host functions.</param>
+    /// <param name="withWasi">Enables/disables WASI.</param>
+    /// <param name="fuelLimit">Max number of instructions that can be executed by the plugin.</param>
+    /// <param name="errmsg"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_new_with_fuel_limit(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, long fuelLimit, out char** errmsg);
+
+    /// <summary>
     /// Frees a plugin error message.
     /// </summary>
     /// <param name="errorMessage"></param>
@@ -217,6 +237,40 @@ internal static class LibExtism
     /// <param name="plugin">Pointer to the plugin you want to free.</param>
     [DllImport("extism")]
     unsafe internal static extern void extism_plugin_free(ExtismPlugin* plugin);
+    /// <summary>
+    /// Pre-compile an Extism plugin
+    /// </summary>
+    /// <param name="wasm">A WASM module (wat or wasm) or a JSON encoded manifest.</param>
+    /// <param name="wasmSize">The length of the `wasm` parameter.</param>
+    /// <param name="functions">Array of host function pointers.</param>
+    /// <param name="nFunctions">Number of host functions.</param>
+    /// <param name="withWasi">Enables/disables WASI.</param>
+    /// <param name="errmsg"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismCompiledPlugin* extism_compiled_plugin_new(byte* wasm, long wasmSize, IntPtr* functions, long nFunctions, [MarshalAs(UnmanagedType.I1)] bool withWasi, out char** errmsg);
+
+    /// <summary>
+    /// Free `ExtismCompiledPlugin`
+    /// </summary>
+    /// <param name="plugin"></param>
+    [DllImport("extism")]
+    unsafe internal static extern void extism_compiled_plugin_free(ExtismCompiledPlugin* plugin);
+
+    /// <summary>
+    ///  Create a new plugin from an `ExtismCompiledPlugin`
+    /// </summary>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_new_from_compiled(ExtismCompiledPlugin* compiled, out char** errmsg);
+
+    /// <summary>
+    /// Enable HTTP response headers in plugins using `extism:host/env::http_request`
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern ExtismPlugin* extism_plugin_allow_http_response_headers(ExtismPlugin* plugin);
 
     /// <summary>
     /// Get handle for plugin cancellation
@@ -265,6 +319,26 @@ internal static class LibExtism
     unsafe internal static extern int extism_plugin_call(ExtismPlugin* plugin, string funcName, byte* data, int dataLen);
 
     /// <summary>
+    /// Call a function with host context.
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <param name="funcName">The function to call.</param>
+    /// <param name="data">Input data.</param>
+    /// <param name="dataLen">The length of the `data` parameter.</param>
+    /// <param name="hostContext">a pointer to context data that will be available in host functions</param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern int extism_plugin_call_with_host_context(ExtismPlugin* plugin, string funcName, byte* data, long dataLen, IntPtr hostContext);
+
+    /// <summary>
+    /// Get the current plugin's associated host context data. Returns null if call was made without host context.
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern void* extism_current_plugin_host_context(ExtismCurrentPlugin* plugin);
+
+    /// <summary>
     /// Get the error associated with a Plugin
     /// </summary>
     /// <param name="plugin">A plugin pointer</param>
@@ -287,6 +361,22 @@ internal static class LibExtism
     /// <returns></returns>
     [DllImport("extism")]
     unsafe internal static extern IntPtr extism_plugin_output_data(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Reset the Extism runtime, this will invalidate all allocated memory
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern bool extism_plugin_reset(ExtismPlugin* plugin);
+
+    /// <summary>
+    /// Get a plugin's ID, the returned bytes are a 16 byte buffer that represent a UUIDv4
+    /// </summary>
+    /// <param name="plugin"></param>
+    /// <returns></returns>
+    [DllImport("extism")]
+    unsafe internal static extern byte* extism_plugin_id(ExtismPlugin* plugin);
 
     /// <summary>
     /// Set log file and level for file logger.

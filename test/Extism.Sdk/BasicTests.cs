@@ -19,6 +19,14 @@ public class BasicTests
     }
 
     [Fact]
+    public void GetId()
+    {
+        using var plugin = Helpers.LoadPlugin("alloc.wasm");
+        var id = plugin.Id;
+        Assert.NotEqual(Guid.Empty, id);
+    }
+
+    [Fact]
     public void Fail()
     {
         using var plugin = Helpers.LoadPlugin("fail.wasm");
@@ -125,7 +133,7 @@ public class BasicTests
     }
 
     [Fact]
-    public void CountVowelsHostFunctions()
+    public void CountVowelsHostFunctionsBackCompat()
     {
         for (int i = 0; i < 100; i++)
         {
@@ -148,8 +156,97 @@ public class BasicTests
         {
             Console.WriteLine("Hello from .NET!");
 
+
+#pragma warning disable CS0618 // Type or member is obsolete
             var text = Marshal.PtrToStringAnsi(plugin.UserData);
+#pragma warning restore CS0618 // Type or member is obsolete
             Console.WriteLine(text);
+
+            var input = plugin.ReadString(new nint(inputs[0].v.ptr));
+            Console.WriteLine($"Input: {input}");
+
+            var output = new string(input); // clone the string
+            outputs[0].v.ptr = plugin.WriteString(output);
+        }
+    }
+
+    [Fact]
+    public void CountVowelsHostFunctions()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            var userData = "Hello again!";
+
+            using var helloWorld = new HostFunction(
+                "hello_world",
+                new[] { ExtismValType.PTR },
+                new[] { ExtismValType.PTR },
+                userData,
+                HelloWorld);
+
+            using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
+
+            var dict = new Dictionary<string, object>
+            {
+                { "answer", 42 }
+            };
+
+            var response = plugin.CallWithHostContext("count_vowels", Encoding.UTF8.GetBytes("Hello World"), dict);
+            Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        }
+
+        void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
+        {
+            Console.WriteLine("Hello from .NET!");
+
+            var text = plugin.GetUserData<string>();
+            Assert.Equal("Hello again!", text);
+
+            var context = plugin.GetCallHostContext<Dictionary<string, object>>();
+            if (context is null || !context.ContainsKey("answer"))
+            {
+                throw new InvalidOperationException("Context not found");
+            }
+
+            Assert.Equal(42, context["answer"]);
+
+            var input = plugin.ReadString(new nint(inputs[0].v.ptr));
+            Console.WriteLine($"Input: {input}");
+
+            var output = new string(input); // clone the string
+            outputs[0].v.ptr = plugin.WriteString(output);
+        }
+    }
+
+    [Fact]
+    public void CountVowelsHostFunctionsNoUserData()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            using var helloWorld = new HostFunction(
+                "hello_world",
+                new[] { ExtismValType.PTR },
+                new[] { ExtismValType.PTR },
+                null,
+                HelloWorld);
+
+            using var plugin = Helpers.LoadPlugin("code-functions.wasm", config: null, helloWorld);
+
+            var dict = new Dictionary<string, object>
+            {
+                { "answer", 42 }
+            };
+
+            var response = plugin.Call("count_vowels", Encoding.UTF8.GetBytes("Hello World"));
+            Encoding.UTF8.GetString(response).ShouldBe("{\"count\": 3}");
+        }
+
+        void HelloWorld(CurrentPlugin plugin, Span<ExtismVal> inputs, Span<ExtismVal> outputs)
+        {
+            Console.WriteLine("Hello from .NET!");
+
+            var text = plugin.GetUserData<string>();
+            Assert.Null(text);
 
             var input = plugin.ReadString(new nint(inputs[0].v.ptr));
             Console.WriteLine($"Input: {input}");
@@ -180,6 +277,18 @@ public class BasicTests
         Encoding.UTF8.GetString(response).ShouldBe("HELLO FRODO!");
     }
 
+    [Fact]
+    public void FuelLimit()
+    {
+        using var plugin = Helpers.LoadPlugin("loop.wasm", options: new PluginIntializationOptions
+        {
+            FuelLimit = 1000,
+            WithWasi = true
+        });
+
+        Should.Throw<ExtismException>(() => plugin.Call("loop_forever", Array.Empty<byte>()))
+            .Message.ShouldContain("fuel");
+    }
 
     //[Fact]
     // flakey
