@@ -48,7 +48,7 @@ public class BasicTests
         var exception = Should.Throw<ExtismException>(() => plugin.Call("_start", Array.Empty<byte>()));
 
         exception.Message.ShouldContain(expected.ToString());
-        exception.Message.ShouldContain("WASI exit code");
+        exception.Message.ShouldContain("error while executing at wasm backtrace");
     }
 
     [Fact]
