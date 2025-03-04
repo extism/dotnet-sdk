@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;net7.0;net8.0;net9.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;net8.0;net9.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -31,11 +31,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<!-- For netstandard2.1 target (still needs package references) -->
+		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+		<PackageReference Include="System.Text.Json" Version="9.0.0" Condition="'$(TargetFramework)' == 'netstandard2.1'" />
+
+		<!-- For net7.0+ targets, these libraries are part of the shared framework -->
+		<FrameworkReference Include="Microsoft.NETCore.App" Condition="'$(TargetFramework)' != 'netstandard2.1'" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="MinVer" Version="6.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
-		<PackageReference Include="System.Text.Json" Version="9.0.2" />
 	</ItemGroup>
 </Project>
