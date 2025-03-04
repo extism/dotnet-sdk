@@ -16,6 +16,17 @@ Then, add the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.S
 dotnet add package Extism.Sdk
 ```
 
+### PowerShell
+
+Open a PowerShell console and detect the Common Language Runtime (CLR) major version with the command
+```
+[System.Environment]::Version
+```
+
+Download the [Extism.Sdk NuGet package](https://www.nuget.org/packages/Extism.Sdk) and change the extension from nupkg to zip. Open the zip file and go into the lib folder. Choose the net folder in dependency of the CLR major version and open it. Copy the file Extism.sdk.dll in your PowerShell script directory.
+
+Download the [Extism native runtime package](https://www.nuget.org/packages/Extism.runtime.all#dependencies-body-tab) in dependency of your operating system and change the extension from nupkg to zip. Open the zip file and go into the runtimes folder. At the end of the path you will find a file with the name libextism.so (shared object) or extism.dll (dynamic link library). Copy this file in your PowerShell script directory.
+
 ## Getting Started
 
 This guide should walk you through some of the concepts in Extism and this .NET library.
@@ -34,6 +45,13 @@ F#:
 open System
 
 open Extism.Sdk
+```
+
+### PowerShell
+```powershell
+[System.String]$LibDir = $($PSScriptRoot)
+[System.String]$Extism = $($LibDir) + "/Extism.Sdk.dll"
+Add-Type -Path $Extism
 ```
 
 ## Creating A Plug-in
@@ -57,6 +75,22 @@ let manifest = Manifest(new UrlWasmSource(uri))
 let plugin = new Plugin(manifest, Array.Empty<HostFunction>(), withWasi = true)
 ```
 
+PowerShell:
+```powershell
+$Manifest = [Extism.Sdk.Manifest]::new(
+        [Extism.Sdk.UrlWasmSource]::new(
+            "https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm"
+        )
+    )
+
+$HostFunctionArray = [Extism.Sdk.HostFunction[]]::new(0)
+
+$Options = [Extism.Sdk.PluginIntializationOptions]::new()
+$Options.WithWasi = $True
+
+$Plugin = [Extism.Sdk.Plugin]::new($Manifest, $HostFunctionArray, $Options)
+```
+
 > **Note**: The schema for this manifest can be found here: https://extism.org/docs/concepts/manifest/
 
 ### Calling A Plug-in's Exports
@@ -75,6 +109,13 @@ F#:
 let output = plugin.Call("count_vowels", "Hello, World!")
 printfn "%s" output
 // => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
+```
+
+PowerShell:
+```powershell
+$output = $Plugin.Call("count_vowels", "Hello, World!")
+Write-Host $output
+# => {"count": 3, "total": 3, "vowels": "aeiouAEIOU"}
 ```
 
 All exports have a simple interface of optional bytes in, and optional bytes out. This plug-in happens to take a string and return a JSON encoded string with a report of results.
