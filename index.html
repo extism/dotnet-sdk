@@ -16,7 +16,7 @@
       <meta name="docfx:rel" content="">
       
       
-      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/blob/v1.9.0/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/extism/dotnet-sdk/blob/v1.9.1/index.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -83,6 +83,12 @@
 <img src="https://img.shields.io/nuget/vpre/Extism.Sdk"></p>
 <pre><code>dotnet add package Extism.Sdk
 </code></pre>
+<h3 id="powershell">PowerShell</h3>
+<p>Open a PowerShell console and detect the Common Language Runtime (CLR) major version with the command</p>
+<pre><code>[System.Environment]::Version
+</code></pre>
+<p>Download the <a href="https://www.nuget.org/packages/Extism.Sdk">Extism.Sdk NuGet package</a> and change the extension from nupkg to zip. Open the zip file and go into the lib folder. Choose the net folder in dependency of the CLR major version and open it. Copy the file Extism.sdk.dll in your PowerShell script directory.</p>
+<p>Download the <a href="https://www.nuget.org/packages/Extism.runtime.all#dependencies-body-tab">Extism native runtime package</a> in dependency of your operating system and change the extension from nupkg to zip. Open the zip file and go into the runtimes folder. At the end of the path you will find a file with the name libextism.so (shared object) or extism.dll (dynamic link library). Copy this file in your PowerShell script directory.</p>
 <h2 id="getting-started">Getting Started</h2>
 <p>This guide should walk you through some of the concepts in Extism and this .NET library.</p>
 <p>First you should add a using statement for Extism:</p>
@@ -95,6 +101,11 @@ using Extism.Sdk;
 <pre><code class="lang-fsharp">open System
 
 open Extism.Sdk
+</code></pre>
+<h3 id="powershell-1">PowerShell</h3>
+<pre><code class="lang-powershell">[System.String]$LibDir = $($PSScriptRoot)
+[System.String]$Extism = $($LibDir) + &quot;/Extism.Sdk.dll&quot;
+Add-Type -Path $Extism
 </code></pre>
 <h2 id="creating-a-plug-in">Creating A Plug-in</h2>
 <p>The primary concept in Extism is the <a href="https://extism.org/docs/concepts/plug-in">plug-in</a>. You can think of a plug-in as a code module stored in a <code>.wasm</code> file.</p>
@@ -110,6 +121,20 @@ let manifest = Manifest(new UrlWasmSource(uri))
 
 let plugin = new Plugin(manifest, Array.Empty&lt;HostFunction&gt;(), withWasi = true)
 </code></pre>
+<p>PowerShell:</p>
+<pre><code class="lang-powershell">$Manifest = [Extism.Sdk.Manifest]::new(
+        [Extism.Sdk.UrlWasmSource]::new(
+            &quot;https://github.com/extism/plugins/releases/latest/download/count_vowels.wasm&quot;
+        )
+    )
+
+$HostFunctionArray = [Extism.Sdk.HostFunction[]]::new(0)
+
+$Options = [Extism.Sdk.PluginIntializationOptions]::new()
+$Options.WithWasi = $True
+
+$Plugin = [Extism.Sdk.Plugin]::new($Manifest, $HostFunctionArray, $Options)
+</code></pre>
 <blockquote>
 <p><strong>Note</strong>: The schema for this manifest can be found here: <a href="https://extism.org/docs/concepts/manifest/">https://extism.org/docs/concepts/manifest/</a></p>
 </blockquote>
@@ -124,6 +149,11 @@ Console.WriteLine(output);
 <pre><code class="lang-fsharp">let output = plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;)
 printfn &quot;%s&quot; output
 // =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
+</code></pre>
+<p>PowerShell:</p>
+<pre><code class="lang-powershell">$output = $Plugin.Call(&quot;count_vowels&quot;, &quot;Hello, World!&quot;)
+Write-Host $output
+# =&gt; {&quot;count&quot;: 3, &quot;total&quot;: 3, &quot;vowels&quot;: &quot;aeiouAEIOU&quot;}
 </code></pre>
 <p>All exports have a simple interface of optional bytes in, and optional bytes out. This plug-in happens to take a string and return a JSON encoded string with a report of results.</p>
 <h2 id="precompiling-plugins">Precompiling plugins</h2>
@@ -425,7 +455,7 @@ use plugin = new Plugin(manifest, Array.empty&lt;HostFunction&gt;, options)
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/extism/dotnet-sdk/blob/v1.9.0/index.md/#L1" class="edit-link">Edit this page</a>
+          <a href="https://github.com/extism/dotnet-sdk/blob/v1.9.1/index.md/#L1" class="edit-link">Edit this page</a>
         </div>
 
         <div class="next-article d-print-none border-top" id="nextArticle"></div>
