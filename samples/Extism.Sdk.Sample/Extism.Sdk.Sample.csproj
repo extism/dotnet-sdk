@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Extism.runtime.all" Version="1.9.1" />
+		<PackageReference Include="Extism.runtime.all" Version="1.11.1" />
 	</ItemGroup>
 
 	<ItemGroup>
