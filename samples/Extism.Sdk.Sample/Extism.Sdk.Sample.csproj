@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Extism.runtime.all" Version="1.9.1" />
+		<PackageReference Include="Extism.runtime.all" Version="1.11.1" />
 	</ItemGroup>
 
 	<ItemGroup>
