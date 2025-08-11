@@ -40,6 +40,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+  	<PackageReference Include="Microsoft.NET.ILLink.Tasks" Version="9.0.8" />
 		<PackageReference Include="MinVer" Version="6.0.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
