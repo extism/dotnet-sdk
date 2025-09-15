@@ -21,6 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+  	<PackageReference Include="Microsoft.DotNet.ILCompiler" Version="9.0.9" />
 		<ProjectReference Include="..\..\src\Extism.Sdk\Extism.Sdk.csproj" />
 	</ItemGroup>
 
