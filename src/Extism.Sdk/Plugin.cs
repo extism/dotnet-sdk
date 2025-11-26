@@ -541,20 +541,30 @@ public unsafe class CompiledPlugin : IDisposable
     /// <param name="manifest"></param>
     /// <param name="functions"></param>
     /// <param name="withWasi"></param>
-    public CompiledPlugin(Manifest manifest, HostFunction[] functions, bool withWasi)
+    public CompiledPlugin(Manifest manifest, HostFunction[] functions, bool withWasi) : this(manifest, functions, new PluginIntializationOptions { WithWasi = withWasi })
+    {
+    }
+
+    /// <summary>
+    /// Compile a plugin from a Manifest.
+    /// </summary>
+    /// <param name="manifest"></param>
+    /// <param name="functions"></param>
+    /// <param name="options"></param>
+    public CompiledPlugin(Manifest manifest, HostFunction[] functions, PluginIntializationOptions options)
     {
         Functions = functions;
 
-        var options = new JsonSerializerOptions
+        var jsonOptions = new JsonSerializerOptions
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
 
-        options.Converters.Add(new WasmSourceConverter());
-        options.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
+        jsonOptions.Converters.Add(new WasmSourceConverter());
+        jsonOptions.Converters.Add(new JsonStringEnumConverter<HttpMethod>());
 
-        var jsonContext = new ManifestJsonContext(options);
+        var jsonContext = new ManifestJsonContext(jsonOptions);
         var json = JsonSerializer.Serialize(manifest, jsonContext.Manifest);
 
         var bytes = Encoding.UTF8.GetBytes(json);
@@ -563,7 +573,7 @@ public unsafe class CompiledPlugin : IDisposable
         fixed (byte* wasmPtr = bytes)
         fixed (IntPtr* functionsPtr = functionHandles)
         {
-            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, withWasi, functionsPtr);
+            NativeHandle = Initialize(wasmPtr, bytes.Length, functions, options.WithWasi, options.FuelLimit, functionsPtr);
         }
     }
 
@@ -577,11 +587,14 @@ public unsafe class CompiledPlugin : IDisposable
         return new Plugin(this);
     }
 
-    private unsafe LibExtism.ExtismCompiledPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, IntPtr* functionsPtr)
+    private unsafe LibExtism.ExtismCompiledPlugin* Initialize(byte* wasmPtr, int wasmLength, HostFunction[] functions, bool withWasi, long? fuelLimit, IntPtr* functionsPtr)
     {
         char** errorMsgPtr;
 
-        var handle = LibExtism.extism_compiled_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, out errorMsgPtr);
+        LibExtism.ExtismCompiledPlugin* handle = fuelLimit.HasValue
+            ? LibExtism.extism_compiled_plugin_new_with_fuel_limit(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, fuelLimit.Value, out errorMsgPtr)
+            : LibExtism.extism_compiled_plugin_new(wasmPtr, wasmLength, functionsPtr, functions.Length, withWasi, out errorMsgPtr);
+
         if (handle == null)
         {
             var msg = "Unable to compile plugin";
