@@ -56,4 +56,19 @@ public class CompiledPluginTests
         }
     }
 
+    [Fact]
+    public void FuelLimit()
+    {
+        using var compiledPlugin = Helpers.CompilePlugin("loop.wasm", options: new PluginIntializationOptions
+        {
+            FuelLimit = 1000,
+            WithWasi = true
+        });
+
+        using var plugin = compiledPlugin.Instantiate();
+
+        Should.Throw<ExtismException>(() => plugin.Call("loop_forever", Array.Empty<byte>()))
+            .Message.ShouldContain("fuel");
+    }
+
 }
