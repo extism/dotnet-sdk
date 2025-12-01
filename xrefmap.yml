@@ -51,6 +51,15 @@ references:
   commentId: T:Extism.Sdk.CompiledPlugin
   fullName: Extism.Sdk.CompiledPlugin
   nameWithType: CompiledPlugin
+- uid: Extism.Sdk.CompiledPlugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],Extism.Sdk.PluginIntializationOptions)
+  name: CompiledPlugin(Manifest, HostFunction[], PluginIntializationOptions)
+  href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___Extism_Sdk_PluginIntializationOptions_
+  commentId: M:Extism.Sdk.CompiledPlugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],Extism.Sdk.PluginIntializationOptions)
+  name.vb: New(Manifest, HostFunction(), PluginIntializationOptions)
+  fullName: Extism.Sdk.CompiledPlugin.CompiledPlugin(Extism.Sdk.Manifest, Extism.Sdk.HostFunction[], Extism.Sdk.PluginIntializationOptions)
+  fullName.vb: Extism.Sdk.CompiledPlugin.New(Extism.Sdk.Manifest, Extism.Sdk.HostFunction(), Extism.Sdk.PluginIntializationOptions)
+  nameWithType: CompiledPlugin.CompiledPlugin(Manifest, HostFunction[], PluginIntializationOptions)
+  nameWithType.vb: CompiledPlugin.New(Manifest, HostFunction(), PluginIntializationOptions)
 - uid: Extism.Sdk.CompiledPlugin.#ctor(Extism.Sdk.Manifest,Extism.Sdk.HostFunction[],System.Boolean)
   name: CompiledPlugin(Manifest, HostFunction[], bool)
   href: api/Extism.Sdk.CompiledPlugin.html#Extism_Sdk_CompiledPlugin__ctor_Extism_Sdk_Manifest_Extism_Sdk_HostFunction___System_Boolean_
